@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Apply.Library
 {
-    class Cards
+    public class Cards
     {
     }
 }
