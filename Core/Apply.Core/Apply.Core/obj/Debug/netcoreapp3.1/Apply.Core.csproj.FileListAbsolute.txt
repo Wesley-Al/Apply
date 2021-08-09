@@ -65,3 +65,6 @@ D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.cspro
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.dll
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.pdb
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.genruntimeconfig.cache
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

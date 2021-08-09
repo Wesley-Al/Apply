@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Apply.Core.Migrations
+namespace Apply.Library.Migrations
 {
-    public partial class Att : Migration
+    public partial class Att_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
