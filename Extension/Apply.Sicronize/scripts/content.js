@@ -95,5 +95,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   parameters.push(wallet);
   
+  console.log(wallet);
+
   sendResponse(JSON.stringify(parameters));
 });

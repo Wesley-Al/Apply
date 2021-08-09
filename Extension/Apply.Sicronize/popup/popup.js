@@ -13,7 +13,8 @@ function sendMessage(message = true){
     */
     chrome.tabs.query({active: true, currentWindow: true}, (tabs)=>{        
         chrome.tabs.sendMessage(tabs[0].id, JSON.stringify(message), (response)=>{    
-            debugger        
+            debugger;
+                    
             console.log(response);
         });
     });
