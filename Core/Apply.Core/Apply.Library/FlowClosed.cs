@@ -9,9 +9,10 @@ namespace Apply.Library
     {
         [Key]
         public long CodFlowClosed { get; set; }        
-        public double Amount { get; set; }
+        public string Amount { get; set; }
         public string Description { get; set; }
         public DateTime Time { get; set; }
+        public string TimeString { get; set; }
         public string Title { get; set; }
         public long CodWallet { get; set; }
     }

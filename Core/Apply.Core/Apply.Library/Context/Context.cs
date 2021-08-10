@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 namespace Apply.Library
 {
     public class Context : DbContext
-    {
-
-        public Context(DbContextOptions<Context> options) : base(options)
-        {
-
-        }
-
+    {        
         public DbSet<Wallet> Wallet { get; set; }
         public DbSet<Cards> Card { get; set; }
         public DbSet<FlowClosed> FlowClosed { get; set; }
@@ -22,7 +16,7 @@ namespace Apply.Library
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Password={Programador};Persist Security Info=True;User ID=Wesley;Initial Catalog=ApplyNubank;Data Source=DESKTOP-C3Q3K9Q");
+            optionsBuilder.UseSqlServer("Password={Programador};Persist Security Info=True;User ID=Wesley;Initial Catalog=ApplyNubank;Data Source=DESKTOP-C3Q3K9Q", b => b.MigrationsAssembly("Apply.Core"));
         }
     }
 }

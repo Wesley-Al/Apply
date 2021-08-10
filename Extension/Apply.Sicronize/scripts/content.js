@@ -4,9 +4,7 @@ var Execute = {
      * @returns Retorna os dados de uso do cartão
      */
     ReturnCards: () =>{
-
-        var cardNotPresent = new Array();        
-        var cardPresent = new Array();        
+      
         var cards = new Array();        
         
         document.querySelectorAll('.card_not_present').forEach((element, index) =>{
@@ -15,9 +13,11 @@ var Execute = {
             CardNotPresent.Title = element.children[1].innerText;
             CardNotPresent.Description = element.children[2].innerText;
             CardNotPresent.Amount = element.children[3].innerText;
-            CardNotPresent.Time = element.children[5].innerText;            
+            CardNotPresent.TimeString = element.children[5].innerText;            
+            CardNotPresent.NotPayment = true;            
+            CardNotPresent.CodWallet = 10;            
 
-            cardNotPresent.push(CardNotPresent);    
+            cards.push(CardNotPresent);    
         });
 
         document.querySelectorAll('.card_present').forEach((element, index) =>{            
@@ -26,13 +26,12 @@ var Execute = {
             CardPresent.Title = element.children[1].innerText;
             CardPresent.Description = element.children[2].innerText;
             CardPresent.Amount = element.children[3].innerText;
-            CardPresent.Time = element.children[5].innerText;            
+            CardPresent.TimeString = element.children[5].innerText;            
+            CardPresent.NotPayment = false;            
+            CardPresent.CodWallet = 10;            
 
-            cardPresent.push(CardPresent);    
+            cards.push(CardPresent);    
         });
-
-        cards.push(cardPresent);
-        cards.push(cardNotPresent);
 
         return cards;
     },
@@ -55,7 +54,7 @@ var Execute = {
             
             Payment.Title = element.children[1].innerText;            
             Payment.Amount = element.children[2].innerText;
-            Payment.Time = element.children[4].innerText;            
+            Payment.TimeString = element.children[4].innerText;            
 
             payments.push(Payment);    
         });
@@ -75,7 +74,7 @@ var Execute = {
             FlowClosed.Title = element.children[1].innerText; 
             FlowClosed.Description = element.children[2].innerText;           
             FlowClosed.Amount = element.children[3].innerText;
-            FlowClosed.Time = element.children[5].innerText;            
+            FlowClosed.TimeString = element.children[5].innerText;            
 
             flowCloseds.push(FlowClosed);    
         });
@@ -85,17 +84,19 @@ var Execute = {
 
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {      
-  var wallet = {};
-  var parameters = new Array();
-
-  wallet.cards = Execute.ReturnCards();
-  wallet.payments = Execute.ReturnPayments();
-  wallet.flowClosed = Execute.ReturnFlowClosed();
-
-  parameters.push(wallet);
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {        
+try{
+    debugger;
+    var Wallet = {};
+    Wallet.Cards = Execute.ReturnCards();
+    Wallet.Payments = Execute.ReturnPayments();
+    Wallet.FlowClosed = Execute.ReturnFlowClosed();
   
-  console.log(wallet);
-
-  sendResponse(JSON.stringify(parameters));
+    console.log(Wallet);
+  
+    sendResponse(JSON.stringify(Wallet));
+}catch(error){
+    alert("Ocorreu um erro ao tentar sincronizar os dados, por favor cheque o log.")
+    console.log(error);
+}  
 });

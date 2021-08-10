@@ -16,13 +16,13 @@ namespace Apply.Library
         public Usuario UsuarioNavigation { get; set; }
 
         public int CodPayment { get; set; }
-        public Payment PaymentNavigation { get; set; }
+        public List<Payment> PaymentNavigation { get; set; }
 
         public int CodCards { get; set; }
-        public Cards CardsNavigation { get; set; }
+        public List<Cards> CardsNavigation { get; set; }
 
         public int CodFlowClosed { get; set; }
-        public FlowClosed FlowClosedNavigation { get; set; }
+        public List<FlowClosed> FlowClosedNavigation { get; set; }
 
     }
 }

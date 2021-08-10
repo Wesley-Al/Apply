@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Core",
-    "\\Core\\Apply.Core",
-    "\\Core\\Apply.Core\\Apply.Library"
+    ""
   ],
-  "SelectedNode": "\\Core\\Apply.Core\\Apply.Library\\Cards.cs",
+  "SelectedNode": "\\Apply.Core.sln",
   "PreviewInSolutionExplorer": false
 }

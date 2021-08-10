@@ -12,31 +12,45 @@ function sendMessage(message = true){
         function - resposta da requisição
     */
     chrome.tabs.query({active: true, currentWindow: true}, (tabs)=>{        
-        chrome.tabs.sendMessage(tabs[0].id, JSON.stringify(message), (response)=>{    
-            debugger;
-                    
-            console.log(response);
-        });
+        try{
+            chrome.tabs.sendMessage(tabs[0].id, JSON.stringify(message), (response)=>{    
+                                    
+                if(response != undefined){
+                    Http.PostWallet(JSON.parse(response));                 
+                }else{
+                    console.log("error");
+                }
+            });
+        }catch(error){
+            console.log(error);
+        }        
     });
 }
 
 var Http = {
-    PostWallet: () => {
+    PostWallet: (Wallet) => {
+        
         var http = new XMLHttpRequest();
 
-        http.open('POST', 'localhost:1024/api/PostWallet');
+        http.open('POST', 'https://localhost:44395/API/Syncronize/Post');
+        http.responseType = 'json';
+
+        http.setRequestHeader('Content-Type', 'application/json');
         http.onload = (xhr, response, obj) =>{
-            debugger;
+            
         }
 
         http.response = (xhr, response, obj) => {
-            debugger;
+            
+        }
+        http.onerror = (xhr, response, obj) =>{
+            
+            console.log(xhr);
         }
 
-        http.send();
-        http.onerror = (xhr, response, obj) =>{
-            alert('Erro');
-        }
+        http.send(JSON.stringify(Wallet));
+        //http.upload();
+        
 
     }
 }

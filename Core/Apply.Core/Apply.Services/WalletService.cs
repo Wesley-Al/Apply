@@ -6,30 +6,27 @@ using System.Threading.Tasks;
 
 namespace Apply.Services
 {
-    class WalletService : IWalletService
+    public class WalletService : IWalletService
     {
-        Context Context { get; set; }
-        
-        public bool InsertWallet(Wallet wallet)
-        {
-            if (wallet != null)
-            {
-                Context.Wallet.Add(wallet);
+        private Context Context { get; set; }
 
-                Context.SaveChanges();
-                return true;
-            }
-            
-            return false;
+        public WalletService()
+        {
+            this.Context = new Context();
         }
 
-        public bool InsertData(Wallet wallet)
+        public async Task<bool> InsertData(WalletParameters wallet)
         {
             if (wallet != null)
             {
-                Context.Wallet.Add(wallet);
+                Context.Wallet.Add(new Wallet
+                {
+                    CardsNavigation = wallet.Cards,
+                    FlowClosedNavigation = wallet.FlowClosed,
+                    PaymentNavigation = wallet.Payments
+                });
 
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
                 return true;
             }
 

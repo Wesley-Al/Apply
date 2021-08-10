@@ -22,13 +22,19 @@ namespace Apply.Core
         }
 
         public IConfiguration Configuration { get; }
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddDbContext<Context>();
-        }        
+            services.AddScoped<Context, Context>();
+            services.AddControllers();
+
+            /*       services.AddDbContext<Context>(x => x.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //Toda vez que uma controller for instanciada, ele ira identificar se a interface em AddScoped esta sendo utilizada, e ira passar a classe
+            services.AddScoped<IRepository, Repository>();   */
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,6 +43,8 @@ namespace Apply.Core
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseHttpsRedirection();
 

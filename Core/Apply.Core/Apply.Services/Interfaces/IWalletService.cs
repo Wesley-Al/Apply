@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Apply.Services
 {
-    interface IWalletService
+    public interface IWalletService
     {
-        bool InsertWallet(Wallet wallet);
-        bool InsertData(Wallet wallet);
+        Task<bool> InsertData(WalletParameters wallet);
     }
 }
