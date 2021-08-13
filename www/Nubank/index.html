@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/Library/scripts/script.padrao.js"></script>
+    <script src="index.js"></script>
+    <script src="/Library/class/class.padrao.js"></script>
+
+    <!--<script src="node_modules/chart.js/dist/chart.js"></script>-->
+
+    <script>
+        var config = {};        
+        
+
+        document.addEventListener('DOMContentLoaded', () => {            
+            var chartData = ChartData;
+            
+            chartData.labels = ['Empty', 'Empty1', 'Empty2'];
+            chartData.datasets = [{
+                label: 'Teste',
+                data: [0, 58, 98],
+                backgroundColor: `rgb(${colorPrymary5Rgb})`,
+                borderWidth: 2,
+                borderColor: `rgb(${colorPrymary5Rgb})`,
+
+            }];
+
+            Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
+                                "grafico");
+        });
+    </script>
+
+    <link rel="stylesheet" href="/Library/css/style.padrao.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>    
+    <div class="container">
+        <h1>Estatisticas</h1>
+        <canvas id="grafico"></canvas>
+    </div>
+</body>
+</html>

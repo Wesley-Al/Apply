@@ -1,0 +1,24 @@
+/*criar variaveis*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+:root{
+    --colorPrymary1: #02DDE8;
+    --colorPrymary2: #0297F2; 
+    --colorPrymary3: #0944DB; 
+    --colorPrymary4: #0F02F2; 
+    --colorPrymary5: #5D00EB; 
+}
+
+body{
+    font-family: 'Montserrat', sans-serif !important;
+    color: var(--colorPrymary2)
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    background-color: rgba(180, 180, 180, 0.20);
+    border-radius: 10px;
+}

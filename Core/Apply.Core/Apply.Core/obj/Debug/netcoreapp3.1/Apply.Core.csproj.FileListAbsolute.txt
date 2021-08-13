@@ -68,3 +68,4 @@ D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\Apply.Services.d
 D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\Apply.Services.pdb
 D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\Humanizer.dll
 D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Debug\netcoreapp3.1\web.config
