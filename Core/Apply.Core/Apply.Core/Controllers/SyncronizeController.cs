@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Apply.Services;
+using System.Collections;
 
 namespace Apply.Core.Controllers
 {
@@ -37,9 +38,30 @@ namespace Apply.Core.Controllers
         }
 
         [HttpGet("Get")]
-        public IActionResult Get()
+        public IActionResult Get(/*long codBank, long codWallet*/)
         {
-            return Ok();
+            Retorno<WalletParameters> retorno = new Retorno<WalletParameters>();
+            long codBank = 1, codWallet = 3;
+            try
+            {
+                retorno.Success = true;
+                retorno.Objeto = iWalletSVC.Get(codBank = 1, codWallet = 3);
+
+                return Ok(retorno);
+            }
+            catch (Exception error)
+            {
+                retorno.Success = false;
+                retorno.Objeto = null;
+                retorno.ErroMsg = error.Message;
+
+                return Ok(retorno);
+            }
         }
+    }
+
+    public enum Bank
+    {        
+        Nubank
     }
 }

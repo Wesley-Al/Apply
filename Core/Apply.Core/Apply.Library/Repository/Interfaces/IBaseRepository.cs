@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Apply.Library.Repository
+namespace Apply.Library
 {
     interface IBaseRepository
     {

@@ -19,6 +19,21 @@ namespace Apply.Core.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Apply.Library.Bank", b =>
+                {
+                    b.Property<long>("CodBank")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NameBank")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CodBank");
+
+                    b.ToTable("Banks");
+                });
+
             modelBuilder.Entity("Apply.Library.Cards", b =>
                 {
                     b.Property<long?>("CodCard")
@@ -28,6 +43,12 @@ namespace Apply.Core.Migrations
 
                     b.Property<string>("Amount")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("BankNavigationCodBank")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CodBank")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("CodWallet")
                         .HasColumnType("bigint");
@@ -47,12 +68,14 @@ namespace Apply.Core.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("WalletCodWallet")
+                    b.Property<long?>("WalletNavigationCodWallet")
                         .HasColumnType("bigint");
 
                     b.HasKey("CodCard");
 
-                    b.HasIndex("WalletCodWallet");
+                    b.HasIndex("BankNavigationCodBank");
+
+                    b.HasIndex("WalletNavigationCodWallet");
 
                     b.ToTable("Card");
                 });
@@ -66,6 +89,12 @@ namespace Apply.Core.Migrations
 
                     b.Property<string>("Amount")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("BankNavigationCodBank")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CodBank")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("CodWallet")
                         .HasColumnType("bigint");
@@ -82,12 +111,14 @@ namespace Apply.Core.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("WalletCodWallet")
+                    b.Property<long?>("WalletNavigationCodWallet")
                         .HasColumnType("bigint");
 
                     b.HasKey("CodFlowClosed");
 
-                    b.HasIndex("WalletCodWallet");
+                    b.HasIndex("BankNavigationCodBank");
+
+                    b.HasIndex("WalletNavigationCodWallet");
 
                     b.ToTable("FlowClosed");
                 });
@@ -102,6 +133,12 @@ namespace Apply.Core.Migrations
                     b.Property<string>("Amount")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("BankNavigationCodBank")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CodBank")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("CodWallet")
                         .HasColumnType("bigint");
 
@@ -114,12 +151,14 @@ namespace Apply.Core.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("WalletCodWallet")
+                    b.Property<long?>("WalletNavigationCodWallet")
                         .HasColumnType("bigint");
 
                     b.HasKey("CodPayment");
 
-                    b.HasIndex("WalletCodWallet");
+                    b.HasIndex("BankNavigationCodBank");
+
+                    b.HasIndex("WalletNavigationCodWallet");
 
                     b.ToTable("Payment");
                 });
@@ -131,13 +170,21 @@ namespace Apply.Core.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("CodWallet")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("DtCadastro")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("WalletNavigationCodWallet")
+                        .HasColumnType("bigint");
+
                     b.HasKey("CodUsuario");
+
+                    b.HasIndex("WalletNavigationCodWallet");
 
                     b.ToTable("Usuario");
                 });
@@ -148,6 +195,12 @@ namespace Apply.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("BankNavigationCodBank")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CodBank")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("CodCards")
                         .HasColumnType("int");
@@ -164,44 +217,74 @@ namespace Apply.Core.Migrations
                     b.Property<DateTime>("DtCadastro")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("UsuarioNavigationCodUsuario")
-                        .HasColumnType("bigint");
-
                     b.HasKey("CodWallet");
 
-                    b.HasIndex("UsuarioNavigationCodUsuario");
+                    b.HasIndex("BankNavigationCodBank");
 
                     b.ToTable("Wallet");
                 });
 
             modelBuilder.Entity("Apply.Library.Cards", b =>
                 {
-                    b.HasOne("Apply.Library.Wallet", null)
+                    b.HasOne("Apply.Library.Bank", "BankNavigation")
+                        .WithMany()
+                        .HasForeignKey("BankNavigationCodBank");
+
+                    b.HasOne("Apply.Library.Wallet", "WalletNavigation")
                         .WithMany("CardsNavigation")
-                        .HasForeignKey("WalletCodWallet");
+                        .HasForeignKey("WalletNavigationCodWallet");
+
+                    b.Navigation("BankNavigation");
+
+                    b.Navigation("WalletNavigation");
                 });
 
             modelBuilder.Entity("Apply.Library.FlowClosed", b =>
                 {
-                    b.HasOne("Apply.Library.Wallet", null)
+                    b.HasOne("Apply.Library.Bank", "BankNavigation")
+                        .WithMany()
+                        .HasForeignKey("BankNavigationCodBank");
+
+                    b.HasOne("Apply.Library.Wallet", "WalletNavigation")
                         .WithMany("FlowClosedNavigation")
-                        .HasForeignKey("WalletCodWallet");
+                        .HasForeignKey("WalletNavigationCodWallet");
+
+                    b.Navigation("BankNavigation");
+
+                    b.Navigation("WalletNavigation");
                 });
 
             modelBuilder.Entity("Apply.Library.Payment", b =>
                 {
-                    b.HasOne("Apply.Library.Wallet", null)
+                    b.HasOne("Apply.Library.Bank", "BankNavigation")
+                        .WithMany()
+                        .HasForeignKey("BankNavigationCodBank");
+
+                    b.HasOne("Apply.Library.Wallet", "WalletNavigation")
                         .WithMany("PaymentNavigation")
-                        .HasForeignKey("WalletCodWallet");
+                        .HasForeignKey("WalletNavigationCodWallet");
+
+                    b.Navigation("BankNavigation");
+
+                    b.Navigation("WalletNavigation");
+                });
+
+            modelBuilder.Entity("Apply.Library.Usuario", b =>
+                {
+                    b.HasOne("Apply.Library.Wallet", "WalletNavigation")
+                        .WithMany()
+                        .HasForeignKey("WalletNavigationCodWallet");
+
+                    b.Navigation("WalletNavigation");
                 });
 
             modelBuilder.Entity("Apply.Library.Wallet", b =>
                 {
-                    b.HasOne("Apply.Library.Usuario", "UsuarioNavigation")
+                    b.HasOne("Apply.Library.Bank", "BankNavigation")
                         .WithMany()
-                        .HasForeignKey("UsuarioNavigationCodUsuario");
+                        .HasForeignKey("BankNavigationCodBank");
 
-                    b.Navigation("UsuarioNavigation");
+                    b.Navigation("BankNavigation");
                 });
 
             modelBuilder.Entity("Apply.Library.Wallet", b =>
