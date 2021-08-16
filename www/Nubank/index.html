@@ -14,16 +14,52 @@
     <!--<script src="node_modules/chart.js/dist/chart.js"></script>-->
 
     <script>
-        var config = {};        
-        
+        var config = {};                
 
-        document.addEventListener('DOMContentLoaded', () => {            
+        var CarregaDados = async () => {
+            return new Promise((resolve) => {
+
+                var options = AjaxOptions;
+
+                options.url = 'https://localhost:44315/API/Syncronize/GET';
+                options.onload = (xhr, obj) => {
+                    
+                    if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
+                        if (xhr.currentTarget.response.success == false) {
+                            alert(`Ocorreu um erro: ${xhr.currentTarget.response.erroMsg}`);
+                            resolve(null);
+                        }
+
+                        var Wallet = xhr.currentTarget.response.objeto;
+
+                        resolve(Wallet);
+                    } else {
+                        alert("Nenhuma carteira foi encontrada");
+                    }                    
+                }
+
+                Ajax(options);
+            });            
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            debugger;
+            var Wallet = await CarregaDados();
+
             var chartData = ChartData;
-            
-            chartData.labels = ['Empty', 'Empty1', 'Empty2'];
+
+            var dataSet = new Array;
+            var label = new Array;
+
+            for (var i = 0; i < Wallet.cards.length; i++) {
+                dataSet.push(parseFloat(Wallet.cards[i].amount.replaceAll("R$", "").replaceAll(",", ".")));
+                label.push(Wallet.cards[i].timeString);
+            }
+
+            chartData.labels = label;
             chartData.datasets = [{
-                label: 'Teste',
-                data: [0, 58, 98],
+                label: "Cards",
+                data: dataSet,
                 backgroundColor: `rgb(${colorPrymary5Rgb})`,
                 borderWidth: 2,
                 borderColor: `rgb(${colorPrymary5Rgb})`,

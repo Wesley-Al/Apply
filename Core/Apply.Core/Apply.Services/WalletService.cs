@@ -43,8 +43,9 @@ namespace Apply.Services
                     item.BankNavigation = bank;
                 }
 
-                Context.Wallet.Add(new Wallet
+                Context.Wallet.Update(new Wallet
                 {
+                    CodWallet = 3,
                     CardsNavigation = wallet.Cards,
                     FlowClosedNavigation = wallet.FlowClosed,
                     PaymentNavigation = wallet.Payments,

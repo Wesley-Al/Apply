@@ -8,3 +8,16 @@ const ChartData = {
         data: [0]
     }]
 }
+
+const AjaxOptions = {
+    method: 'GET',
+    url: null,
+    onload: (xhr, response, obj) => { console.log(xhr); },
+    onerror: (xhr, response, obj) => { console.log(xhr); },
+    data: null,
+    responseType: 'json',
+    setRequestHeader: {
+        name: 'Content-Type',
+        value: 'application/json'
+    }
+}

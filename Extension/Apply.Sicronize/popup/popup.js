@@ -32,7 +32,7 @@ var Http = {
         
         var http = new XMLHttpRequest();
 
-        http.open('POST', 'https://localhost:44395/API/Syncronize/Post');
+        http.open('POST', 'https://localhost:44315/API/Syncronize/Post');
         http.responseType = 'json';
 
         http.setRequestHeader('Content-Type', 'application/json');

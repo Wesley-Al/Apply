@@ -68,3 +68,4 @@ D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.cspro
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.dll
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.pdb
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.genruntimeconfig.cache
+D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Debug\netcoreapp3.1\Apply.Core.csproj.AssemblyReference.cache
