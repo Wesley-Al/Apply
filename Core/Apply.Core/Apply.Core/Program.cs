@@ -21,8 +21,7 @@ namespace Apply.Core
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseIISIntegration();
-                    
+                    .UseIISIntegration();                                     
                 });
     }
 }
