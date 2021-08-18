@@ -21,7 +21,8 @@
 
                 var options = AjaxOptions;
 
-                options.url = 'https://localhost:44315/API/Syncronize/GET';
+                //options.url = 'https://localhost:44315/Syncronize/GET';
+                options.url = 'http://apply.client/api/Syncronize/Get';
                 options.onload = (xhr, obj) => {
                     
                     if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {

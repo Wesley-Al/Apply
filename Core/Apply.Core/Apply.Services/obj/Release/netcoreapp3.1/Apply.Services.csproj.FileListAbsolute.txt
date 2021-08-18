@@ -10,3 +10,4 @@ D:\git\Apply\Core\Apply.Core\Apply.Services\obj\Release\netcoreapp3.1\Apply.Serv
 D:\git\Apply\Core\Apply.Core\Apply.Services\obj\Release\netcoreapp3.1\Apply.Services.csproj.CopyComplete
 D:\git\Apply\Core\Apply.Core\Apply.Services\obj\Release\netcoreapp3.1\Apply.Services.dll
 D:\git\Apply\Core\Apply.Core\Apply.Services\obj\Release\netcoreapp3.1\Apply.Services.pdb
+D:\git\Apply\Core\Apply.Core\Apply.Services\obj\Release\netcoreapp3.1\Apply.Services.GeneratedMSBuildEditorConfig.editorconfig

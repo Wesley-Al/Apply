@@ -68,3 +68,5 @@ D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Release\netcoreapp3.1\Apply.Core.csp
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Release\netcoreapp3.1\Apply.Core.dll
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Release\netcoreapp3.1\Apply.Core.pdb
 D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Release\netcoreapp3.1\Apply.Core.genruntimeconfig.cache
+D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Release\netcoreapp3.1\Apply.Core.csproj.AssemblyReference.cache
+D:\git\Apply\Core\Apply.Core\Apply.Core\obj\Release\netcoreapp3.1\Apply.Core.GeneratedMSBuildEditorConfig.editorconfig

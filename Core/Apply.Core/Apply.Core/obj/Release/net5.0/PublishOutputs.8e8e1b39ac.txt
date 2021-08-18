@@ -1,0 +1,11 @@
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Apply.Core.exe
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\appsettings.Development.json
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\appsettings.json
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Apply.Core.dll
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Apply.Core.deps.json
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Apply.Core.runtimeconfig.json
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Apply.Core.pdb
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Microsoft.OpenApi.dll
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Swashbuckle.AspNetCore.Swagger.dll
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\git\Apply\Core\Apply.Core\Apply.Core\bin\Release\net5.0\publish\Swashbuckle.AspNetCore.SwaggerUI.dll

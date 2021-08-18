@@ -10,3 +10,4 @@ D:\git\Apply\Core\Apply.Core\Apply.Library\obj\Debug\netcoreapp3.1\Apply.Library
 D:\git\Apply\Core\Apply.Core\Apply.Library\bin\Debug\netcoreapp3.1\Apply.Library.runtimeconfig.json
 D:\git\Apply\Core\Apply.Core\Apply.Library\bin\Debug\netcoreapp3.1\Apply.Library.runtimeconfig.dev.json
 D:\git\Apply\Core\Apply.Core\Apply.Library\obj\Debug\netcoreapp3.1\Apply.Library.genruntimeconfig.cache
+D:\git\Apply\Core\Apply.Core\Apply.Library\obj\Debug\netcoreapp3.1\Apply.Library.GeneratedMSBuildEditorConfig.editorconfig
