@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apply.Services", "Apply.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apply", "Apply\Apply.csproj", "{BBAAA4C4-9E4E-4691-9A5F-197134A3E8F6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2F392BC-E801-44C5-A349-A3DA1F6D1CBE}"
+	ProjectSection(SolutionItems) = preProject
+		publish.txt = publish.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
