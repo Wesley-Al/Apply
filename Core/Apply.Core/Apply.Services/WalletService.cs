@@ -25,7 +25,7 @@ namespace Apply.Services
 
                 Bank bank = Context.Banks.Where(x => x.CodBank == wallet.CodBank).FirstOrDefault();
 
-                foreach (var  item in wallet.Cards)
+                foreach (var item in wallet.Cards)
                 {
                     item.CodBank = 1;
                     item.BankNavigation = bank;
@@ -50,7 +50,7 @@ namespace Apply.Services
                     FlowClosedNavigation = wallet.FlowClosed,
                     PaymentNavigation = wallet.Payments,
                     BankNavigation = bank
-            });
+                });
 
                 await Context.SaveChangesAsync();
                 return true;
@@ -59,20 +59,41 @@ namespace Apply.Services
             return false;
         }
 
-        public WalletParameters Get(long codBank, long codWallet)        {
+        public WalletParameters Get(long codBank, long codWallet)
+        {
 
             try
             {
-                WalletParameters wallet = new WalletParameters
+                WalletParameters parameters = new WalletParameters();
+                parameters.TimeString = new List<string>();
+                parameters.Cards = new List<Cards>();
+
+                var wallet = new
                 {
                     Payments = Context.Payment.Where(x => x.BankNavigation.CodBank == codBank && x.WalletNavigation.CodWallet == codWallet).ToList(),
-                    Cards = Context.Card.Where(x => x.BankNavigation.CodBank == codBank && x.WalletNavigation.CodWallet == codWallet).ToList(),
+                    Cards = Context.Card.Where(x => x.BankNavigation.CodBank == codBank && x.WalletNavigation.CodWallet == codWallet)
+                        .ToList().GroupBy(x => new { x.TimeString }),
                     FlowClosed = Context.FlowClosed.Where(x => x.BankNavigation.CodBank == codBank && x.WalletNavigation.CodWallet == codWallet).ToList()
                 };
 
-                return wallet;
+                foreach (var item in wallet.Cards)
+                {
+                    parameters.TimeString.Add(item.Key.TimeString);
+
+                    foreach (var card in item.ToList())
+                    {
+                        parameters.Cards.Add(card);
+                    }
+                }
+
+                parameters.Payments = wallet.Payments;
+                
+                parameters.FlowClosed = wallet.FlowClosed;
+
+
+                return parameters;
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 throw error;
             }

@@ -8,10 +8,9 @@
 
     <script src="/Library/js/core/coreIncrement.js?" type='text/javascript'></script>
     <script src="/Library/js/core/core.js?" type='text/javascript'></script>
-    <script src="index.js"></script>        
 
-    <script>
-        var config = {};                
+    <script type='text/javascript'>
+        var config = {};
 
         var CarregaDados = async () => {
             return new Promise((resolve) => {
@@ -21,7 +20,7 @@
                 //options.url = 'https://localhost:44315/Syncronize/GET';
                 options.url = 'http://apply.client/api/Syncronize/Get';
                 options.onload = (xhr, obj) => {
-                    
+
                     if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
                         if (xhr.currentTarget.response.success == false) {
                             alert(`Ocorreu um erro: ${xhr.currentTarget.response.erroMsg}`);
@@ -33,75 +32,170 @@
                         resolve(Wallet);
                     } else {
                         alert("Nenhuma carteira foi encontrada");
-                    }                    
+                    }
                 }
 
                 Ajax(options);
-            });            
+            });
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            debugger;
-            var Wallet = await CarregaDados();
+        var ImplementList = {
+            Cards: (index, codCard, amount, timeString, title, description, codBank, codWallet) => {
+                try {                                                       
+                    var card = Scripts.Elements.Create('li', null, null,
+                        null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start']);
 
-            var chartData = ChartData;
+                    card.dataset['cod'] = codCard;
 
-            var dataSet = new Array;
-            var label = new Array;
+                    var cabecalho = Scripts.Elements.Create('div', null, null,
+                        null, null, ['ms-2', 'me-auto']);
 
-            for (var i = 0; i < Wallet.cards.length; i++) {
-                dataSet.push(parseFloat(Wallet.cards[i].amount.replaceAll("R$", "").replaceAll(",", ".")));
-                label.push(Wallet.cards[i].timeString);
+                    cabecalho.innerText = `${description} - ${amount}} `;
+
+                    var titulo = Scripts.Elements.Create('div', null, null,
+                        'fw-bold', null);
+
+                    titulo.innerText = title;
+
+                    var spanIndex = Scripts.Elements.Create('span', 'listCard', null,
+                        null, null, ['badge', 'bg-primary', 'rounded-pill']);
+
+                    spanIndex.innerText = index;
+
+                    var spanTime = Scripts.Elements.Create('span', 'listCard', null,
+                        null, null, ['badge', 'bg-primary', 'rounded-pill']);
+
+                    spanTime.innerText = timeString;
+
+
+                    cabecalho.appendChild(titulo);
+                    cabecalho.appendChild(spanIndex);
+                    cabecalho.appendChild(spanTime);
+
+                    card.appendChild(cabecalho);                   
+
+                    return card;
+
+                } catch (error) {
+                    console.log(error);
+                }
             }
+        }
 
-            chartData.labels = label;
-            chartData.datasets = [{
-                label: "Cards",
-                data: dataSet,
-                backgroundColor: `rgb(${colorPrymary5Rgb})`,
-                borderWidth: 2,
-                borderColor: `rgb(${colorPrymary5Rgb})`,
+        document.addEventListener('DOMContentLoaded', async () => {            
+            try {
+                var Wallet = await CarregaDados();
 
-            }];
+                var chartData = ChartData;
 
-            Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
-                                "grafico");
+                var data = new Array;
+                var dataSet = new Array;
+                var label = new Array;
+
+                var ol = Scripts.Elements.Create('ol', 'listCard', null, null, 'padding-top: 9% !important; height: 11% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
+
+                var configTime = new Array();                
+
+                for (var i = 0; i < Wallet.cards.length; i++) {
+                    ol.appendChild(ImplementList.Cards(i + 1, Wallet.cards[i].codCard, Wallet.cards[i].amount,
+                        Wallet.cards[i].timeString, Wallet.cards[i].description));
+                }
+
+                for (i = 0; i < Wallet.timeString.length; i++) {
+                    configTime.push([Wallet.timeString[i], `rgb(${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)})`]);
+                    
+                    var result = Wallet.cards.find(x => x.timeString == Wallet.timeString[i]);                    
+
+                    if (Array.isArray(result)) {
+                        var total = 0;
+                        for (o = 0; o < result.length; o++) {
+                            total += parseFloat(Wallet.cards[i].amount.replaceAll("R$", "").replaceAll(",", "."));
+                        }
+
+                        data.push(total);
+
+                    } else if (result != null) {
+                        data.push(parseFloat(result.amount.replaceAll("R$", "").replaceAll(",", ".")));
+                    }
+
+                    dataSet.push({
+                        label: Wallet.timeString[i],
+                        data: data,
+                        backgroundColor: configTime.find(x => x[0] == Wallet.cards[i].timeString)[1],
+                        borderWidth: 2,
+                        borderColor: configTime.find(x => x[0] == Wallet.cards[i].timeString)[1]
+                    });
+
+                    label.push(Wallet.timeString[i]);
+                }
+
+                document.getElementById("listCards").appendChild(ol);
+
+                chartData.labels = label;
+                chartData.datasets = dataSet;
+
+                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
+                    "graficoLine");
+
+                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('doughnut', chartData),
+                    "graficoDoughnut");
+
+                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('bubble', chartData),
+                    "graficoBubble");
+
+                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('bar', chartData),
+                    "graficoBar");
+
+            } catch (error) {
+                console.log(error);
+            }
         });
     </script>
 
     <link rel="stylesheet" href="/Library/css/style.padrao.css">
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>    
-    <div class="container">
-        <h1>Estatisticas</h1>
-        <canvas id="grafico"></canvas>
-    </div>
 
-    <div class="container">
-        <ol class="list-group list-group-numbered">
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">Subheading</div>
-                    Cras justo odio
+    <style>
+        .panel {
+            display: flex;
+            justify-content: space-around;
+            align-content: center;
+            text-align: center;
+            padding-top: 4% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="container">
+            <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>
+
+            <div id="carouselExampleInterval" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <canvas id="graficoLine"></canvas>
+                    </div>
+                    <div class="carousel-item">
+                        <canvas id="graficoDoughnut"></canvas>
+                    </div>
+                    <div class="carousel-item">
+                        <canvas id="graficoBubble"></canvas>
+                    </div>
+                    <div class="carousel-item">
+                        <canvas id="graficoBar"></canvas>
+                    </div>
                 </div>
-                <span class="badge bg-primary rounded-pill">14</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">Subheading</div>
-                    Cras justo odio
-                </div>
-                <span class="badge bg-primary rounded-pill">14</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">Subheading</div>
-                    Cras justo odio
-                </div>
-                <span class="badge bg-primary rounded-pill">14</span>
-            </li>
-        </ol>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>        
+
+        <div id="listCards" class="container"></div>
     </div>
 </body>
 </html>

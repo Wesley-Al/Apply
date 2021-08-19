@@ -14,6 +14,7 @@ namespace Apply.Library
         public List<Cards> Cards { get; set; }
         [FromQuery(Name = "FlowClosed[]")]
         public List<FlowClosed> FlowClosed { get; set; }
+        public List<string> TimeString { get; set; }
         public long CodBank { get; set; }
     }
 }

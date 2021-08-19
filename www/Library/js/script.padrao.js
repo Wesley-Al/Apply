@@ -82,7 +82,10 @@ const Grafico = {
         }
     }
 }
-
+/**
+ * Função responsável pelas requisições para a API.
+ * @param {AjaxOptions} pOptions Objeto contendo a configuração da requisição.
+ */
 const Ajax = (pOptions) => {
     try {
         if (pOptions == undefined || pOptions == null) {
@@ -115,9 +118,9 @@ const Ajax = (pOptions) => {
 
         if (pOptions.data != null && pOptions.data != undefined) {
             var data = options.setRequestHeader.value == 'application/json' ? JSON.stringify(options.data) : encodeURI(options.data);
-            
+
             http.send(data);
-        } else{
+        } else {
             http.send();
         }
 
@@ -158,7 +161,54 @@ const API = {
     }
 }
 
+const Elements = {
+    /**
+     * Retorna um elemento configurado por parametro.
+     * @param {any} type Tipo do elemento: div, button, input, label, canvas, p, h1, etc.
+     * @param {any} id
+     * @param {any} name
+     * @param {any} classe
+     * @param {any} style
+     * @param {any} onchange
+     */
+    Create: (type = null, id = '', name = '', classe = null, style = null, classList = null, onchange = null) => {
+        try {
+            if (type == null && type == undefined) {
+                return null;
+            }
+
+            var element = document.createElement(type);
+
+            if (onchange != null, onchange != undefined) {
+                element.addEventListener('change', onchange);
+            }
+
+            if (style != null && style != undefined) {
+                element.style = style;
+            }
+
+            element.id = id;
+
+            if (classList != null && Array.isArray(classList)) {
+                for (i = 0; i < classList.length; i++) {
+                    element.classList.add(classList[i]);
+                }
+            } else if (classe != null) {
+                element.classList.add(classe);
+            }
+            
+            element.name = name;
+
+            return element;
+        } catch (error) {
+            debugger;
+            console.log(error);
+        }
+    }
+}
+
 const Scripts = {
     Grafico: Grafico,
-    API: API
+    API: API,
+    Elements: Elements
 }
