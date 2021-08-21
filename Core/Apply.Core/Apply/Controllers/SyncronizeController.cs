@@ -9,10 +9,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Apply.Services;
 using System.Collections;
+using Microsoft.AspNetCore.Cors;
 
 namespace Apply.Controllers
 {
-    [ApiController]
+    [ApiController]    
     [Route("[controller]")]
     public class SyncronizeController : ControllerBase
     {

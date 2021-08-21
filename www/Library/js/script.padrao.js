@@ -1,4 +1,18 @@
-const urlAPI = '/API/';
+/**
+ * Esse script tem dependencia das seguintes bibliotecas:
+ * 
+ * class.padrao.js
+ * style.padrao.js
+ * 
+ * Terceiros:
+ * 
+ *  Bootstrap 5.1 ou superior. 
+ *  ChartJS;.
+ * 
+ * */
+
+const url = new URL(document.URL);
+const urlAPI = `${url.protocol}//${url.host}`;
 
 //Cores primarias
 const colorPrymary1Hex = "#02DDE8";
@@ -85,10 +99,15 @@ const Grafico = {
 /**
  * Função responsável pelas requisições para a API.
  * @param {AjaxOptions} pOptions Objeto contendo a configuração da requisição.
+ * @param {any} asyncRequest Um booleano indicando se a requisição é assincrona, o valor padrão é true
  */
-const Ajax = (pOptions) => {
+const Ajax = (pOptions, asyncRequest = true) => {
     try {
         if (pOptions == undefined || pOptions == null) {
+            return false;
+        }
+
+        if (typeof (asyncRequest) != "boolean") {
             return false;
         }
 
@@ -108,13 +127,16 @@ const Ajax = (pOptions) => {
             options.setRequestHeader.value = pOptions.setRequestHeader.value != undefined && pOptions.setRequestHeader.value != null ? pOptions.setRequestHeader.value : AjaxOptions.setRequestHeader.value;
         }
 
-        http.open(options.method, options.url);
+        http.open(options.method, options.url, asyncRequest);
 
         http.responseType = options.responseType;
 
         http.setRequestHeader(options.setRequestHeader.name, options.setRequestHeader.value);
         http.onload = options.onload;
         http.onerror = options.onerror;
+
+        http.onloadstart = pOptions.onloadstart != undefined && pOptions.onloadstart != null ? pOptions.onloadstart : AjaxOptions.onloadstart;
+        http.onloadend = pOptions.onloadend != undefined && pOptions.onloadend != null ? pOptions.onloadend : AjaxOptions.onloadend;
 
         if (pOptions.data != null && pOptions.data != undefined) {
             var data = options.setRequestHeader.value == 'application/json' ? JSON.stringify(options.data) : encodeURI(options.data);
@@ -196,13 +218,82 @@ const Elements = {
             } else if (classe != null) {
                 element.classList.add(classe);
             }
-            
+
             element.name = name;
 
             return element;
         } catch (error) {
-            debugger;
             console.log(error);
+        }
+    },
+
+    /**
+     * Renderiza um elemento de load na tela
+     * @param {any} type Tipo do load que sera renderizado, o tipo padrão é "Spin" (Spin, Growing)
+     * @param {any} idElement Id do elemento onde o load sera renderizado
+     * @param {any} style Tipo de cor ()
+     */
+    Load: {
+        Create: (type, idElement, strStyle, strSpinnerColor) => {
+            try {
+
+                var span;
+                var div;
+                var spinnerColor = strSpinnerColor == null || strSpinnerColor == undefined ? "var(--colorPrymary5)" : strSpinnerColor;
+                var style = strStyle == null || strStyle == undefined ? `z-index: 999 !important; position: fixed !important; left: 50%;`
+                    + `top: 50% !important; bottom: 0 !important; color: ${spinnerColor} !important;` : strStyle;
+
+                switch (type) {
+                    case "Spin":
+                        div = Elements.Create('div', 'load', null, null, style, ["spinner-border", "text-primary"]);
+                        span = Elements.Create('span', 'loadSpan', "visually-hidden", null);
+
+                        div.appendChild(span);
+
+                        break;
+
+                    case "Growing":
+                        div = Elements.Create('div', 'loadMestre', null, null, style);
+
+                        var divSpinner = Elements.Create('div', 'divGrowing', null, null, `z-index: 150 !important; color: ${spinnerColor} !important;`, ["spinner-grow", "text-primary"]);
+                        span = Elements.Create('span', 'loadGrowing', "visually-hidden", null);
+
+                        divSpinner.appendChild(span);
+                        div.appendChild(divSpinner);
+
+                        break;
+
+                    default:
+                        div = Elements.Create('div', 'load', null, null, style, ["spinner-border", "text-primary"]);
+                        span = Elements.Create('span', 'loadSpan', null, "visually-hidden");
+
+                        div.appendChild(span);
+
+                        break;
+                }
+
+                if (idElement == null || idElement == undefined) {
+                    document.body.appendChild(div);
+
+                } else {
+                    document.getElementById(idElement).appendChild(div);
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        LoadRemove: (load) => {
+
+            try {
+                if (load == null || load == undefined) {
+                    alert("O Load não pode ser nulo");
+                    return
+                }
+                document.getElementById(load).remove();
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 }
@@ -211,4 +302,10 @@ const Scripts = {
     Grafico: Grafico,
     API: API,
     Elements: Elements
+}
+
+//Métodos nativos reescritos
+
+Number.prototype.toLocaleBR = (number) => {
+    return number.toLocaleString('pt-BR', { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' });
 }

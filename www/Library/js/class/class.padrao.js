@@ -1,3 +1,10 @@
+/**
+ * Esse script tem dependencia das seguintes bibliotecas:
+ *
+ * script.padrao.js
+ *
+ * */
+
 const ChartData = {
     labels: [],
     datasets: [{
@@ -12,8 +19,10 @@ const ChartData = {
 const AjaxOptions = {
     method: 'GET',
     url: null,
+    onloadstart: (xhr, response, obj) => {  Scripts.Elements.Load.Create("Spin"); },
+    onloadend: (xhr, response, obj) => { Scripts.Elements.Load.LoadRemove('load'); },
     onload: (xhr, response, obj) => { console.log(xhr); },
-    onerror: (xhr, response, obj) => { console.log(xhr); },
+    onerror: (xhr, response, obj) => { Scripts.Elements.Load.LoadRemove('load'); console.log(xhr); },
     data: null,
     responseType: 'json',
     setRequestHeader: {

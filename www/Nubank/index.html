@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-Br">
+<html lang="pt-Br" style=" height: 100%; width: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,9 +16,8 @@
             return new Promise((resolve) => {
 
                 var options = AjaxOptions;
+                options.url = `${urlAPI}/api/Syncronize/Get`;
 
-                //options.url = 'https://localhost:44315/Syncronize/GET';
-                options.url = 'http://apply.client/api/Syncronize/Get';
                 options.onload = (xhr, obj) => {
 
                     if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
@@ -41,38 +40,39 @@
 
         var ImplementList = {
             Cards: (index, codCard, amount, timeString, title, description, codBank, codWallet) => {
-                try {                                                       
+                try {
                     var card = Scripts.Elements.Create('li', null, null,
-                        null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start']);
+                        null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'cards']);
 
                     card.dataset['cod'] = codCard;
 
                     var cabecalho = Scripts.Elements.Create('div', null, null,
-                        null, null, ['ms-2', 'me-auto']);
+                        null, 'width: 100%;', ['ms-2', 'me-auto']);
 
-                    cabecalho.innerText = `${description} - ${amount}} `;
+                    cabecalho.innerText = `${description} - ${amount}`;
 
                     var titulo = Scripts.Elements.Create('div', null, null,
                         'fw-bold', null);
 
-                    titulo.innerText = title;
+                    //titulo.innerText = title;
 
-                    var spanIndex = Scripts.Elements.Create('span', 'listCard', null,
-                        null, null, ['badge', 'bg-primary', 'rounded-pill']);
+                    //var spanIndex = Scripts.Elements.Create('span', 'listCard', null,
+                    //    null, null, ['badge', 'bg-primary', 'rounded-pill']);
 
-                    spanIndex.innerText = index;
+                    //spanIndex.innerText = index;
 
                     var spanTime = Scripts.Elements.Create('span', 'listCard', null,
-                        null, null, ['badge', 'bg-primary', 'rounded-pill']);
+                        null, null, ['badge', 'bg-primary', 'rounded-pill', 'spanTime']);
 
                     spanTime.innerText = timeString;
 
 
                     cabecalho.appendChild(titulo);
-                    cabecalho.appendChild(spanIndex);
-                    cabecalho.appendChild(spanTime);
+                    //cabecalho.appendChild(spanIndex);
 
-                    card.appendChild(cabecalho);                   
+                    card.appendChild(cabecalho);
+
+                    card.appendChild(spanTime);
 
                     return card;
 
@@ -82,7 +82,7 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {            
+        var ImplementGrafico = async () => {
             try {
                 var Wallet = await CarregaDados();
 
@@ -91,20 +91,23 @@
                 var data = new Array;
                 var dataSet = new Array;
                 var label = new Array;
+                var totalizador = 0;
 
-                var ol = Scripts.Elements.Create('ol', 'listCard', null, null, 'padding-top: 9% !important; height: 11% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
+                var ol = Scripts.Elements.Create('ol', 'listCard', null, null, 'padding-top: 9% !important; height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
 
-                var configTime = new Array();                
+                var configTime = new Array();
 
                 for (var i = 0; i < Wallet.cards.length; i++) {
                     ol.appendChild(ImplementList.Cards(i + 1, Wallet.cards[i].codCard, Wallet.cards[i].amount,
-                        Wallet.cards[i].timeString, Wallet.cards[i].description));
+                        Wallet.cards[i].timeString, Wallet.cards[i].title, Wallet.cards[i].description));
+
+                    totalizador += parseFloat(Wallet.cards[i].amount.replaceAll("R$", "").replaceAll(",", "."));
                 }
 
                 for (i = 0; i < Wallet.timeString.length; i++) {
                     configTime.push([Wallet.timeString[i], `rgb(${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)})`]);
-                    
-                    var result = Wallet.cards.find(x => x.timeString == Wallet.timeString[i]);                    
+
+                    var result = Wallet.cards.find(x => x.timeString == Wallet.timeString[i]);
 
                     if (Array.isArray(result)) {
                         var total = 0;
@@ -131,6 +134,17 @@
 
                 document.getElementById("listCards").appendChild(ol);
 
+                var divTotalizador = Scripts.Elements.Create('div', null, null,
+                    null, "display: flex; align-items: center; justify-content: center;", ['totalizador', 'cards']);
+
+                var spanTotalizador = Scripts.Elements.Create('span', null, null,
+                    null);
+
+                spanTotalizador.innerText = `Total: ${totalizador.toLocaleBR(totalizador)}`;
+                divTotalizador.appendChild(spanTotalizador);
+                document.getElementById("listCards").appendChild(divTotalizador);
+
+
                 chartData.labels = label;
                 chartData.datasets = dataSet;
 
@@ -149,6 +163,9 @@
             } catch (error) {
                 console.log(error);
             }
+        }
+        document.addEventListener('DOMContentLoaded', async () => {
+            ImplementGrafico();
         });
     </script>
 
@@ -156,15 +173,51 @@
 
     <style>
         .panel {
+            height: 100%;
             display: flex;
             justify-content: space-around;
             align-content: center;
             text-align: center;
-            padding-top: 4% !important;
+            padding-top: 12% !important;
+        }
+
+        .spanTime {
+            background-color: white !important;
+            color: var(--colorPrymary5) !important;                        
+        }
+
+        .cards {
+            background-color: var(--colorPrymary5) !important;
+            color: white !important;
+            border: 0.5px solid white;
+            border-radius: 10px;
+        }
+
+            .cards:hover .spanTime {
+                background-color: var(--colorPrymary5) !important;
+                color: white !important;
+                font-weight: 600 !important;
+                transition: background-color 0.5s;
+            }
+
+            .cards:hover{
+                background-color: white !important;
+                color: var(--colorPrymary5) !important;
+                font-weight: 600 !important;
+                transition: background-color 0.5s;
+            }
+        
+        .totalizador {
+            width: 100%;
+            height: 60px;
+            background-color: var(--colorPrymary5);
+            border-radius: 10px;
+            margin-top: 21px;
         }
     </style>
 </head>
 <body>
+    <img class="logo" src="img/nubank-logo.png" alt="Logo-Nubank" />
     <div class="panel">
         <div class="container">
             <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>
@@ -193,9 +246,9 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-        </div>        
+        </div>
 
-        <div id="listCards" class="container"></div>
+        <div id="listCards" style="height: 59% !important;" class="container"></div>
     </div>
 </body>
 </html>
