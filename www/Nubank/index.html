@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply</title>
+    <link rel="sortcut icon" href="/favicon.ico" type="image/x-icon" />
 
     <script src="/Library.Front/Library/js/core/coreIncrement.js?" type='text/javascript'></script>
     <script src="/Library.Front/Library/js/core/core.js?" type='text/javascript'></script>
@@ -138,10 +139,10 @@
                     null, "display: flex; align-items: center; justify-content: center;", ['totalizador', 'cards']);
 
                 var spanTotalizador = Scripts.Elements.Create('span', null, null,
-                    null);                
+                    null);
 
                 spanTotalizador.innerText = `Total: ${totalizador.toLocaleBR(totalizador)}`;
-                
+
                 divTotalizador.appendChild(spanTotalizador);
                 divTotalizador.append(Scripts.Elements.Create('i', null, null,
                     null, null, ["fas", "fa-coins"]));
@@ -205,7 +206,7 @@
             opacity: 60%;
         }
 
-            .backMenu:hover {                
+            .backMenu:hover {
                 border-radius: 15px;
                 transform: rotate( -119deg );
                 color: var(--colorPrymary5) !important;
@@ -214,7 +215,7 @@
                 transition: background-color,transform,opacity 0.5s;
                 transition-duration: 0.5s;
                 transition-timing-function: ease-in-out;
-            }           
+            }
 
 
         .spanTime {
@@ -256,7 +257,6 @@
             padding-top: 1%;
             padding-right: 0.4%;
         }
-
     </style>
 </head>
 <body>
