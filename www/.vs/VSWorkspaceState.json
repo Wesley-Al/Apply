@@ -4,8 +4,10 @@
     "\\Library",
     "\\Library\\css",
     "\\Library\\js",
-    "\\Library\\js\\class"
+    "\\Library\\js\\class",
+    "\\Nubank",
+    "\\Nubank\\img"
   ],
-  "SelectedNode": "\\Library\\js\\script.padrao.js",
+  "SelectedNode": "\\Library\\js\\class\\class.padrao.js",
   "PreviewInSolutionExplorer": false
 }
