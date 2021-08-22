@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply</title>
 
-    <script src="/Library/js/core/coreIncrement.js?" type='text/javascript'></script>
-    <script src="/Library/js/core/core.js?" type='text/javascript'></script>
+    <script src="/Library.Front/Library/js/core/coreIncrement.js?" type='text/javascript'></script>
+    <script src="/Library.Front/Library/js/core/core.js?" type='text/javascript'></script>
 
     <script type='text/javascript'>
         var config = {};
@@ -138,10 +138,13 @@
                     null, "display: flex; align-items: center; justify-content: center;", ['totalizador', 'cards']);
 
                 var spanTotalizador = Scripts.Elements.Create('span', null, null,
-                    null);
+                    null);                
 
                 spanTotalizador.innerText = `Total: ${totalizador.toLocaleBR(totalizador)}`;
+                
                 divTotalizador.appendChild(spanTotalizador);
+                divTotalizador.append(Scripts.Elements.Create('i', null, null,
+                    null, null, ["fas", "fa-coins"]));
                 document.getElementById("listCards").appendChild(divTotalizador);
 
 
@@ -169,8 +172,8 @@
         });
     </script>
 
-    <link rel="stylesheet" href="/Library/css/style.padrao.css">
-
+    <link rel="stylesheet" href="/Library.Front/Library/css/style.padrao.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .panel {
             height: 100%;
@@ -181,9 +184,42 @@
             padding-top: 12% !important;
         }
 
+        footer {
+            position: fixed;
+            background-color: var(--colorPrymary5);
+            height: 6%;
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            font-size: 2vh;
+            bottom: 0px;
+        }
+
+        .backMenu {
+            transform: rotate( -139deg );
+            font-size: 4vh;
+            color: var(--colorPrymary5);
+            opacity: 60%;
+        }
+
+            .backMenu:hover {                
+                border-radius: 15px;
+                transform: rotate( -119deg );
+                color: var(--colorPrymary5) !important;
+                opacity: 100%;
+                font-weight: 600 !important;
+                transition: background-color,transform,opacity 0.5s;
+                transition-duration: 0.5s;
+                transition-timing-function: ease-in-out;
+            }           
+
+
         .spanTime {
             background-color: white !important;
-            color: var(--colorPrymary5) !important;                        
+            color: var(--colorPrymary5) !important;
         }
 
         .cards {
@@ -200,13 +236,13 @@
                 transition: background-color 0.5s;
             }
 
-            .cards:hover{
+            .cards:hover {
                 background-color: white !important;
                 color: var(--colorPrymary5) !important;
                 font-weight: 600 !important;
                 transition: background-color 0.5s;
             }
-        
+
         .totalizador {
             width: 100%;
             height: 60px;
@@ -214,10 +250,18 @@
             border-radius: 10px;
             margin-top: 21px;
         }
+
+        .iconFooter {
+            transform: rotate( 261deg );
+            padding-top: 1%;
+            padding-right: 0.4%;
+        }
+
     </style>
 </head>
 <body>
-    <img class="logo" src="img/nubank-logo.png" alt="Logo-Nubank" />
+    <a style=" position: absolute; top: 11%; left: 4%;" href="http://apply.client/"><i class="fas fa-rocket backMenu"></i></a>
+    <a href="https://app.nubank.com.br/#/login" target="_blank"><img class="logo" src="http://apply.client/img/nubank-logo.png" alt="Logo-Nubank" /></a>
     <div class="panel">
         <div class="container">
             <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>
@@ -250,5 +294,6 @@
 
         <div id="listCards" style="height: 59% !important;" class="container"></div>
     </div>
+    <footer><i class="fas fa-meteor iconFooter"></i> Apply 1.1 - COMET INC.</footer>
 </body>
 </html>

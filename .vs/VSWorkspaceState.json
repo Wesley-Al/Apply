@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Extension\\Apply.Sicronize",
+    "\\www",
+    "\\www\\Library.Front",
+    "\\www\\Library.Front\\Library",
+    "\\www\\Library.Front\\Library\\js"
   ],
-  "SelectedNode": "\\Apply.Core.sln",
+  "SelectedNode": "\\www\\Library.Front\\Library\\js\\script.padrao.js",
   "PreviewInSolutionExplorer": false
 }

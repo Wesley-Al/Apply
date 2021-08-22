@@ -2,12 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\Apply.Sicronize",
-    "\\Apply.Sicronize\\front\\www",
-    "\\Apply.Sicronize\\front\\www\\js",
-    "\\Apply.Sicronize\\popup",
-    "\\Apply.Sicronize\\popup\\img",
-    "\\Apply.Sicronize\\scripts"
+    "\\Apply.Sicronize\\popup\\img"
   ],
-  "SelectedNode": "\\Apply.Sicronize\\popup\\popup.html",
   "PreviewInSolutionExplorer": false
 }
