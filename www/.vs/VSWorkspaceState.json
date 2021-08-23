@@ -1,13 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Library",
-    "\\Library\\css",
-    "\\Library\\js",
-    "\\Library\\js\\class",
-    "\\Nubank",
-    "\\Nubank\\img"
+    "\\Security\\Login"
   ],
-  "SelectedNode": "\\Library\\js\\class\\class.padrao.js",
+  "SelectedNode": "\\script.js",
   "PreviewInSolutionExplorer": false
 }

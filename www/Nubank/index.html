@@ -50,6 +50,9 @@
                     var cabecalho = Scripts.Elements.Create('div', null, null,
                         null, 'width: 100%;', ['ms-2', 'me-auto']);
 
+                    cabecalho.appendChild(Scripts.Elements.Create('i', null, null,
+                        null, null, ['fas', 'fa-check-circle']));
+
                     cabecalho.innerText = `${description} - ${amount}`;
 
                     var titulo = Scripts.Elements.Create('div', null, null,
@@ -67,11 +70,9 @@
 
                     spanTime.innerText = timeString;
 
-
+                    cabecalho.appendChild(titulo);
                     cabecalho.appendChild(titulo);
                     //cabecalho.appendChild(spanIndex);
-
-                    card.appendChild(cabecalho);
 
                     card.appendChild(spanTime);
 
@@ -94,7 +95,7 @@
                 var label = new Array;
                 var totalizador = 0;
 
-                var ol = Scripts.Elements.Create('ol', 'listCard', null, null, 'padding-top: 9% !important; height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
+                var ol = Scripts.Elements.Create('ol', 'listCard', null, null, 'height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
 
                 var configTime = new Array();
 
@@ -148,7 +149,6 @@
                     null, null, ["fas", "fa-coins"]));
                 document.getElementById("listCards").appendChild(divTotalizador);
 
-
                 chartData.labels = label;
                 chartData.datasets = dataSet;
 
@@ -176,6 +176,28 @@
     <link rel="stylesheet" href="/Library.Front/Library/css/style.padrao.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        .buttonPanel {
+            background-color: white !important;
+            border: 0;
+            color: var(--colorPrymary5) !important;
+            font-weight: 600 !important;
+            width: 100% !important;
+            transition: background-color 0.5s;
+        }
+
+            .buttonPanel:hover {
+                background-color: var(--colorPrymary5) !important;
+                color: white !important;
+                font-weight: 600 !important;
+                transition: background-color 0.5s;
+            }
+
+            .buttonPanel:disabled {
+                background-color: var(--colorPrymary5) !important;
+                opacity: 50% !important;
+                color: white !important;
+            }
+
         .panel {
             height: 100%;
             display: flex;
@@ -204,6 +226,9 @@
             font-size: 4vh;
             color: var(--colorPrymary5);
             opacity: 60%;
+            transition: background-color,transform,opacity 0.5s;
+            transition-duration: 0.5s;
+            transition-timing-function: ease-in-out;
         }
 
             .backMenu:hover {
@@ -221,6 +246,7 @@
         .spanTime {
             background-color: white !important;
             color: var(--colorPrymary5) !important;
+            transition: background-color 0.5s;
         }
 
         .cards {
@@ -228,6 +254,7 @@
             color: white !important;
             border: 0.5px solid white;
             border-radius: 10px;
+            transition: background-color 0.5s;
         }
 
             .cards:hover .spanTime {
@@ -261,7 +288,7 @@
 </head>
 <body>
     <a style=" position: absolute; top: 11%; left: 4%;" href="http://apply.client/"><i class="fas fa-rocket backMenu"></i></a>
-    <a href="https://app.nubank.com.br/#/login" target="_blank"><img class="logo" src="http://apply.client/img/nubank-logo.png" alt="Logo-Nubank" /></a>
+    <a href="https://app.nubank.com.br/#/login" target="_blank"><img class="logo" src="/img/nubank-logo.png" alt="Logo-Nubank" /></a>
     <div class="panel">
         <div class="container">
             <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>
@@ -292,7 +319,15 @@
             </div>
         </div>
 
-        <div id="listCards" style="height: 59% !important;" class="container"></div>
+        <div id="listCards" style="height: 59% !important;" class="container">
+            <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">
+                <i class="fas fa-check-circle"></i>
+                <i class="far fa-check-circle"></i>
+                <button type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
+                <button type="button" class="btn btn-primary buttonPanel" disabled><i class="fas fa-eraser"></i> Apagar</button>
+                <button type="button" class="btn btn-primary buttonPanel"><i class="fas fa-sync-alt"></i> Atualizar</button>
+            </div>
+        </div>
     </div>
     <footer><i class="fas fa-meteor iconFooter"></i> Apply 1.1 - COMET INC.</footer>
 </body>

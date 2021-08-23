@@ -2,7 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\Apply.Sicronize",
-    "\\Apply.Sicronize\\popup\\img"
+    "\\Apply.Sicronize\\Icons",
+    "\\Apply.Sicronize\\Library.Front\\Library",
+    "\\Apply.Sicronize\\popup",
+    "\\Apply.Sicronize\\popup\\img",
+    "\\Apply.Sicronize\\popup\\Library.Front",
+    "\\Apply.Sicronize\\popup\\Library.Front\\Library"
   ],
+  "SelectedNode": "\\Apply.Sicronize\\popup\\img\\logoComet.PNG",
   "PreviewInSolutionExplorer": false
 }
