@@ -10,8 +10,10 @@ namespace Apply.Library
         [Key]
         public long CodUsuario { get; set; }        
         public DateTime DtCadastro { get; set; }
-        public string Nome { get; set; }
+        public string NomeUsuario { get; set; }        
         public long CodWallet { get; set; }
+        public string UsuarioLogin { get; set; }
+        public string Senha { get; set; }
         public Wallet WalletNavigation { get; set; }
     }
 }

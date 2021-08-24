@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Security\\Login"
+    "\\img",
+    "\\Library.Front",
+    "\\Library.Front\\Library",
+    "\\Library.Front\\Library\\css",
+    "\\Library.Front\\Library\\js",
+    "\\Nubank"
   ],
   "SelectedNode": "\\script.js",
   "PreviewInSolutionExplorer": false

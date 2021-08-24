@@ -17,7 +17,7 @@ namespace Apply.Library
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Password={Programador};Persist Security Info=True;User ID=Wesley;Initial Catalog=ApplyNubank;Data Source=DESKTOP-C3Q3K9Q", b => b.MigrationsAssembly("Apply.Core"));
+            optionsBuilder.UseSqlServer("Password={Programador};Persist Security Info=True;User ID=Wesley;Initial Catalog=Apply;Data Source=DESKTOP-C3Q3K9Q");
         }
     }
 }

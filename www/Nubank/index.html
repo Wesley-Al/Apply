@@ -167,9 +167,12 @@
             } catch (error) {
                 console.log(error);
             }
-        }
+        }        
+
         document.addEventListener('DOMContentLoaded', async () => {
             ImplementGrafico();
+
+            document.getElementById('userName').textContent = `Bem vindo ao seu painel de controle, ${recuperaUserCookie()}`
         });
     </script>
 
@@ -284,11 +287,31 @@
             padding-top: 1%;
             padding-right: 0.4%;
         }
+
+        #logout {
+            top: 2%;
+            right: 5%;
+            position: absolute;
+            color: var(--colorPrymary6);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #userName {
+            top: 2%;
+            left: 5%;
+            position: absolute;
+            color: var(--colorPrymary6);
+            font-weight: 600;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <a style=" position: absolute; top: 11%; left: 4%;" href="http://apply.client/"><i class="fas fa-rocket backMenu"></i></a>
     <a href="https://app.nubank.com.br/#/login" target="_blank"><img class="logo" src="/img/nubank-logo.png" alt="Logo-Nubank" /></a>
+    <label id="userName"></label>
+    <label id="logout" onclick="logOut();">Logout</label>
     <div class="panel">
         <div class="container">
             <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>

@@ -1,3 +1,4 @@
+using Apply.Library;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,9 @@ namespace Apply
                                       builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                                   });
             });
+
+            services.AddDbContext<Context>();
+            services.AddScoped<Context, Context>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
