@@ -6,3 +6,5 @@
 /Core/Apply.Core/Apply/bin
 /Core/Apply.Core/Apply/obj
 /Core/Apply.Core/Apply/Apply.csproj.user
+*.sqlite
+www/.vs/www/v16/.suo
