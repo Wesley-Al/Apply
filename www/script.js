@@ -12,7 +12,9 @@ const Usuario = {
             
             if (response.success == true) {
                 if (response.objeto != null) {
-                    document.cookie = `username=${response.objeto}; path=/;`;
+                    document.cookie = `username=${response.objeto.UsuNome}; path=/;`;
+                    document.cookie = `username=${response.objeto.UsuCod}; path=/;`;
+
                     Scripts.Elements.Message.Success("Efetuando o Login...");
                     Scripts.Elements.Load.Create('Growing', 'messageContent', 'width: 1rem !important; height: 1rem !important;', 'var(--colorPrymary6)');                    
 

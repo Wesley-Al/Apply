@@ -55,17 +55,18 @@ namespace Apply.Controllers
         [HttpPost("Autentication")]
         public IActionResult Autentication([FromBody] Usuario usuario)
         {
-            Retorno<string> retorno = new Retorno<string>
-            {
-                Objeto = "",
+            Retorno<UsuarioParameters> retorno = new Retorno<UsuarioParameters>
+            {               
                 Success = true
             };
 
             try
             {
                 if (iSecuritySVC.AtenticaUsuario(usuario))
-                {                    
-                    retorno.Objeto = iSecuritySVC.GetByUsuLogin(usuario.UsuarioLogin).NomeUsuario;
+                {
+                    Usuario user = iSecuritySVC.GetByUsuLogin(usuario.UsuarioLogin);
+                    retorno.Objeto.UsuNome = user.NomeUsuario;
+                    retorno.Objeto.UsuCod= user.CodUsuario;
                 }
                 else
                 {
