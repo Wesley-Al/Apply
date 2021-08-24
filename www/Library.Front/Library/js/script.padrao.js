@@ -30,7 +30,11 @@ const colorPrymary4Rgb = "15, 2, 242";
 const colorPrymary5Rgb = "93, 0, 235";
 
 document.addEventListener('DOMContentLoaded', () => {
-        
+
+    if (ext) {
+        return;
+    }
+
     var cod = recuperaUserCodCookie();
 
     if (cod == '' || cod == null || cod == undefined) {
@@ -383,7 +387,7 @@ var recuperaUserCodCookie = function () {
     try {
         var cookie = document.cookie.split(';')
         return cookie[1].replaceAll('usercod=', '');
-    } catch () {
+    } catch (error) {
         return null;
     }    
 };
