@@ -1,0 +1,95 @@
+/*criar variaveis*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css');
+
+:root {
+    --colorPrymary1: #02DDE8;
+    --colorPrymary2: #0297F2;
+    --colorPrymary3: #0944DB;
+    --colorPrymary4: #0F02F2;
+    --colorPrymary5: #820AD1;
+    --colorPrymary6: #5D00EB;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif !important;
+    color: var(--colorPrymary2);
+
+    height: 100%;
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    background-color: rgba(180, 180, 180, 0.20);
+    border-radius: 10px;
+}
+
+.logo {
+    width: 10%;
+    left: 48%;
+    position: absolute;
+    top: 8%;
+}
+
+.iconMessage {
+    position: absolute;
+    top: 83%;
+    left: 5%;
+    color: white;
+}
+
+.messageError {
+    width: 10%;
+    height: 10%;
+    background-color: red;
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    border-radius: 9px;
+    font-size: 1.5vh;
+}
+
+.messageSuccess {
+    width: 10%;
+    height: 10%;
+    background-color: green;
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    border-radius: 9px;
+    font-size: 1.5vh;
+}
+
+.messageContent {
+    height: 80%;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    color: var(--colorPrymary6);
+    font-weight: 600;
+    padding-top: 11%;
+}
+
+    .messageContent span {
+        /*white-space: nowrap;*/
+        overflow: hidden;
+        text-overflow: ellipsis;
+        direction: ltr;
+    }
+
+    .messageContent #divGrowing {
+        width: 1rem !important;
+        height: 1rem !important;
+    }
