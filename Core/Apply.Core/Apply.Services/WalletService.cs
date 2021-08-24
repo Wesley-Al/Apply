@@ -10,6 +10,8 @@ namespace Apply.Services
 {
     public class WalletService : IWalletService
     {
+        SecurityService SecuritySVC = new SecurityService();
+
         private Context Context { get; set; }
 
         public WalletService()
@@ -24,6 +26,7 @@ namespace Apply.Services
                 wallet.CodBank = 1;
 
                 Bank bank = Context.Banks.Where(x => x.CodBank == wallet.CodBank).FirstOrDefault();
+                var codWallet = Context.Usuario.Where(x => x.CodUsuario == wallet.CodUsuario).FirstOrDefault().WalletNavigation.CodWallet;
 
                 foreach (var item in wallet.Cards)
                 {
@@ -45,7 +48,7 @@ namespace Apply.Services
 
                 Context.Wallet.Update(new Wallet
                 {
-                    CodWallet = 3,
+                    CodWallet = codWallet,
                     CardsNavigation = wallet.Cards,
                     FlowClosedNavigation = wallet.FlowClosed,
                     PaymentNavigation = wallet.Payments,

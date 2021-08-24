@@ -29,7 +29,8 @@
     </style>
 </head>
 <body style="background-color: var(--colorPrymary6); color: white; border-radius: 43px;">   
-    <div style="
+    <div id="panel">
+        <div style="
     /* padding: 74px; */
     justify-content: center;
     align-items: center;
@@ -38,9 +39,9 @@
     padding: 13px;
     padding-top: 0px;
 ">
-        <img style="width: 27px;" src="img/logoComet.png" alt="Logo-Comet">
-        <label>Sincronizar</label>
-        <button id="sincronize" style="
+            <img style="width: 27px;" src="img/logoComet.png" alt="Logo-Comet">
+            <label>Sincronizar</label>
+            <button id="sincronize" style="
     color: var(--colorPrymary6);
     background-color: white;
     border: none;
@@ -48,20 +49,22 @@
     font-weight: 600;
     font-size: 11px;
     transition: background-color,color linear 0.5s !important;">
-            Start
-        </button>
-    </div>
-    <ul style="padding-bottom: 7px; padding-right: 20px;">
-        <li style="
+                Start
+            </button>
+        </div>
+        <ul style="padding-bottom: 7px; padding-right: 20px;">
+            <li style="
     background-color: white;
     border-radius: 6px;
 ">
-            <a target="_blank" href="http://apply.client/Nubank/index.html" style="
+                <a target="_blank" href="http://apply.client/Nubank/index.html" style="
     /* left: 19px; */
     padding-left: 7px;
 "><img class="logoNubank" src="img/nubank-logo.png" alt="Logo-Nubank"></a>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
+    <a id="login" style="opacity: 0;" href="http://apply.client/">Fazer Login</a>
    <script src="./popup.js"></script>
 </body>
 </html>

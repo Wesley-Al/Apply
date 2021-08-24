@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\popup",
+    "\\popup\\Library.Front",
+    "\\popup\\Library.Front\\Library",
+    "\\popup\\Library.Front\\Library\\js",
     "\\scripts"
   ],
-  "SelectedNode": "\\popup\\popup.js",
+  "SelectedNode": "\\popup\\Library.Front\\Library\\js\\script.padrao.js",
   "PreviewInSolutionExplorer": false
 }

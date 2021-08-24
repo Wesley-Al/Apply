@@ -1,7 +1,18 @@
-document.addEventListener('DOMContentLoaded', () =>{
-    document.getElementById("sincronize").addEventListener("click", ()=>{        
-        sendMessage();
-    });
+const ext = true;
+
+document.addEventListener('DOMContentLoaded', () => {
+    debugger;
+    cod = recuperaUserCodCookie();
+
+    if (cod != null) {
+        document.getElementById("sincronize").addEventListener("click", () => {
+            sendMessage();
+        });
+    } else {
+        document.getElementById("panel").remove();
+        document.getElementById("login").style.display = '';
+        document.getElementById("login").style.opacity = 1;
+    }    
 });
 
 function sendMessage(message = true){ 
@@ -29,7 +40,7 @@ function sendMessage(message = true){
 
 var Http = {
     PostWallet: (Wallet) => {
-        
+        debugger;
         var http = new XMLHttpRequest();
 
         http.open('POST', 'https://localhost:44315/API/Syncronize/Post');
@@ -50,8 +61,6 @@ var Http = {
 
         http.send(JSON.stringify(Wallet));
         //http.upload();
-        
-
     }
 }
  

@@ -7,7 +7,7 @@ namespace Apply.Library
 {
     public class WalletParameters
     {
-        public Usuario Usuario { get; set; }               
+        public long CodUsuario { get; set; }               
         [FromQuery(Name = "Payments[]")]
         public List<Payment> Payments { get; set; }
         [FromQuery(Name = "Cards[]")]
