@@ -56,7 +56,8 @@ namespace Apply.Controllers
         public IActionResult Autentication([FromBody] Usuario usuario)
         {
             Retorno<UsuarioParameters> retorno = new Retorno<UsuarioParameters>
-            {               
+            {
+                Objeto = new UsuarioParameters(),
                 Success = true
             };
 

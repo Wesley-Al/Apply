@@ -4,14 +4,16 @@ using Apply.Library;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Apply.Library.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210825011116_att10")]
+    partial class att10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,6 +232,15 @@ namespace Apply.Library.Migrations
                     b.Property<long>("CodBank")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("CodCards")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodFlowClosed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CodPayment")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DtCadastro")
                         .HasColumnType("datetime2");
 
@@ -247,7 +258,7 @@ namespace Apply.Library.Migrations
                         .HasForeignKey("BankNavigationCodBank");
 
                     b.HasOne("Apply.Library.Wallet", "WalletNavigation")
-                        .WithMany()
+                        .WithMany("CardsNavigation")
                         .HasForeignKey("WalletNavigationCodWallet");
 
                     b.Navigation("BankNavigation");
@@ -262,7 +273,7 @@ namespace Apply.Library.Migrations
                         .HasForeignKey("BankNavigationCodBank");
 
                     b.HasOne("Apply.Library.Wallet", "WalletNavigation")
-                        .WithMany()
+                        .WithMany("FlowClosedNavigation")
                         .HasForeignKey("WalletNavigationCodWallet");
 
                     b.Navigation("BankNavigation");
@@ -277,7 +288,7 @@ namespace Apply.Library.Migrations
                         .HasForeignKey("BankNavigationCodBank");
 
                     b.HasOne("Apply.Library.Wallet", "WalletNavigation")
-                        .WithMany()
+                        .WithMany("PaymentNavigation")
                         .HasForeignKey("WalletNavigationCodWallet");
 
                     b.Navigation("BankNavigation");
@@ -316,6 +327,15 @@ namespace Apply.Library.Migrations
                         .HasForeignKey("BankNavigationCodBank");
 
                     b.Navigation("BankNavigation");
+                });
+
+            modelBuilder.Entity("Apply.Library.Wallet", b =>
+                {
+                    b.Navigation("CardsNavigation");
+
+                    b.Navigation("FlowClosedNavigation");
+
+                    b.Navigation("PaymentNavigation");
                 });
 #pragma warning restore 612, 618
         }

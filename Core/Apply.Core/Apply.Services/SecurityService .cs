@@ -21,9 +21,21 @@ namespace Apply.Services
         {
             try
             {
+                
                 usuario.WalletNavigation = new Wallet();
                 usuario.DtCadastro = DateTime.Now;
-                
+
+                usuario.WalletNavigation.DtCadastro = DateTime.Now;
+                usuario.WalletNavigation.BankNavigation = Context.Banks.Where(x => x.CodBank == 1).FirstOrDefault();
+
+                UsuarioWallet usuarioWallet = new UsuarioWallet();
+
+                usuarioWallet.UWCod = default;
+
+                usuarioWallet.CodUsuario = usuario;
+                usuarioWallet.CodWallet = usuario.WalletNavigation;                
+
+                Context.UsuarioWallet.Add(usuarioWallet);
                 Context.Usuario.Add(usuario);
 
                 Context.SaveChanges();

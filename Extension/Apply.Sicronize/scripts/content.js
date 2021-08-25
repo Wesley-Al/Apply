@@ -14,8 +14,7 @@ var Execute = {
             CardNotPresent.Description = element.children[2].innerText;
             CardNotPresent.Amount = element.children[3].innerText;
             CardNotPresent.TimeString = element.children[5].innerText;            
-            CardNotPresent.NotPayment = true;            
-            CardNotPresent.CodWallet = 10;            
+            CardNotPresent.NotPayment = true;                                 
 
             cards.push(CardNotPresent);    
         });
@@ -27,8 +26,7 @@ var Execute = {
             CardPresent.Description = element.children[2].innerText;
             CardPresent.Amount = element.children[3].innerText;
             CardPresent.TimeString = element.children[5].innerText;            
-            CardPresent.NotPayment = false;            
-            CardPresent.CodWallet = 10;            
+            CardPresent.NotPayment = false;                        
 
             cards.push(CardPresent);    
         });
@@ -91,9 +89,7 @@ try{
     Wallet.Cards = Execute.ReturnCards();
     Wallet.Payments = Execute.ReturnPayments();
     Wallet.FlowClosed = Execute.ReturnFlowClosed();
-  
-    console.log(Wallet);
-  
+ 
     sendResponse(JSON.stringify(Wallet));
 }catch(error){
     alert("Ocorreu um erro ao tentar sincronizar os dados, por favor cheque o log.")

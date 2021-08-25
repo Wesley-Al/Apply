@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Apply.Services
 {
@@ -12,11 +15,11 @@ namespace Apply.Services
     {
         SecurityService SecuritySVC = new SecurityService();
 
-        private Context Context { get; set; }
+        private Context context { get; set; }
 
         public WalletService()
         {
-            this.Context = new Context();
+            this.context = new Context();
         }
 
         public async Task<bool> InsertData(WalletParameters wallet)
@@ -25,44 +28,45 @@ namespace Apply.Services
             {
                 wallet.CodBank = 1;
 
-                Bank bank = Context.Banks.Where(x => x.CodBank == wallet.CodBank).FirstOrDefault();
-                var codWallet = Context.Usuario.Where(x => x.CodUsuario == wallet.CodUsuario).FirstOrDefault().WalletNavigation.CodWallet;
+                Bank bank = context.Banks.Where(x => x.CodBank == 1).FirstOrDefault();
+
+                var Wallet = context.Usuario.Include(x => x.WalletNavigation)
+                    .Where(x => x.CodUsuario == wallet.CodUsuario)
+                    .FirstOrDefault()
+                    .WalletNavigation;
+
+                var codWallet = Wallet.CodWallet;
 
                 foreach (var item in wallet.Cards)
                 {
-                    item.CodBank = 1;
+                    item.CodWallet = codWallet;                    
                     item.BankNavigation = bank;
                 }
 
                 foreach (var item in wallet.Payments)
                 {
-                    item.CodBank = 1;
+                    item.CodWallet = codWallet;                    
                     item.BankNavigation = bank;
                 }
 
                 foreach (var item in wallet.FlowClosed)
                 {
-                    item.CodBank = 1;
-                    item.BankNavigation = bank;
+                    item.CodWallet = codWallet;                    
+                    item.BankNavigation = bank;                    
                 }
+        
+                context.Card.AddRange(wallet.Cards);
+                context.FlowClosed.AddRange(wallet.FlowClosed);
+                context.Payment.AddRange(wallet.Payments);                
 
-                Context.Wallet.Update(new Wallet
-                {
-                    CodWallet = codWallet,
-                    CardsNavigation = wallet.Cards,
-                    FlowClosedNavigation = wallet.FlowClosed,
-                    PaymentNavigation = wallet.Payments,
-                    BankNavigation = bank
-                });
-
-                await Context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return true;
             }
 
             return false;
         }
 
-        public WalletParameters Get(long codBank, long codWallet)
+        public WalletParameters GetById(long codUsuario)
         {
 
             try
@@ -71,12 +75,17 @@ namespace Apply.Services
                 parameters.TimeString = new List<string>();
                 parameters.Cards = new List<Cards>();
 
+                var Wallet = context.Usuario.Include(x => x.WalletNavigation).ThenInclude(x => x.BankNavigation)
+                   .Where(x => x.CodUsuario == codUsuario)
+                   .FirstOrDefault()
+                   .WalletNavigation;
+
                 var wallet = new
                 {
-                    Payments = Context.Payment.Where(x => x.BankNavigation.CodBank == codBank && x.WalletNavigation.CodWallet == codWallet).ToList(),
-                    Cards = Context.Card.Where(x => x.BankNavigation.CodBank == codBank && x.WalletNavigation.CodWallet == codWallet)
+                    Payments = context.Payment.Where(x => x.BankNavigation.CodBank == Wallet.BankNavigation.CodBank && x.WalletNavigation.CodWallet == Wallet.CodWallet).ToList(),
+                    Cards = context.Card.Where(x => x.BankNavigation.CodBank == Wallet.BankNavigation.CodBank && x.WalletNavigation.CodWallet == Wallet.CodWallet)
                         .ToList().GroupBy(x => new { x.TimeString }),
-                    FlowClosed = Context.FlowClosed.Where(x => x.BankNavigation.CodBank == codBank && x.WalletNavigation.CodWallet == codWallet).ToList()
+                    FlowClosed = context.FlowClosed.Where(x => x.BankNavigation.CodBank == Wallet.BankNavigation.CodBank && x.WalletNavigation.CodWallet == Wallet.CodWallet).ToList()
                 };
 
                 foreach (var item in wallet.Cards)
@@ -90,7 +99,7 @@ namespace Apply.Services
                 }
 
                 parameters.Payments = wallet.Payments;
-                
+
                 parameters.FlowClosed = wallet.FlowClosed;
 
 

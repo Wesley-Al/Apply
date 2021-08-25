@@ -17,25 +17,28 @@
             return new Promise((resolve) => {
 
                 var options = AjaxOptions;
-                options.url = `${urlAPI}/api/Syncronize/Get`;
-
+                options.url = `${urlAPI}Syncronize/GetById`;
+                options.method = 'POST';
+                
                 options.onload = (xhr, obj) => {
-
+                    
                     if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
                         if (xhr.currentTarget.response.success == false) {
-                            alert(`Ocorreu um erro: ${xhr.currentTarget.response.erroMsg}`);
+                            alert(`Ocorreu um erro: ${xhr.currentTarget.response.ErroMsg}`);
                             resolve(null);
                         }
 
-                        var Wallet = xhr.currentTarget.response.objeto;
+                        var Wallet = xhr.currentTarget.response.Objeto;
 
                         resolve(Wallet);
                     } else {
                         alert("Nenhuma carteira foi encontrada");
                     }
                 }
-
-                Ajax(options);
+                
+                options.data = recuperaUserCodCookie();
+                
+                Scripts.API.POST(options);
             });
         }
 
@@ -73,7 +76,7 @@
                     cabecalho.appendChild(titulo);
                     cabecalho.appendChild(titulo);
                     //cabecalho.appendChild(spanIndex);
-
+                    card.append(cabecalho);
                     card.appendChild(spanTime);
 
                     return card;
@@ -99,22 +102,22 @@
 
                 var configTime = new Array();
 
-                for (var i = 0; i < Wallet.cards.length; i++) {
-                    ol.appendChild(ImplementList.Cards(i + 1, Wallet.cards[i].codCard, Wallet.cards[i].amount,
-                        Wallet.cards[i].timeString, Wallet.cards[i].title, Wallet.cards[i].description));
+                for (var i = 0; i < Wallet.Cards.length; i++) {
+                    ol.appendChild(ImplementList.Cards(i + 1, Wallet.Cards[i].CodCard, Wallet.Cards[i].Amount,
+                        Wallet.Cards[i].TimeString, Wallet.Cards[i].title, Wallet.Cards[i].Description));
 
-                    totalizador += parseFloat(Wallet.cards[i].amount.replaceAll("R$", "").replaceAll(",", "."));
+                    totalizador += parseFloat(Wallet.Cards[i].Amount.replaceAll("R$", "").replaceAll(",", "."));
                 }
 
-                for (i = 0; i < Wallet.timeString.length; i++) {
-                    configTime.push([Wallet.timeString[i], `rgb(${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)})`]);
+                for (i = 0; i < Wallet.TimeString.length; i++) {
+                    configTime.push([Wallet.TimeString[i], `rgb(${(Math.round(Math.random() * 100) + 100)}, ${(Math.round(Math.random() * 100) + 100)}, ${(Math.round(Math.random() * 100 )+ 100)})`]);
 
-                    var result = Wallet.cards.find(x => x.timeString == Wallet.timeString[i]);
+                    var result = Wallet.Cards.find(x => x.timeString == Wallet.TimeString[i]);
 
                     if (Array.isArray(result)) {
                         var total = 0;
                         for (o = 0; o < result.length; o++) {
-                            total += parseFloat(Wallet.cards[i].amount.replaceAll("R$", "").replaceAll(",", "."));
+                            total += parseFloat(Wallet.Cards[i].Amount.replaceAll("R$", "").replaceAll(",", "."));
                         }
 
                         data.push(total);
@@ -124,14 +127,14 @@
                     }
 
                     dataSet.push({
-                        label: Wallet.timeString[i],
+                        label: Wallet.TimeString[i],
                         data: data,
-                        backgroundColor: configTime.find(x => x[0] == Wallet.cards[i].timeString)[1],
+                        backgroundColor: configTime.find(x => x[0] == Wallet.Cards[i].TimeString)[1],
                         borderWidth: 2,
-                        borderColor: configTime.find(x => x[0] == Wallet.cards[i].timeString)[1]
+                        borderColor: configTime.find(x => x[0] == Wallet.Cards[i].TimeString)[1]
                     });
 
-                    label.push(Wallet.timeString[i]);
+                    label.push(Wallet.TimeString[i]);
                 }
 
                 document.getElementById("listCards").appendChild(ol);

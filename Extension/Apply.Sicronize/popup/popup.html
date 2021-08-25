@@ -7,10 +7,11 @@
     <link rel="sortcut icon" href="/favicon.ico" type="image/x-icon" />
     
     <script src="/Library.Front/Library/js/core/core.js?" type='text/javascript'></script>
-
+   
     <link rel="stylesheet" href="/Library.Front/Library/css/style.padrao.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
+    <style>        }
+
         a {
             text-decoration: none;
         }
@@ -26,6 +27,45 @@
             border: 0.5px solid !important;
             transition: background-color,color linear 0.5s !important;
         }
+
+        .login {
+            border-radius: 10px;
+            border: none;
+            color: var(--colorPrymary6) !important;
+            font-weight: 600;
+            font-size: 15px;
+            width: 50%;
+            align-self: center;
+            margin-top: 17px;
+            transition: background-color,color,border 0.5s;
+            transition-duration: 0.5s;
+        }
+
+            .login:hover {
+                color: white !important;
+                border: 1px solid white !important;
+                background-color: var(--colorPrymary6) !important;
+                transition: background-color,color,border 0.5s !important;
+                transition-duration: 0.5s !important;
+            }
+
+        #logout {
+            top: 2%;
+            right: 5%;
+            position: absolute;
+            color: var(--colorPrymary6);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #userName {
+            top: 2%;
+            left: 5%;
+            position: absolute;
+            color: var(--colorPrymary6);
+            font-weight: 600;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body style="background-color: var(--colorPrymary6); color: white; border-radius: 43px;">   
@@ -40,8 +80,19 @@
     padding-top: 0px;
 ">
             <img style="width: 27px;" src="img/logoComet.png" alt="Logo-Comet">
-            <label>Sincronizar</label>
-            <button id="sincronize" style="
+            <div style=" display: none; opacity: 0;" id="login">
+                <label>Usuario</label>
+                <input id="usuLogin" type="text">
+                <label>Senha</label>
+                <input id="senhaLogin" type="password">
+                <button class="login">Logar</button>
+            </div>
+            <div id="sincronizar">
+                <label id="userName"></label>
+                <label id="logout">Logout</label>
+
+                <label>Sincronizar</label>
+                <button id="sincronize" style="
     color: var(--colorPrymary6);
     background-color: white;
     border: none;
@@ -49,22 +100,25 @@
     font-weight: 600;
     font-size: 11px;
     transition: background-color,color linear 0.5s !important;">
-                Start
-            </button>
-        </div>
-        <ul style="padding-bottom: 7px; padding-right: 20px;">
-            <li style="
+                    Start
+                </button>
+
+                <ul style="padding-bottom: 7px; padding-right: 20px;">
+                    <li style="
     background-color: white;
     border-radius: 6px;
 ">
-                <a target="_blank" href="http://apply.client/Nubank/index.html" style="
+                        <a target="_blank" href="http://apply.client/Nubank/index.html" style="
     /* left: 19px; */
     padding-left: 7px;
 "><img class="logoNubank" src="img/nubank-logo.png" alt="Logo-Nubank"></a>
-            </li>
-        </ul>
-    </div>
-    <a id="login" style="opacity: 0;" href="http://apply.client/">Fazer Login</a>
+                    </li>
+                </ul>
+
+            </div>
+            
+        </div>  
+    </div>    
    <script src="./popup.js"></script>
 </body>
 </html>

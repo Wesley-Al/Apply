@@ -14,6 +14,7 @@ namespace Apply.Library
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<UsuarioWallet> UsuarioWallet { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

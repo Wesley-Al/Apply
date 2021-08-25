@@ -2,13 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\Apply.Sicronize",
-    "\\Apply.Sicronize\\Icons",
+    "\\Apply.Sicronize\\Library.Front",
     "\\Apply.Sicronize\\Library.Front\\Library",
+    "\\Apply.Sicronize\\Library.Front\\Library\\js",
     "\\Apply.Sicronize\\popup",
-    "\\Apply.Sicronize\\popup\\img",
     "\\Apply.Sicronize\\popup\\Library.Front",
-    "\\Apply.Sicronize\\popup\\Library.Front\\Library"
+    "\\Apply.Sicronize\\popup\\Library.Front\\Library",
+    "\\Apply.Sicronize\\popup\\Library.Front\\Library\\js",
+    "\\Apply.Sicronize\\scripts"
   ],
-  "SelectedNode": "\\Apply.Sicronize\\popup\\img\\logoComet.PNG",
+  "SelectedNode": "\\Apply.Sicronize\\scripts\\content.js",
   "PreviewInSolutionExplorer": false
 }

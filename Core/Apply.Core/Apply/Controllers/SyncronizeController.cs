@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using Apply.Services;
 using System.Collections;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Cors;
 
 namespace Apply.Controllers
@@ -37,17 +37,16 @@ namespace Apply.Controllers
             }
         }
 
-        [HttpGet("Get")]
-        public IActionResult Get(/*long codBank, long codWallet*/)
+        [HttpPost("GetById")]
+        public IActionResult GetById([FromBody]long codWallet)
         {
-            Retorno<WalletParameters> retorno = new Retorno<WalletParameters>();
-            long codBank = 1, codWallet = 3;
+            Retorno<WalletParameters> retorno = new Retorno<WalletParameters>();            
             try
             {
                 retorno.Success = true;
-                retorno.Objeto = iWalletSVC.Get(codBank = 1, codWallet = 3);
-
-                return Ok(retorno);
+                retorno.Objeto = iWalletSVC.GetById(codWallet);                
+                
+                return Ok(JsonConvert.SerializeObject(retorno));
             }
             catch (Exception error)
             {

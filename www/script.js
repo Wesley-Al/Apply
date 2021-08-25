@@ -1,3 +1,5 @@
+const ext = false;
+
 const Usuario = {
     AutenticaUsuario: (pUsuario, pSenha) => {
         var Usuario = {
@@ -12,13 +14,13 @@ const Usuario = {
             
             if (response.success == true) {
                 if (response.objeto != null) {
-                    document.cookie = `username=${response.objeto.UsuNome}; path=/;`;
-                    document.cookie = `username=${response.objeto.UsuCod}; path=/;`;
+                    document.cookie = `username=${response.objeto.usuNome}; path=/;`;
+                    document.cookie = `usercod=${response.objeto.usuCod}; path=/;`;
 
                     Scripts.Elements.Message.Success("Efetuando o Login...");
                     Scripts.Elements.Load.Create('Growing', 'messageContent', 'width: 1rem !important; height: 1rem !important;', 'var(--colorPrymary6)');                    
 
-                    setTimeout(() => { window.location.href = `${urlAPI}/Nubank/index.html`; }, 3000);
+                    setTimeout(() => { window.location.href = `${urlHost}/Nubank/index.html`; }, 3000);
 
                 } else {
                     Scripts.Elements.Message.Error(response.erroMsg);
@@ -30,7 +32,7 @@ const Usuario = {
 
         option.data = Usuario;
         option.method = 'POST';
-        option.url = `${urlAPI}/api/Security/Autentication`;
+        option.url = `${urlAPI}Security/Autentication`;
         Scripts.API.POST(option);
     },
     CadastraUsuario: (pUsuario, pSenha, nomeUsuario) => {
@@ -58,7 +60,7 @@ const Usuario = {
 
         option.data = Usuario;
         option.method = 'POST';
-        option.url = `${urlAPI}/api/Security/Cadastro`;
+        option.url = `${urlAPI}Security/Cadastro`;
         Scripts.API.POST(option);
     }
 }
