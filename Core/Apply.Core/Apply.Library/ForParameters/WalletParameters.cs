@@ -10,19 +10,15 @@ namespace Apply.Library
     {        
         public long CodUsuario { get; set; }
         
-        [FromQuery(Name = "Payments[]")]
-        [JsonIgnore]
+        [FromQuery(Name = "Payments[]")]        
         public List<Payment> Payments { get; set; }
-
-        [FromQuery(Name = "Cards[]")]
-        [JsonIgnore]
+        
+        [FromQuery(Name = "Cards[]")]        
         public List<Cards> Cards { get; set; }
-
-        [FromQuery(Name = "FlowClosed[]")]
-        [JsonIgnore]
+        
+        [FromQuery(Name = "FlowClosed[]")]        
         public List<FlowClosed> FlowClosed { get; set; }
-
-        [JsonIgnore]
+        
         public List<string> TimeString { get; set; }
         public long CodBank { get; set; }
     }

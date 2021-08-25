@@ -82,10 +82,10 @@ namespace Apply.Services
 
                 var wallet = new
                 {
-                    Payments = context.Payment.Where(x => x.BankNavigation.CodBank == Wallet.BankNavigation.CodBank && x.WalletNavigation.CodWallet == Wallet.CodWallet).ToList(),
-                    Cards = context.Card.Where(x => x.BankNavigation.CodBank == Wallet.BankNavigation.CodBank && x.WalletNavigation.CodWallet == Wallet.CodWallet)
+                    Payments = context.Payment.Where(x =>x.CodWallet == Wallet.CodWallet).ToList(),
+                    Cards = context.Card.Where(x => x.CodWallet == Wallet.CodWallet)
                         .ToList().GroupBy(x => new { x.TimeString }),
-                    FlowClosed = context.FlowClosed.Where(x => x.BankNavigation.CodBank == Wallet.BankNavigation.CodBank && x.WalletNavigation.CodWallet == Wallet.CodWallet).ToList()
+                    FlowClosed = context.FlowClosed.Where(x => x.CodWallet == Wallet.CodWallet).ToList()
                 };
 
                 foreach (var item in wallet.Cards)

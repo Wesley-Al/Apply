@@ -2,15 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(".login").addEventListener("click", () => {
         Autenticar()
     });
-    
+
     document.getElementById("logout").addEventListener("click", () => {
         logOutPop();
     });
-    
+
     document.getElementById("sincronize").addEventListener("click", () => {
         sendMessage();
     });
-    debugger;
+    
     validaCookie();
 });
 
@@ -29,9 +29,9 @@ const Usuario = {
             if (response.success == true) {
                 if (response.objeto != null) {
                     document.cookie = `usercod=${response.objeto.usuCod}; path=/;`;
-                    document.cookie = `username=${response.objeto.usuNome}; path=/;`;                    
+                    document.cookie = `username=${response.objeto.usuNome}; path=/;`;
 
-                    setTimeout(() => { validaCookie();}, 3000)
+                    setTimeout(() => { validaCookie(); }, 3000)
 
                 } else {
                     Scripts.Elements.Message.Error(response.erroMsg);
@@ -77,7 +77,7 @@ const Usuario = {
 }
 
 var logOutPop = function () {
-    debugger;
+    
     document.cookie = `username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     document.cookie = `usercod=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 
@@ -89,11 +89,11 @@ function Autenticar() {
 }
 
 function validaCookie() {
-    debugger;
+    
     var cookie = document.cookie.split(';')
     cod = cookie[0].replaceAll('usercod=', '');
 
-    if (cod != null && cod != "") {      
+    if (cod != null && cod != "") {
         document.getElementById("sincronizar").style.display = '';
         document.getElementById("sincronizar").style.opacity = 1;
         document.getElementById("login").style.display = 'none';
@@ -140,7 +140,7 @@ var recuperaUserNameCookie = function () {
 };
 
 var recuperaUserCodCookie = function () {
-    debugger;
+    
     try {
         var cookie = document.cookie.split(';')
         return cookie[0].replaceAll('usercod=', '');
@@ -151,30 +151,26 @@ var recuperaUserCodCookie = function () {
 
 var Http = {
     PostWallet: (Wallet) => {
-        debugger;
-        var http = new XMLHttpRequest();
+        
 
-        debugger;
         Wallet.CodUsuario = recuperaUserCodCookie();
-        //http.open('POST', 'http://apply.client/api/Syncronize/Post');
-        http.open('POST', 'https://localhost:44382/Syncronize/Post');
-        http.responseType = 'json';
 
-        http.setRequestHeader('Content-Type', 'application/json');
-        http.onload = (xhr, response, obj) => {
+        var option = AjaxOptions;
 
+        option.onload = (xhr, response, obj) => {
+            var response = xhr.target.response;
+            if (response == true) {
+                Scripts.Elements.Message.Success("Sincronizado com sucesso!");
+            } else {
+                Scripts.Elements.Message.Error(`Ocorreu um erro durante o processo.`);
+            }
         }
 
-        http.response = (xhr, response, obj) => {
-
-        }
-        http.onerror = (xhr, response, obj) => {
-
-            console.log(xhr);
-        }
-
-        http.send(JSON.stringify(Wallet));
-        //http.upload();
+        option.data = Wallet;
+        option.method = 'POST';
+        option.url = 'http://apply.client/api/Syncronize/Post';
+        //        option.url = 'https://localhost:44382/Syncronize/Post';        
+        Scripts.API.POST(option);
     }
 }
 

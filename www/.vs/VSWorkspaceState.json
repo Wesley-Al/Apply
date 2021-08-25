@@ -6,8 +6,9 @@
     "\\Library.Front\\Library\\css",
     "\\Library.Front\\Library\\js",
     "\\Nubank",
+    "\\Security",
     "\\Security\\Login"
   ],
-  "SelectedNode": "\\Nubank\\index.html",
+  "SelectedNode": "\\Library.Front\\Library\\js\\script.padrao.js",
   "PreviewInSolutionExplorer": false
 }
