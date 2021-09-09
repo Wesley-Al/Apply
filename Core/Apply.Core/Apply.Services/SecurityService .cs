@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Apply.Services
 {
     public class SecurityService
     {
-        private Context Context { get; set; }
+        private readonly Context Context;
 
-        public SecurityService()
+        public SecurityService(Context context)
         {
-            this.Context = new Context();
+            DbContextOptions<Context> dbContextOptions = new DbContextOptions<Context>();
+            
+            Context = new Context(dbContextOptions);
         }
 
         public bool CadastraUsuario(Usuario usuario)

@@ -1,0 +1,85 @@
+﻿.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+    height: 92%;
+    z-index: 10050;
+    position: absolute;
+}
+
+footer {
+    position: fixed;
+    background-color: var(--colorPrymary5) !important;    
+    height: 6%;
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+    color: var(--colorPrymary6);
+    justify-content: center;
+    align-items: center;
+    font-size: 2vh;
+    bottom: 0px;
+    border-radius: 10px 10px 0px 0px;
+    font-weight: bold;
+}
+
+.head {
+    color: var(--colorPrymary5);
+    font-weight: bold !important;
+    margin-top: 4%;
+    margin-bottom: 3%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.body {
+    height: 100%;
+    width: 100%;
+}
+
+.containerProjects{
+    height: 85%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.project{    
+    height: 100%;
+    width: 35%;
+    border-radius: 10px;
+    box-shadow: 0 0 27px -6px black;
+    margin-top: 2%;
+    background-color: indigo;
+}
+
+.projectHeader{    
+    width: 100%;
+    height: 50%;
+    margin-top: 14px;
+}
+
+.projectDescription{    
+    height: 50%;
+    width: 100%;
+}
+
+.projectDescription p{    
+    color: var(--colorPrymary8);
+    font-size: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.buttonDescription{
+    top: 79%;
+}
+
+.projectImage{
+    border-radius: 2vh;
+}

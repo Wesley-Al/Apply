@@ -13,14 +13,15 @@ namespace Apply.Services
 {
     public class WalletService : IWalletService
     {
-        SecurityService SecuritySVC = new SecurityService();
+        static private Context context;
 
-        private Context context { get; set; }
-
-        public WalletService()
+        public WalletService(Context _context)
         {
-            this.context = new Context();
+            context = _context;
         }
+
+        SecurityService SecuritySVC = new SecurityService(context);
+      
 
         public async Task<bool> InsertData(WalletParameters wallet)
         {

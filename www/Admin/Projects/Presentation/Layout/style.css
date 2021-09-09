@@ -1,0 +1,14 @@
+﻿:root {
+    --colorPrymary1: #02DDE8 !important;
+    --colorPrymary2: #0297F2 !important;
+    --colorPrymary3: #0944DB !important;
+    --colorPrymary4: #0F02F2 !important;
+    --colorPrymary5: #18277A !important;
+    --colorPrymary6: white;
+    --colorPrymary7: #5D00EB !important;
+    --colorPrymary8: #ff6b51 !important;
+}
+
+.off{
+    display: none;
+}

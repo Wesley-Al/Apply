@@ -20,7 +20,7 @@ const Usuario = {
                     Scripts.Elements.Message.Success("Efetuando o Login...");
                     Scripts.Elements.Load.Create('Growing', 'messageContent', 'width: 1rem !important; height: 1rem !important;', 'var(--colorPrymary6)');                    
 
-                    setTimeout(() => { window.location.href = `${urlHost}/Nubank/index.html`; }, 3000);
+                    setTimeout(() => { window.location.href = `${urlHost}/`; }, 3000);
 
                 } else {
                     Scripts.Elements.Message.Error(response.erroMsg);
@@ -36,6 +36,7 @@ const Usuario = {
         Scripts.API.POST(option);
     },
     CadastraUsuario: (pUsuario, pSenha, nomeUsuario) => {
+        debugger;
         var Usuario = {
             UsuarioLogin: pUsuario,
             Senha: pSenha,

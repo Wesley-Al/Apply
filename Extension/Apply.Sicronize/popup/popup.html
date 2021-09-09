@@ -10,7 +10,7 @@
    
     <link rel="stylesheet" href="/Library.Front/Library/css/style.padrao.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>        }
+    <style>        
 
         a {
             text-decoration: none;
@@ -66,6 +66,16 @@
             font-weight: 600;
             cursor: pointer;
         }
+        
+        .input{
+            border: none;
+            border-radius: 10px;            
+        }
+
+        .input:focus-visible{
+            border: none;  
+            outline: none;          
+        }
     </style>
 </head>
 <body style="background-color: var(--colorPrymary6); color: white; border-radius: 43px;">   
@@ -82,10 +92,10 @@
             <img style="width: 27px;" src="img/logoComet.png" alt="Logo-Comet">
             <div style=" display: none; opacity: 0;" id="login">
                 <label>Usuario</label>
-                <input id="usuLogin" type="text">
+                    <input class="input" id="usuLogin" type="text">
                 <label>Senha</label>
-                <input id="senhaLogin" type="password">
-                <button class="login">Logar</button>
+                    <input class="input" id="senhaLogin" type="password">
+                        <button class="login">Logar</button>
             </div>
             <div id="sincronizar">
                 <label id="userName"></label>

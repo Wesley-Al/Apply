@@ -1,3 +1,7 @@
+const urlHostExt = `http://intru`;
+const urlAPIExt = `${urlHostExt}/api/`;
+//const urlAPI = `https://localhost:44382/`;
+
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(".login").addEventListener("click", () => {
         Autenticar()
@@ -43,7 +47,7 @@ const Usuario = {
 
         option.data = Usuario;
         option.method = 'POST';
-        option.url = `http://apply.client/api/Security/Autentication`;
+        option.url = `${urlAPIExt}Security/Autentication`;
         Scripts.API.POST(option);
     },
     CadastraUsuario: (pUsuario, pSenha, nomeUsuario) => {
@@ -71,7 +75,7 @@ const Usuario = {
 
         option.data = Usuario;
         option.method = 'POST';
-        option.url = `${urlAPI}Security/Cadastro`;
+        option.url = `${urlAPIExt}Security/Cadastro`;
         Scripts.API.POST(option);
     }
 }
@@ -168,8 +172,7 @@ var Http = {
 
         option.data = Wallet;
         option.method = 'POST';
-        option.url = 'http://apply.client/api/Syncronize/Post';
-        //        option.url = 'https://localhost:44382/Syncronize/Post';        
+        option.url = `${urlAPIExt}Syncronize/Post`;        
         Scripts.API.POST(option);
     }
 }

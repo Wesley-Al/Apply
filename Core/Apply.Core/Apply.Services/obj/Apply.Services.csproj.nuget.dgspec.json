@@ -76,6 +76,10 @@
               "target": "Package",
               "version": "[5.0.8, )"
             },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
             "System.Linq": {
               "target": "Package",
               "version": "[4.3.0, )"
@@ -148,6 +152,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            },
             "System.Linq": {
               "target": "Package",
               "version": "[4.3.0, )"

@@ -17,7 +17,14 @@ namespace Apply.Controllers
     [Route("[controller]")]
     public class SyncronizeController : ControllerBase
     {
-        private WalletService iWalletSVC = new WalletService();
+
+        static private Context _context;
+        public SyncronizeController(Context context)
+        {
+            _context = context;
+        }
+
+        private WalletService iWalletSVC = new WalletService(_context);
 
         [HttpPost("Post")]
         public async Task<IActionResult> Post([FromBody] WalletParameters wallet)
