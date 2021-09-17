@@ -11,13 +11,13 @@ namespace Apply.Library
         public long CodUsuario { get; set; }
         
         [FromQuery(Name = "Payments[]")]        
-        public List<Payment> Payments { get; set; }
+        public List<Cards> Payments { get; set; }
         
         [FromQuery(Name = "Cards[]")]        
         public List<Cards> Cards { get; set; }
         
         [FromQuery(Name = "FlowClosed[]")]        
-        public List<FlowClosed> FlowClosed { get; set; }
+        public List<Cards> FlowClosed { get; set; }
         
         public List<string> TimeString { get; set; }
         public long CodBank { get; set; }

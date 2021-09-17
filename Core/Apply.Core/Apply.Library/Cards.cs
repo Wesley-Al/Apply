@@ -19,5 +19,6 @@ namespace Apply.Library
         public Wallet WalletNavigation { get; set; }
         public long CodBank { get; set; }
         public Bank BankNavigation { get; set; }
+        public string TypeCard { get; set; }
     }
 }

@@ -14,9 +14,7 @@ namespace Apply.Library
         }
 
         public DbSet<Wallet> Wallet { get; set; }
-        public DbSet<Cards> Card { get; set; }
-        public DbSet<FlowClosed> FlowClosed { get; set; }
-        public DbSet<Payment> Payment { get; set; }
+        public DbSet<Cards> Card { get; set; }        
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Bank> Banks { get; set; }
         public DbSet<UsuarioWallet> UsuarioWallet { get; set; }

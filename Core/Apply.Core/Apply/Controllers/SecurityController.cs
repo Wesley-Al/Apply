@@ -12,14 +12,15 @@ namespace Apply.Controllers
     [Route("[controller]")]
     public class SecurityController : ControllerBase
     {
-        static private Context _context;
-        public SecurityController(Context context)
-        {
-            _context = context;
-        }
+        private IWalletService iWalletSVC;
+        private ISecurityService iSecuritySVC;
 
-        private WalletService iWalletSVC = new WalletService(_context);
-        private SecurityService iSecuritySVC = new SecurityService(_context);
+        public SecurityController(IWalletService WalletSVC,
+                                  ISecurityService SecuritySVC)
+        {
+            this.iSecuritySVC = SecuritySVC;
+            this.iWalletSVC = WalletSVC;
+        }        
 
         [HttpPost("Cadastro")]
         public IActionResult Cadastro([FromBody] Usuario usuario)

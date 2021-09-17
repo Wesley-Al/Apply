@@ -17,14 +17,11 @@ namespace Apply.Controllers
     [Route("[controller]")]
     public class SyncronizeController : ControllerBase
     {
-
-        static private Context _context;
-        public SyncronizeController(Context context)
-        {
-            _context = context;
+        private IWalletService iWalletSVC;
+        public SyncronizeController(IWalletService WalletSVC)                                  
+        {            
+            this.iWalletSVC = WalletSVC;
         }
-
-        private WalletService iWalletSVC = new WalletService(_context);
 
         [HttpPost("Post")]
         public async Task<IActionResult> Post([FromBody] WalletParameters wallet)
@@ -45,13 +42,13 @@ namespace Apply.Controllers
         }
 
         [HttpPost("GetById")]
-        public IActionResult GetById([FromBody]long codWallet)
+        public IActionResult GetById(long usuCod, string dataJoined)
         {
             Retorno<WalletParameters> retorno = new Retorno<WalletParameters>();            
             try
             {
                 retorno.Success = true;
-                retorno.Objeto = iWalletSVC.GetById(codWallet);                
+                retorno.Objeto = iWalletSVC.GetByUsuCod(usuCod, dataJoined);                
                 
                 return Ok(JsonConvert.SerializeObject(retorno));
             }

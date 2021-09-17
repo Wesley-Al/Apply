@@ -9,5 +9,7 @@ namespace Apply.Services
     public interface IWalletService
     {
         Task<bool> InsertData(WalletParameters wallet);
+        public Wallet GetWalletByUsuCod(long usuCod);
+        public WalletParameters GetByUsuCod(long codUsuario, string dataJoined = "");
     }
 }

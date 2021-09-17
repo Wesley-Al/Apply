@@ -1,4 +1,5 @@
 using Apply.Library;
+using Apply.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -46,8 +47,11 @@ namespace Apply
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Apply", Version = "v1" });
             });
 
-            
-            services.AddScoped<Context, Context>();
+            services.AddSingleton<Context, Context>();
+
+            services.AddScoped<IWalletService, WalletService>();
+            services.AddScoped<ICardsService, CardsService>();
+            services.AddScoped<ISecurityService, SecurityService>();
 
             services.AddDbContextPool<Context>(options =>
                 options.UseMySql(mySqlConection,

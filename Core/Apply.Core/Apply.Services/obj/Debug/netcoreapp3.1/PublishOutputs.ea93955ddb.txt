@@ -44,7 +44,9 @@ D:\git\Apply\Core\Apply.Core\publish\Microsoft.IdentityModel.Protocols.OpenIdCon
 D:\git\Apply\Core\Apply.Core\publish\Microsoft.IdentityModel.Tokens.dll
 D:\git\Apply\Core\Apply.Core\publish\Microsoft.Net.Http.Headers.dll
 D:\git\Apply\Core\Apply.Core\publish\Microsoft.Win32.SystemEvents.dll
+D:\git\Apply\Core\Apply.Core\publish\MySqlConnector.dll
 D:\git\Apply\Core\Apply.Core\publish\Newtonsoft.Json.dll
+D:\git\Apply\Core\Apply.Core\publish\Pomelo.EntityFrameworkCore.MySql.dll
 D:\git\Apply\Core\Apply.Core\publish\System.Collections.Immutable.dll
 D:\git\Apply\Core\Apply.Core\publish\System.ComponentModel.Annotations.dll
 D:\git\Apply\Core\Apply.Core\publish\System.Configuration.ConfigurationManager.dll

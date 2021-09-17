@@ -13,22 +13,79 @@
     <script type='text/javascript'>
         var config = {};
 
-        var CarregaDados = async () => {
-            return new Promise((resolve) => {
+        var AtualizaDados = (event, element) => {
+            try{                                       
+               // var icon = Scripts.Elements.Create('i', 'icoRefresh', null, null, null, ['far', 'fa-dot-circle']);
 
+                var options = document.querySelectorAll('input[name=month]:checked');
+
+                if(options.length > 0){
+                    document.getElementById('icoRefresh').classList;            
+                }
+               
+            }catch(Error){
+
+            }
+        }
+
+        var AtualizaList = () => {
+            try{
+                debugger;
+                var inputs = document.querySelectorAll('input[name=month]:checked');
+                var options = new Array();
+
+                for(var i = 0; i < inputs.length; i++){
+                    options.push(inputs[i].value);
+                }
+
+                var divCarrousel = document.querySelectorAll('div[name=frameCarrousel]');
+
+                document.getElementsByClassName('totalizador')[0]?.remove();
+                document.getElementById('listCard')?.remove();                
+                document.getElementById('graficoLine')?.remove()
+                document.getElementById('graficoBar')?.remove();
+
+                divCarrousel[0].appendChild(Scripts.Elements.Create('canvas', 'graficoLine'));
+                divCarrousel[1].appendChild(Scripts.Elements.Create('canvas', 'graficoBar'));
+
+                ImplementGrafico(options);
+
+               
+            }catch(Error){
+
+            }
+        }
+
+        var CarregaDados = async (dataOptions) => {
+            return new Promise((resolve) => {
                 var options = AjaxOptions;
-                options.url = `${urlAPI}Syncronize/GetById`;
+                var dataJoined = dataOptions != null && dataOptions != undefined ? dataOptions.join(',') : '';
+
+                options.url = `${urlAPI}Syncronize/GetById?usuCod=${recuperaUserCodCookie()}&dataJoined=${dataJoined}`;
                 options.method = 'POST';
-                
+                options.async = false;
+
                 options.onload = (xhr, obj) => {
                     
                     if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
                         if (xhr.currentTarget.response.success == false) {
-                            alert(`Ocorreu um erro: ${xhr.currentTarget.response.ErroMsg}`);
+                            Scripts.Elements.Message.Error(`Ocorreu um erro: ${xhr.currentTarget.response.erroMsg}`);
                             resolve(null);
                         }
 
-                        var Wallet = xhr.currentTarget.response.Objeto;
+                        debugger;
+
+                        var Wallet;
+
+                        if (xhr.currentTarget.response.Objeto != undefined && xhr.currentTarget.response.Objeto != null) {
+                            Wallet = xhr.currentTarget.response.Objeto;
+                        } else {
+                            Wallet = {
+                                Cards: [],
+                                Payments: [],
+                                FlowClosed: []
+                            }
+                        }
 
                         resolve(Wallet);
                     } else {
@@ -36,7 +93,17 @@
                     }
                 }
                 
-                options.data = recuperaUserCodCookie();
+                 debugger;
+                if(dataOptions != null && dataOptions != undefined ){
+                    if(dataOptions.length > 0){
+                        dataJoined = dataOptions.join(',');
+                    }
+                }
+
+              /*  options.data = { 
+                    usuCod: recuperaUserCodCookie(),
+                    dataJoined: dataJoined
+                };*/
                 
                 Scripts.API.POST(options);
             });
@@ -87,9 +154,10 @@
             }
         }
 
-        var ImplementGrafico = async () => {
+        var ImplementGrafico = async (dataOptions) => {
             try {
-                var Wallet = await CarregaDados();
+
+                var Wallet = await CarregaDados(dataOptions);
 
                 var chartData = ChartData;
 
@@ -100,42 +168,40 @@
 
                 var ol = Scripts.Elements.Create('ol', 'listCard', null, null, 'height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
 
-                var configTime = new Array();
+                var configTime = null;
 
                 for (var i = 0; i < Wallet.Cards.length; i++) {
-                    ol.appendChild(ImplementList.Cards(i + 1, Wallet.Cards[i].CodCard, Wallet.Cards[i].Amount,
-                        Wallet.Cards[i].TimeString, Wallet.Cards[i].title, Wallet.Cards[i].Description));
+                    ol.appendChild(ImplementList.Cards(i + 1, Wallet.Cards[i]?.CodCard, Wallet.Cards[i]?.Amount,
+                        Wallet.Cards[i]?.TimeString, Wallet.Cards[i]?.title ?? ' - ', Wallet.Cards[i]?.Description));
 
                     totalizador += parseFloat(Wallet.Cards[i].Amount.replaceAll("R$", "").replaceAll(",", "."));
                 }
 
-                for (i = 0; i < Wallet.TimeString.length; i++) {
-                    configTime.push([Wallet.TimeString[i], `rgb(${(Math.round(Math.random() * 100) + 100)}, ${(Math.round(Math.random() * 100) + 100)}, ${(Math.round(Math.random() * 100 )+ 100)})`]);
-
-                    var result = Wallet.Cards.find(x => x.timeString == Wallet.TimeString[i]);
+                for (var i = 0; i < MonthColor.length; i++) {                    
+                    var result = Wallet.Cards.filter(x => x.TimeString.indexOf(MonthColor[i].month) > -1);                                 
 
                     if (Array.isArray(result)) {
                         var total = 0;
-                        for (o = 0; o < result.length; o++) {
-                            total += parseFloat(Wallet.Cards[i].Amount.replaceAll("R$", "").replaceAll(",", "."));
+                        for (var o = 0; o < result.length; o++) {
+                            total += parseFloat(Wallet.Cards[o].Amount.replaceAll("R$", "").replaceAll(",", "."));
                         }
 
                         data.push(total);
 
                     } else if (result != null) {
-                        data.push(parseFloat(result.amount.replaceAll("R$", "").replaceAll(",", ".")));
+                        data.push(parseFloat(result.Amount.replaceAll("R$", "").replaceAll(",", ".")));
                     }
 
-                    dataSet.push({
-                        label: Wallet.TimeString[i],
-                        data: data,
-                        backgroundColor: configTime.find(x => x[0] == Wallet.Cards[i].TimeString)[1],
-                        borderWidth: 2,
-                        borderColor: configTime.find(x => x[0] == Wallet.Cards[i].TimeString)[1]
-                    });
-
-                    label.push(Wallet.TimeString[i]);
+                    label.push(MonthColor[i].month);
                 }
+
+                dataSet.push({
+                        label: ["Gastos"],
+                        data: data,
+                        backgroundColor: '#7542ff',
+                        borderWidth: 2,
+                        borderColor: '#7542ff'
+                    });
 
                 document.getElementById("listCards").appendChild(ol);
 
@@ -156,13 +222,7 @@
                 chartData.datasets = dataSet;
                 
                 Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
-                    "graficoLine");
-
-                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('doughnut', chartData),
-                    "graficoDoughnut");
-
-                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('bubble', chartData),
-                    "graficoBubble");
+                    "graficoLine");               
 
                 Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('bar', chartData),
                     "graficoBar");
@@ -172,10 +232,70 @@
             }
         }        
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            ImplementGrafico();
+        var DeleteAll = function async (){
 
-            document.getElementById('userName').textContent = `Bem vindo ao seu painel de controle, ${recuperaUserNameCookie()}`
+            if(confirm('Deseja apagar todos os registros desse Banco?')){
+                return new Promise((resolve) => {
+                    var options = AjaxOptions;
+                    options.url = `${urlAPI}Wallet/DeleteAllCards`;
+                    options.method = 'POST';
+
+                    options.onload = (xhr, obj) => {
+                        
+                        if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
+                            if (xhr.currentTarget.response == false) {
+                                alert(`Ocorreu um erro durante o processo.`);
+                                resolve(false);
+                            }                        
+                            AtualizaList();
+                            resolve(true);
+                        } else {
+                            alert("Nenhum dado foi excluído.");
+                        }
+                    }
+
+                    options.data = recuperaUserCodCookie();
+
+                    Scripts.API.POST(options);
+                });
+            }
+            
+        }
+
+        var ImplementMonthsOptions = () =>{
+            try{               
+
+                for(var i = 0; i <= MonthColor.length; i++){
+                    var checkbox = Scripts.Elements.Create('input', `option${MonthColor[i].month}`, 'month',
+                        'btn-check', null, null, (event) => {AtualizaDados(event, event.target);}, 'checkbox');
+
+                    var label = Scripts.Elements.Create('label', null, null,
+                        'btn-check', null, ['btn', 'btn-outline-primary']);
+                    
+                    checkbox.value = MonthColor[i].month;
+                    
+                    label.innerText = MonthColor[i].month;
+                    label.htmlFor = `option${MonthColor[i].month}`;
+                    
+                    document.getElementById('groupMonth').appendChild(checkbox);
+                    document.getElementById('groupMonth').appendChild(label);
+                }
+
+            }catch(Error){
+
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try{
+                debugger;
+                ImplementGrafico();
+                ImplementMonthsOptions();
+
+                document.getElementById('userName').textContent = `Bem vindo ao seu painel de controle de bancos, ${recuperaUserNameCookie()}`
+            }catch(Error){
+                log(Error);
+            }            
         });
     </script>
 
@@ -282,23 +402,24 @@
 <body>
     <a style=" background-color: transparent; position: absolute; top: 11%; left: 4%;" href="/Admin/Projects/Apply/Apply.html"><i class="fas fa-rocket backMenu"></i></a>
     <a href="https://app.nubank.com.br/#/login" target="_blank"><img class="logo" src="/img/nubank-logo.png" alt="Logo-Nubank" /></a>    
+    <label id="userName"></label>
     <label id="logout" onclick="logOut();">Logout</label>
     <div class="panel">
         <div class="container">
             <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>
-
+            <div style="margin: 10px;"class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="btnradio1">Sintetico</label>
+              
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3">Analitico</label>
+            </div>
             <div id="carouselExampleInterval" class="carousel slide">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
+                    <div name="frameCarrousel" class="carousel-item active">
                         <canvas id="graficoLine"></canvas>
-                    </div>
-                    <div class="carousel-item">
-                        <canvas id="graficoDoughnut"></canvas>
-                    </div>
-                    <div class="carousel-item">
-                        <canvas id="graficoBubble"></canvas>
-                    </div>
-                    <div class="carousel-item">
+                    </div>                    
+                    <div name="frameCarrousel" class="carousel-item">
                         <canvas id="graficoBar"></canvas>
                     </div>
                 </div>
@@ -314,13 +435,25 @@
         </div>
 
         <div id="listCards" style="height: 59% !important;" class="container">
-            <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">
-                <i class="fas fa-check-circle"></i>
-                <i class="far fa-check-circle"></i>
+            <div style="width: 100%; flex-direction: column;" class="btn-group" role="group" aria-label="Basic example">                                     
+                <button id="monthOptions" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    All
+                </button>                
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <div class="btn-group" role="group" id="groupMonth">
+                            <input value="All" checked type="checkbox" class="btn-check" name="month" id="All" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="All">All</label>                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">     
                 <button type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
                 <button type="button" class="btn btn-primary buttonPanel" disabled><i class="fas fa-eraser"></i> Apagar</button>
-                <button type="button" class="btn btn-primary buttonPanel"><i class="fas fa-sync-alt"></i> Atualizar</button>
-            </div>
+                <button type="button" class="btn btn-primary buttonPanel" onclick="DeleteAll();"><i class="far fa-trash-alt"></i> Apagar Todas</button>
+                <button id="refresh"type="button" class="btn btn-primary buttonPanel" onclick="AtualizaList();" ><i class="fas fa-sync-alt"></i> Atualizar <i id="icoRefresh" class="far fa-dot-circle"></i></button>
+            </div>            
         </div>
     </div>
     <footer><i class="fas fa-meteor iconFooter"></i> Apply 1.1 - INTRU INC.</footer>

@@ -215,13 +215,19 @@ const Elements = {
      * @param {any} style
      * @param {any} onchange
      */
-    Create: (type = null, id = '', name = '', classe = null, style = null, classList = null, onchange = null) => {
+    Create: (type = null, id = '', name = '', classe = null, style = null, classList = null, onchange = null, typeButton = null) => {
         try {
             if (type == null && type == undefined) {
                 return null;
             }
 
             var element = document.createElement(type);
+
+            if (typeButton != null && typeButton != undefined) {
+                if(type == 'input'){
+                    element.type = typeButton;
+                }                
+            }
 
             if (onchange != null, onchange != undefined) {
                 element.addEventListener('change', onchange);
@@ -231,7 +237,9 @@ const Elements = {
                 element.style = style;
             }
 
-            element.id = id;
+            if (id != null && id != undefined) {
+                element.id = id;
+            }            
 
             if (classList != null && Array.isArray(classList)) {
                 for (i = 0; i < classList.length; i++) {
@@ -241,7 +249,9 @@ const Elements = {
                 element.classList.add(classe);
             }
 
-            element.name = name;
+            if (name != null && name != undefined) {
+                element.name = name;
+            }            
 
             return element;
         } catch (error) {

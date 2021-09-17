@@ -69,10 +69,10 @@ var Execute = {
         document.querySelectorAll(".bill_flow_closed").forEach((element, index) =>{
             var FlowClosed = {};
             
-            FlowClosed.Title = element.children[1].innerText; 
-            FlowClosed.Description = element.children[2].innerText;           
-            FlowClosed.Amount = element.children[3].innerText;
-            FlowClosed.TimeString = element.children[5].innerText;            
+            FlowClosed.Title = element.children[1]?.innerText ?? null; 
+            FlowClosed.Description = element.children[2]?.innerText ?? null;           
+            FlowClosed.Amount = element.children[3]?.innerText ?? null;
+            FlowClosed.TimeString = element.children[5]?.innerText ?? null;            
 
             flowCloseds.push(FlowClosed);    
         });

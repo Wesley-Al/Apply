@@ -5,6 +5,57 @@
  *
  * */
 
+const MonthColor = [
+    {
+        month: 'JAN',
+        color: '#1060ff' 
+    },
+    {
+        month: 'FEV',
+        color: '#7542ff' 
+    },
+    {
+        month: 'MAR',
+        color: '#198e7c' 
+    },
+    {
+        month: 'ABR',
+        color: '#24b550' 
+    },
+    {
+        month: 'MAIO',
+        color: '#89e23c' 
+    },
+    {
+        month: 'JUN',
+        color: '#fef200' 
+    },
+    {
+        month: 'JUL',
+        color: '#fccc00'
+    },
+    {
+        month: 'AGO',
+        color: '#fe8f01'
+    },
+    {
+        month: 'SET',
+        color: '#f95201'
+    },
+    {
+        month: 'OUT',
+        color: '#7a1fa0'
+    },
+    {
+        month: 'NOV',
+        color: '#ab31aa'
+    },
+    {
+        month: 'DEZ',
+        color: '#fe0000'
+    }
+]
+
 const ChartData = {
     labels: [],
     datasets: [{

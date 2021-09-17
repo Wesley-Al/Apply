@@ -9,15 +9,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Apply.Services
 {
-    public class SecurityService
+    public class SecurityService : ISecurityService
     {
         private readonly Context Context;
 
         public SecurityService(Context context)
-        {
-            DbContextOptions<Context> dbContextOptions = new DbContextOptions<Context>();
-            
-            Context = new Context(dbContextOptions);
+        {   
+            Context = context;
         }
 
         public bool CadastraUsuario(Usuario usuario)
