@@ -38,6 +38,8 @@
                     options.push(inputs[i].value);
                 }
 
+                document.getElementById('monthOptions').innerText = options.join(' - ') == "" ? 'All' : options.join(' - ');
+
                 var divCarrousel = document.querySelectorAll('div[name=frameCarrousel]');
 
                 document.getElementsByClassName('totalizador')[0]?.remove();
@@ -49,7 +51,6 @@
                 divCarrousel[1].appendChild(Scripts.Elements.Create('canvas', 'graficoBar'));
 
                 ImplementGrafico(options);
-
                
             }catch(Error){
 
