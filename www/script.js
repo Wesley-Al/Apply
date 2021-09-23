@@ -36,7 +36,7 @@ const Usuario = {
         Scripts.API.POST(option);
     },
     CadastraUsuario: (pUsuario, pSenha, nomeUsuario) => {
-        debugger;
+        
         var Usuario = {
             UsuarioLogin: pUsuario,
             Senha: pSenha,

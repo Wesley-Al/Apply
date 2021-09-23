@@ -13,8 +13,8 @@
 
 const url = new URL(document.URL);
 const urlHost = `${url.protocol}//${url.host}`;
-const urlAPI = `${urlHost}/api/`;
-//const urlAPI = `https://intru.herokuapp.com/`;
+//const urlAPI = `${urlHost}/api/`;
+const urlAPI = `https://intru.herokuapp.com/`;
 //const urlAPI = `https://localhost:44382/`;
 
 //Cores primarias

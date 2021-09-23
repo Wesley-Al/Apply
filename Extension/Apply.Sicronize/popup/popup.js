@@ -1,13 +1,18 @@
 const urlHostExt = `http://intru`;
-const urlAPIExt = `${urlHostExt}/api/`;
+const urlAPIExt = `https://intru.herokuapp.com/`;
+//const urlAPIExt = `${urlHostExt}/api/`;
 //const urlAPI = `https://localhost:44382/`;
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    document.getElementById('userNameExtension').textContent = `${recuperaUserNameCookie()}`;
+    
+
     document.querySelector(".login").addEventListener("click", () => {
         Autenticar()
     });
 
-    document.getElementById("logout").addEventListener("click", () => {
+    document.getElementById("logoutExtension").addEventListener("click", () => {
         logOutPop();
     });
 

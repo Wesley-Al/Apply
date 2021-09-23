@@ -30,7 +30,7 @@
 
         var AtualizaList = () => {
             try{
-                debugger;
+                
                 var inputs = document.querySelectorAll('input[name=month]:checked');
                 var options = new Array();
 
@@ -72,9 +72,7 @@
                         if (xhr.currentTarget.response.success == false) {
                             Scripts.Elements.Message.Error(`Ocorreu um erro: ${xhr.currentTarget.response.erroMsg}`);
                             resolve(null);
-                        }
-
-                        debugger;
+                        }                        
 
                         var Wallet;
 
@@ -94,7 +92,7 @@
                     }
                 }
                 
-                 debugger;
+                 
                 if(dataOptions != null && dataOptions != undefined ){
                     if(dataOptions.length > 0){
                         dataJoined = dataOptions.join(',');
@@ -289,7 +287,7 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             try{
-                debugger;
+                
                 ImplementGrafico();
                 ImplementMonthsOptions();
 
@@ -303,6 +301,10 @@
     <link rel="stylesheet" href="/Library.Front/Library/css/style.padrao.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        #graficoLine{
+            width: 100% !important;            
+        }
+
         .buttonPanel {
             background-color: white !important;
             border: 0;
@@ -408,13 +410,14 @@
     <div class="panel">
         <div class="container">
             <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>
-            <div style="margin: 10px;"class="btn-group" role="group" aria-label="Basic radio toggle button group">
+           <!-- <div style="margin: 10px;"class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
                 <label class="btn btn-outline-primary" for="btnradio1">Sintetico</label>
               
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
                 <label class="btn btn-outline-primary" for="btnradio3">Analitico</label>
             </div>
+           -->
             <div id="carouselExampleInterval" class="carousel slide">
                 <div class="carousel-inner">
                     <div name="frameCarrousel" class="carousel-item active">
