@@ -56,6 +56,34 @@ const MonthColor = [
     }
 ]
 
+const TipoRegistroColor = [
+    {
+        cod: 'RendaFx',
+        name: 'Renda Fixa',
+        color: '#1060ff'
+    },
+    {
+        cod: 'DebitoFx',
+        name: 'Débito Fixo',
+        color: '#7542ff'
+    },
+    {
+        cod: 'DebitoPas',
+        name: 'Débito Passivo',
+        color: '#198e7c'
+    },
+    {
+        cod: 'ReceitaPas',
+        name: 'Receita Passiva',
+        color: '#24b550'
+    },
+    {
+        cod: 'Emprestimo',
+        name: 'Empréstimo',
+        color: '#89e23c'
+    }
+]
+
 const ChartData = {
     labels: [],
     datasets: [{

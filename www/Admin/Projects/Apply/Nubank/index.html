@@ -221,10 +221,7 @@
                 chartData.datasets = dataSet;
                 
                 Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
-                    "graficoLine");               
-
-                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('bar', chartData),
-                    "graficoBar");
+                    "graficoLine");                             
 
             } catch (error) {
                 console.log(error);
@@ -418,23 +415,8 @@
                 <label class="btn btn-outline-primary" for="btnradio3">Analitico</label>
             </div>
            -->
-            <div id="carouselExampleInterval" class="carousel slide">
-                <div class="carousel-inner">
-                    <div name="frameCarrousel" class="carousel-item active">
-                        <canvas id="graficoLine"></canvas>
-                    </div>                    
-                    <div name="frameCarrousel" class="carousel-item">
-                        <canvas id="graficoBar"></canvas>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+            <div name="frameCarrousel" class="carousel-item active">
+                <canvas id="graficoLine"></canvas>
             </div>
         </div>
 

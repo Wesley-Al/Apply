@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-Br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head>    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge; charset=UTF-8;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply</title>
     <link rel="sortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -39,8 +38,43 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            var dataSet = new Array;
+            
+
+            var chartData = ChartData;
+            var label = new Array;
+
             document.getElementById('userName').innerHTML = recuperaUserNameCookie() + '<i class="far fa-user-circle"></i>';
-            document.getElementById('user').textContent = `Bem vindo , ${recuperaUserNameCookie()}`
+            document.getElementById('user').textContent = `Bem vindo , ${recuperaUserNameCookie()}`                       
+
+            for (var m = 0; m < MonthColor.length; m++) {
+
+                label.push(MonthColor[m].month);
+            }
+
+            for (var i = 0; i < TipoRegistroColor.length; i++) {
+                var data = new Array;
+
+                for (var m = 0; m < MonthColor.length; m++) {
+
+                    var total = 0;
+                    data.push(10 + (m * Math.random()));             
+                }
+
+                dataSet.push({
+                    label: TipoRegistroColor[i].name,
+                    data: data,
+                    backgroundColor: TipoRegistroColor[i].color,
+                    borderWidth: 2,
+                    borderColor: TipoRegistroColor[i].color
+                });
+            }
+
+            chartData.labels = label;
+            chartData.datasets = dataSet;
+
+            Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
+                "graficoLine");
         })
     </script>
 
@@ -58,7 +92,7 @@
 
 body{
     color: var(--colorPrymary5) !important;
-    background-color: black;        
+    background-color: white;        
 }
 .body{
     width: 100%;
@@ -251,31 +285,31 @@ h5{
                     </button>
                   </div>
             </div>
-            <div id="competencias" class="competencias">
-             RELATÓRIOS
+            <div id="relatorio" class="relatorio">
+                <canvas id="graficoLine"></canvas>
             </div>
             <div id="curriculum" class="curriculum">
                 <div class="projects">
                     <div class="list-group">
                         <a href="/Admin/Projects/Apply/Nubank/index.html" class="list-group-item list-group-item-action" aria-current="true">
-                          <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">NuBank</h5>
-                            <small class="atualizar">Hoje <i class="fas fa-sync-alt"></i></small>
-                          </div>
-                          <p class="mb-1">Some placeholder content in a paragraph.</p>
-                          <small>And some small print.</small>
-                        </a>                
-                      </div>
-                      <div class="list-group">
-                        <a href="/Admin/Projects/Apply/Nubank/index.html" class="list-group-item list-group-item-action" aria-current="true">
-                          <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">Inter</h5>
-                            <small class="atualizar">Hoje <i class="fas fa-sync-alt"></i></small>
-                          </div>
-                          <p class="mb-1">Some placeholder content in a paragraph.</p>
-                          <small>And some small print.</small>
-                        </a>                
-                      </div>
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">NuBank</h5>
+                                <small class="atualizar">Hoje <i class="fas fa-sync-alt"></i></small>
+                            </div>
+                            <p class="mb-1">Some placeholder content in a paragraph.</p>
+                            <small>And some small print.</small>
+                        </a>
+                    </div>
+                    <!--<div class="list-group">
+      <a href="/Admin/Projects/Apply/Nubank/index.html" class="list-group-item list-group-item-action" aria-current="true">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Inter</h5>
+          <small class="atualizar">Hoje <i class="fas fa-sync-alt"></i></small>
+        </div>
+        <p class="mb-1">Some placeholder content in a paragraph.</p>
+        <small>And some small print.</small>
+      </a>
+    </div>-->
                 </div>        
             </div>
         </div>

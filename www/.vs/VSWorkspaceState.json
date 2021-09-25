@@ -1,11 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Admin",
+    "\\Admin\\Projects",
+    "\\Admin\\Projects\\Apply",
+    "\\Admin\\Projects\\Apply\\Nubank",
     "\\Library.Front",
     "\\Library.Front\\Library",
     "\\Library.Front\\Library\\js",
     "\\Library.Front\\Library\\js\\class"
   ],
-  "SelectedNode": "\\Library.Front\\Library\\js\\class\\class.padrao.js",
+  "SelectedNode": "\\Library.Front\\Library\\js\\script.padrao.js",
   "PreviewInSolutionExplorer": false
 }
