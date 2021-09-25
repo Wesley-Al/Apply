@@ -12,9 +12,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
 
-        body{
-            font-size: 60%;
+        #sincronize {
+            color: var(--colorPrymary6);
+            background-color: white;
+            border: none;
+            border-radius: 21px;
+            font-weight: 600;
+            font-size: 11px;
+            transition: background-color,color linear 0.5s !important;
         }
+
+        #sincronizar {
+            padding: 10px 27px 27px;
+            margin-top: 14px;
+            flex-direction: column;
+            place-content: center;
+            gap: 15px;
+            text-align: center;
+            background-color: white;
+            color: var(--colorPrymary5);
+            font-weight: bold;
+            border-radius: 10px;
+            display: flex;
+        }       
 
         a {
             text-decoration: none;
@@ -81,18 +101,27 @@
                 border: none;
                 outline: none;
             }
+
+        .panelBody {            
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            display: flex;
+            padding: 13px;
+            padding-top: 0px;
+        }
+
+        .headerSincronizar {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            font-size: 13px;
+        }
     </style>
 </head>
 <body style="background-color: var(--colorPrymary6); color: white; border-radius: 43px;">
     <div id="panel">
-        <div style="
-    /* padding: 74px; */
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    display: flex;
-    padding: 13px;
-    padding-top: 0px;">
+        <div class="panelBody">
             <div style=" display: none; opacity: 0;" id="login">
                 <label>Usuario</label>
                 <input class="input" id="usuLogin" type="text">
@@ -100,17 +129,13 @@
                 <input class="input" id="senhaLogin" type="password">
                 <button class="login">Logar</button>
             </div>
-            <div id="sincronizar" style=" opacity: 1; padding: 10px 27px 27px; margin-top: 14px; flex-direction: column; place-content: center; gap: 15px; text-align: center; background-color: white; color: var(--colorPrymary5); font-weight: bold; border-radius: 10px; display: flex;">
-                <div style="
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    font-size: 13px;">
+            <div id="sincronizar" style="opacity: 1;">
+                <div class="headerSincronizar">
                     <label id="userNameExtension"></label>
                     <label id="logoutExtension">Logout</label>
                 </div>
 
-                <label>Painel de Sincronização</label>
+                <label>Synchronize</label>
                 <select>
                     <option value="null"> 
                         [Selecione uma opção]
@@ -119,14 +144,7 @@
                         NuBank
                     </option>
                 </select>
-                <button id="sincronize" style="
-    color: var(--colorPrymary6);
-    background-color: white;
-    border: none;
-    border-radius: 21px;
-    font-weight: 600;
-    font-size: 11px;
-    transition: background-color,color linear 0.5s !important;">
+                <button id="sincronize">
                     Start
                 </button>
 
