@@ -394,7 +394,7 @@ var logOut = function () {
     Scripts.Elements.Message.Error("Redirecionando para o login...");
     document.cookie = `username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     document.cookie = `usercod=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    setTimeout(() => { window.location.href = `${urlHost}/Security/Login/`; }, 3000);
+    setTimeout(() => { window.location.href = `${urlHost}/Security/Login/`; }, 1800);
 }
 
 var recuperaUserNameCookie = function () {    

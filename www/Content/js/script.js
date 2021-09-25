@@ -20,7 +20,7 @@ const Usuario = {
                     Scripts.Elements.Message.Success("Efetuando o Login...");
                     Scripts.Elements.Load.Create('Growing', 'messageContent', 'width: 1rem !important; height: 1rem !important;', 'var(--colorPrymary6)');                    
 
-                    setTimeout(() => { window.location.href = `${urlHost}/`; }, 3000);
+                    setTimeout(() => { window.location.href = `${urlHost}/Admin/Projects/Intru/Intru.html`; }, 2000);
 
                 } else {
                     Scripts.Elements.Message.Error(response.erroMsg);
@@ -50,7 +50,7 @@ const Usuario = {
             
             if (response.success == true) {
                 if (response.objeto == true) {
-                    Scripts.Elements.Message.Success("Usuario Cadastrado com sucesso!");
+                    Scripts.Elements.Message.Success("Usuário Cadastrado com sucesso!");
                 } else {
                     Scripts.Elements.Message.Error(response.erroMsg);
                 }
