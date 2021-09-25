@@ -65,12 +65,12 @@ const TipoRegistroColor = [
     {
         cod: 'DebitoFx',
         name: 'Débito Fixo',
-        color: '#7542ff'
+        color: '#fe0000'
     },
     {
         cod: 'DebitoPas',
         name: 'Débito Passivo',
-        color: '#198e7c'
+        color: '#fccc00'
     },
     {
         cod: 'ReceitaPas',
@@ -80,7 +80,7 @@ const TipoRegistroColor = [
     {
         cod: 'Emprestimo',
         name: 'Empréstimo',
-        color: '#89e23c'
+        color: '#7542ff'
     }
 ]
 

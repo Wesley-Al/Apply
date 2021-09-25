@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-Br">
-<head>    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge; charset=UTF-8;">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="charset=UTF-8;">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply</title>
     <link rel="sortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -39,13 +39,14 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             var dataSet = new Array;
-            
+
 
             var chartData = ChartData;
             var label = new Array;
+            var option = null;
 
             document.getElementById('userName').innerHTML = recuperaUserNameCookie() + '<i class="far fa-user-circle"></i>';
-            document.getElementById('user').textContent = `Bem vindo , ${recuperaUserNameCookie()}`                       
+            document.getElementById('user').textContent = `Bem vindo , ${recuperaUserNameCookie()}`
 
             for (var m = 0; m < MonthColor.length; m++) {
 
@@ -58,7 +59,7 @@
                 for (var m = 0; m < MonthColor.length; m++) {
 
                     var total = 0;
-                    data.push(10 + (m * Math.random()));             
+                    data.push(10 + (m * Math.random()));
                 }
 
                 dataSet.push({
@@ -68,10 +69,22 @@
                     borderWidth: 2,
                     borderColor: TipoRegistroColor[i].color
                 });
+
+                option = Scripts.Elements.Create('option', null, 'optionsType', null, null, ['dropdown-item', 'optionSelect']);
+
+                option.innerText = TipoRegistroColor[i].name;
+                option.value = i;
+
+                document.getElementById('selectType')
+                    .appendChild(option);
             }
 
             chartData.labels = label;
             chartData.datasets = dataSet;
+
+            document.getElementById('selectType').addEventListener('change', (target, obj) => {
+
+            });
 
             Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
                 "graficoLine");
@@ -81,30 +94,37 @@
     <link rel="stylesheet" href="/Library.Front/Library/css/style.padrao.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        .container{
-   
-            width: 50%;
-    height: 92%;    
-    display: flex;    
-    align-items: center;
-    flex-direction: column;    
-}
+        .container {
+            width: 70% !important;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
 
-body{
-    color: var(--colorPrymary5) !important;
-    background-color: white;        
-}
-.body{
-    width: 100%;
-}
+        body {
+            color: var(--colorPrymary5) !important;
+            background-color: white;
+            height: 100% !important;
+        }
 
-.head{
-    margin: 5%;
-}
+        .body {
+            width: 100%;
+            height: 100% !important;
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr;
+            gap: 62px;
+        }
 
-h5{
-    font-weight: 600 !important;
-}
+        .head {
+            margin: 5%;
+        }
+
+        h5 {
+            font-weight: 600 !important;
+        }
+
         .subTitle {
             font-size: 0.7rem;
             text-align: right;
@@ -113,40 +133,40 @@ h5{
 
         .repository {
             width: 100%;
-            height: 70%;           
+            height: 70%;
             margin-bottom: 5%;
         }
 
-        .competencias{
+        .competencias {
             width: 100%;
         }
 
-        #carouselExampleIndicators{
+        #carouselExampleIndicators {
             height: 100%;
             width: 100%;
         }
 
-        .carousel-indicators button{
+        .carousel-indicators button {
             height: 10px !important;
             width: 10px !important;
             border-radius: 100% !important;
-            background-color: var(--colorPrymary5) !important;            
+            background-color: var(--colorPrymary5) !important;
         }
 
-        .list-group-item-action{
+        .list-group-item-action {
             font-weight: 600 !important;
             color: var(--colorPrymary5);
             transition: color,border-color,background-color 1s !important;
             background-color: transparent !important;
-            border: solid 1px var(--colorPrymary5) !important;            
+            border: solid 1px var(--colorPrymary5) !important;
         }
 
-        .list-group-item-action:hover{
-            color: whitesmoke !important;
-            transition: color,border-color,background-color 1s !important;
-            background-color: var(--colorPrymary5) !important;
-            border-color: transparent;         
-        }
+            .list-group-item-action:hover {
+                color: whitesmoke !important;
+                transition: color,border-color,background-color 1s !important;
+                background-color: var(--colorPrymary5) !important;
+                border-color: transparent;
+            }
 
         footer {
             position: fixed;
@@ -168,23 +188,23 @@ h5{
             padding-right: 0.4%;
         }
 
-        #userName{
+        #userName {
             font-weight: 600 !important;
             color: var(--colorPrymary5);
             transition: color,border-color,background-color 1s !important;
             background-color: transparent !important;
-            border: solid 1px var(--colorPrymary5) !important;   
+            border: solid 1px var(--colorPrymary5) !important;
             padding: 7px !important;
             border-radius: 52px;
             cursor: pointer;
         }
 
-        #userName:hover{
-            color: whitesmoke !important;
-            transition: color,border-color,background-color 1s !important;
-            background-color: var(--colorPrymary5) !important;
-            border-color: transparent;         
-        }
+            #userName:hover {
+                color: whitesmoke !important;
+                transition: color,border-color,background-color 1s !important;
+                background-color: var(--colorPrymary5) !important;
+                border-color: transparent;
+            }
 
         #user {
             top: 2%;
@@ -195,56 +215,81 @@ h5{
             cursor: pointer;
         }
 
-        .painel{
+        .painel {
             width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-content: center;
-    align-items: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-content: center;
+            align-items: center;
         }
 
-        .actions{            
+        .actions {
             width: 25%;
-    height: 38%;
-    background-color: black;
-    color: white;
-    text-align: center;
-    border-radius: 11px;
-    padding: 32px;
-    cursor: pointer;
-    transition: color,border-color,background-color 1s !important;
-        }
-        .actions:hover{
-            font-weight: 600;
-            color: var(--colorPrymary5) !important;
+            height: 38%;
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 11px;
+            padding: 32px;
+            cursor: pointer;
             transition: color,border-color,background-color 1s !important;
-            background-color: rgba(201, 201, 201, 0.849) !important;
-            border-color: transparent;         
         }
 
-        .atualizar{                        
-        background-color: black;
-        color: white;
-        text-align: center;
-        border-radius: 11px;
-        padding: 8px;
-        cursor: pointer;
-        transition: color,border-color,background-color 1s !important;
-        }
-        .atualizar:hover{
-            font-weight: 600;
-            color: var(--colorPrymary5) !important;
+            .actions:hover {
+                font-weight: 600;
+                color: var(--colorPrymary5) !important;
+                transition: color,border-color,background-color 1s !important;
+                background-color: rgba(201, 201, 201, 0.849) !important;
+                border-color: transparent;
+            }
+
+        .atualizar {
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 11px;
+            padding: 8px;
+            cursor: pointer;
             transition: color,border-color,background-color 1s !important;
-            background-color: rgba(201, 201, 201, 0.849) !important;
-            border-color: transparent;         
         }
 
-        .atualizar:hover::before{
-            content: 'Última atualização - ';
+            .atualizar:hover {
+                font-weight: 600;
+                color: var(--colorPrymary5) !important;
+                transition: color,border-color,background-color 1s !important;
+                background-color: rgba(201, 201, 201, 0.849) !important;
+                border-color: transparent;
+            }
+
+                .atualizar:hover::before {
+                    content: 'Última atualização - ';
+                }
+
+        .selectPrymary {
+            color: white;
         }
-        
+
+        .optionSelect {
+            color: white;
+        }
+
+        .painelBody{
+            font-weight: 600;
+        }
+
+        .title {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            margin-bottom: 35px;
+        }
+
+        .title span{
+            font-size: 2rem;
+        }
+
     </style>
 </head>
 <body>
@@ -254,36 +299,77 @@ h5{
     <div id="container" class="container">
         <div id="header" class="head">
             <div style="align-self: flex-start;">
-                <h4 id="userName" style=" text-align: left;"></h4>                 
-            </div>            
+                <h4 id="userName" style=" text-align: left;"></h4>
+            </div>
         </div>
-      
-        <div id="body" class="body">
-            <div id="repository" class="repository">
-                <div style="background-color: white; border-radius: 10px; height: 100%; box-shadow: 0 0 27px -6px black;" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>                      
-                    </div>
-                    <div style=" width: 100%; height: 100%;" class="carousel-inner">
-                      <div style="    height: 100%; width: 100%;" class="carousel-item active">
-                        <div class="painel">
-                            <div class="actions">
-                                Registros <i class="fas fa-clipboard-list"></i>
-                            </div>
-                            <div class="actions">
-                                Conversor <i class="fab fa-bitcoin"></i>
-                            </div>                            
-                        </div>
 
-                      </div>                      
+        <div id="body" class="body">
+            <div id="painel" class="painel">
+
+                <div class="painelBody">
+                    <div class="title">
+                        <span>Cadastrar Registro </span>
+                        <small>
+                            Escolha o tipo do registro para come&#231;ar
+                        </small>
                     </div>
-                    <button disabled class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <i class="fas fa-chevron-right" style="transform: rotate(180deg); font-size: 2rem; color: var(--colorPrymary5); opacity: 67%;"></i>
-                    </button>
-                    <button disabled class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">                        
-                        <i class="fas fa-chevron-right" style="font-size: 2rem; color: var(--colorPrymary5); opacity: 67%;"></i>
-                    </button>
-                  </div>
+                    <form>
+                        <fieldset style="
+    display: flex;
+    gap: 56px;
+">
+                            <div class="mb-3">
+                                <label for="disabledTextInput" class="form-label">Tipo</label>
+                                <div class="selectionType">
+                                    <!-- Default dropend button -->
+                                    <div class="btn-group dropend">
+                                        <select id="selectType" class="btn btn-secondary dropdown-toggle selectPrymary" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <option style="color: var(--colorPrymary5) !important; font-weight: bold !important; background-color: white !important; " class="dropdown-item-text">Selecione um tipo de Registro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="vinculoUsuario">
+                                    <label for="disabledTextInput" class="form-label">
+                                        Vincular Usu&#225;rio
+                                    </label>
+                                    <input type="text" class="form-control" placeholder="Usu&#225;rio">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="disabledTextInput" class="form-label">Titulo</label>
+                                <input type="text" class="form-control" placeholder="Titulo do Registro">
+
+                                <label for="disabledTextInput" class="form-label">Valor</label>
+                                <input type="text" class="form-control" placeholder="Valor do Registro">
+                            </div>
+                            <div class="mb-3">
+                                <label for="disabledTextInput" class="form-label">Data</label>
+                                <input type="date" class="form-control" placeholder="Data do Registro">
+
+                                <label for="disabledSelect" class="form-label">Categoria</label>
+                                <select class="form-select">
+                                    <option>Compras</option>
+                                </select>
+                            </div>
+                            <!--<div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled>
+                                    <label class="form-check-label" for="disabledFieldsetCheck">
+                                        Can't check this
+                                    </label>
+                                </div>
+                            </div>-->
+                            <button type="submit" class="btn btn-primary" style="
+    /* height: 244px !important; */
+    /* width: 15%; */
+    /* right: 0; */
+    /* position: absolute; */
+">
+                                Concluir
+                            </button>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
             <div id="relatorio" class="relatorio">
                 <canvas id="graficoLine"></canvas>
@@ -301,19 +387,19 @@ h5{
                         </a>
                     </div>
                     <!--<div class="list-group">
-      <a href="/Admin/Projects/Apply/Nubank/index.html" class="list-group-item list-group-item-action" aria-current="true">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">Inter</h5>
-          <small class="atualizar">Hoje <i class="fas fa-sync-alt"></i></small>
-        </div>
-        <p class="mb-1">Some placeholder content in a paragraph.</p>
-        <small>And some small print.</small>
-      </a>
-    </div>-->
-                </div>        
+                      <a href="/Admin/Projects/Apply/Nubank/index.html" class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">Inter</h5>
+                          <small class="atualizar">Hoje <i class="fas fa-sync-alt"></i></small>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                        <small>And some small print.</small>
+                      </a>
+                    </div>-->
+                </div>
             </div>
         </div>
-        <footer><i class="fas fa-meteor iconFooter"></i> Apply 1.1 - INTRU INC.</footer>       
+        <footer><i class="fas fa-meteor iconFooter"></i> Apply 1.1 - INTRU INC.</footer>
     </div>
     <!--<img style="height: 100vh; width: 100%; position: fixed;" src="/img/background.jpg" />-->
 
