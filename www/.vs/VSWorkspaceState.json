@@ -5,11 +5,14 @@
     "\\Admin\\Projects",
     "\\Admin\\Projects\\Intru",
     "\\Admin\\Projects\\Intru\\Nubank",
+    "\\Content",
+    "\\Content\\js",
     "\\Library.Front",
     "\\Library.Front\\Library",
     "\\Library.Front\\Library\\js",
-    "\\Library.Front\\Library\\js\\class"
+    "\\Library.Front\\Library\\js\\class",
+    "\\Security"
   ],
-  "SelectedNode": "\\Library.Front\\Library\\js\\script.padrao.js",
+  "SelectedNode": "\\Content\\js\\Intru.js",
   "PreviewInSolutionExplorer": false
 }
