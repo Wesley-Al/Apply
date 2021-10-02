@@ -232,12 +232,13 @@ var ImplementList = {
         }
     },
     Category: (Category) => {
-        try {
-
-            debugger;
+        try {            
 
             var category = Scripts.Elements.Create('li', null, null,
-                null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'cards', 'categoryItem']);
+                null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'cards', 'categoryItem']);            
+
+            var edit = Scripts.Elements.Create('i', null, null,
+                null, null, ['fas', 'fa-pen', 'editItem']);
 
             category.addEventListener('click', (element) => {
                 Scripts.Elements.ToogleClass(element.currentTarget, 'cards', 'cardSelected', (element) => {
@@ -267,7 +268,7 @@ var ImplementList = {
             //cabecalho.appendChild(spanIndex);
             category.append(cabecalho);
             category.appendChild(spanFixed);
-
+            category.appendChild(edit);
             return category;
 
         } catch (error) {
