@@ -137,6 +137,7 @@ a:hover{
     border: 0.5px solid white;
     border-radius: 10px;
     transition: background-color 0.5s;
+    cursor: pointer;
 }
 
     .cards:hover .spanTime {
@@ -152,4 +153,12 @@ a:hover{
         font-weight: 600 !important;
         transition: background-color 0.5s;
     }
+
+.cardSelected {
+    background-color: white !important;
+    color: var(--colorPrymary5) !important;
+    font-weight: 600 !important;
+    transition: background-color 0.5s;
+    cursor: pointer;
+}
 

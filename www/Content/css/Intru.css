@@ -247,6 +247,10 @@ footer {
     color: #5d00ebd4 !important;
 }
 
+.cardSelected {
+    color: #5d00ebd4 !important;
+}
+
 #alternateMenu {
     align-self: end;
     font-size: 2vh;

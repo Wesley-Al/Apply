@@ -381,13 +381,54 @@ const Elements = {
 
             document.body.appendChild(div);
         }
+    },
+    ToogleClass: (element, stringClassBefore, stringClassAfter, callback) => {
+        try {
+            var classList = element?.classList;
+
+            classList?.toggle(stringClassBefore)
+            classList?.toggle(stringClassAfter)
+
+            if (callback != null && callback != undefined && typeof(callback) == 'function') {
+                callback(element);
+            }
+
+        } catch (error) {
+            alert(error)
+        }
+    }
+}
+
+const ElementList = {
+    ToogleDisabledElement: (className, classIdentify, idElementDisable) => {
+
+        var selected = document.querySelectorAll(`.${className}`);
+        var existSelected = false;
+        var classList = null;
+
+        for (var i = 0; i < selected?.length; i++) {
+            classList = selected[i].classList;
+
+            if (classList?.value?.indexOf(`${classIdentify}`) != -1) {
+                existSelected = true;
+                break;
+            }
+        }
+
+        if (existSelected) {
+            document.getElementById(`${idElementDisable}`).disabled = false;
+        } else {
+            document.getElementById(`${idElementDisable}`).disabled = true;
+        }
+
     }
 }
 
 const Scripts = {
     Grafico: Grafico,
     API: API,
-    Elements: Elements
+    Elements: Elements,
+    ElementList: ElementList
 }
 
 var logOut = function () {    
@@ -395,6 +436,43 @@ var logOut = function () {
     document.cookie = `username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     document.cookie = `usercod=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     setTimeout(() => { window.location.href = `${urlHost}/Security/Login/`; }, 1800);
+}
+
+function selectAll(className, type, stringClassBefore, stringClassAfter) {
+    try {
+        var elements = null;        
+
+        switch (type) {
+            case 'li':
+                elements = document.querySelectorAll(`.${className}`);
+
+                for (var index = 0; index < elements?.length; index++) {
+                    Scripts.Elements
+                        .ToogleClass(elements[index], stringClassBefore, stringClassAfter);
+                }
+
+                break;
+
+            case 'checkBox':
+                elements = document.querySelectorAll(`.${className}`);
+
+                for (var index = 0; index < elements?.length; index++) {
+                    if (elements[i]?.checked == true) {
+                        elements[i].checked = false;
+
+                    } else {
+                        elements[i].checked = true;
+                    }
+                }
+
+                break;
+        }
+
+        return elements;
+
+    } catch (error) {
+        alert(error);
+    }
 }
 
 var recuperaUserNameCookie = function () {    

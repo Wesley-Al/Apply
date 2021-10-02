@@ -233,8 +233,17 @@ var ImplementList = {
     },
     Category: (Category) => {
         try {
+
+            debugger;
+
             var category = Scripts.Elements.Create('li', null, null,
-                null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'cards']);
+                null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'cards', 'categoryItem']);
+
+            category.addEventListener('click', (element) => {
+                Scripts.Elements.ToogleClass(element.currentTarget, 'cards', 'cardSelected', (element) => {
+                    Scripts.ElementList.ToogleDisabledElement('categoryItem ', 'cardSelected', 'eraseCategory');
+                });
+            });            
 
             category.dataset['cod'] = Category.ccCod;
 
@@ -376,11 +385,25 @@ var ImplementGrafico = async (dataOptions) => {
 }
 
 var DeleteAll = {
-    Category: async () => {
-        if (confirm('Deseja apagar todas as suas Categorias?')) {
+    Category: async (itens) => {
+        if (confirm('Deseja apagar as Categorias?')) {
             return new Promise((resolve) => {
                 var options = AjaxOptions;
-                options.url = `${urlAPI}Category/DeleteAllCategorys`;
+
+                if (itens?.length > 0) {
+                    var categorys = {
+                        UsuCod: recuperaUserCodCookie(),
+                        CCCodList: itens
+                    }
+
+                    options.url = `${urlAPI}Category/DeleteCategorys`;
+                    options.data = categorys;
+                } else {
+                    options.url = `${urlAPI}Category/DeleteAllCategorys`;
+                    options.data = recuperaUserCodCookie();
+
+                }
+                
                 options.method = 'POST';
 
                 options.onload = (xhr, obj) => {
@@ -400,9 +423,7 @@ var DeleteAll = {
                     } else {
                         alert("Nenhum dado foi excluído.");
                     }
-                }
-
-                options.data = recuperaUserCodCookie();
+                }                             
 
                 Scripts.API.POST(options);
             });

@@ -64,6 +64,35 @@
                     CadastraCategoria();
                 });
 
+                document.getElementById('eraseCategory').addEventListener('click', (target, obj) => {
+                    debugger;
+
+                    var selected = document.querySelectorAll('.categoryItem');
+                    var existSelected = false;
+                    var classList = null;
+                    var itens = new Array();
+
+                    for (var i = 0; i < selected?.length; i++) {
+                        classList = selected[i].classList;
+
+                        if (classList?.value?.indexOf('cardSelected') != -1) {
+                            itens.push(parseInt(selected[i]
+                                .dataset['cod']));
+                            existSelected = true;
+                        }
+                    }
+
+                    if (existSelected) {
+                        DeleteAll.Category(itens);
+                    }
+                    
+                });
+
+                document.getElementById('selectAllCategory').addEventListener('click', (target, obj) => {
+                    selectAll('categoryItem', 'li', 'cards', 'cardSelected');
+                    Scripts.ElementList.ToogleDisabledElement('categoryItem ', 'cardSelected', 'eraseCategory');
+                });
+
                 Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
                     "graficoLine");              
 
@@ -242,8 +271,8 @@
                                         </div>
                                         <div id="listCategory" style="height: 59% !important;" class="container">
                                             <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
-                                                <button type="button" class="btn btn-primary buttonPanel" disabled=""><i class="fas fa-eraser"></i> Apagar</button>
+                                                <button id="selectAllCategory" type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
+                                                <button id="eraseCategory" type="button" class="btn btn-primary buttonPanel" disabled=""><i class="fas fa-eraser"></i> Apagar</button>
                                                 <button type="button" class="btn btn-primary buttonPanel" onclick="DeleteAll.Category();"><i class="far fa-trash-alt"></i> Apagar Todas</button>
                                                 <button id="refresh" type="button" class="btn btn-primary buttonPanel" onclick="AtualizaList.Category();"><i class="fas fa-sync-alt"></i> Atualizar <i id="icoRefresh" class="far fa-dot-circle"></i></button>
                                             </div>
