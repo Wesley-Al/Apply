@@ -32,11 +32,12 @@ html {
 }
 
 .head {
+    box-shadow: 0px 0px 9px 0px black;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     text-align: center;
     z-index: 500;
     position: fixed;
-    background-color: var(--colorPrymary5);
+    background-color: #5d00ebd4;
     width: 100%;
     display: grid;
     flex-direction: row;
@@ -94,8 +95,9 @@ h5 {
     }
 
 footer {
+    box-shadow: 0px 0px 7px 0px black;
     position: fixed;
-    background-color: var(--colorPrymary5);
+    background-color: #5d00ebd4;
     height: 6%;
     width: 100%;
     display: flex;
@@ -202,8 +204,13 @@ footer {
 }
 
 .painelBody {
-    font-weight: 600;
+    font-weight: bold;
 }
+
+.painelBody input,option,select{
+    font-weight: bold !important;
+}
+
 
 .title {
     display: flex;
@@ -231,3 +238,37 @@ footer {
     width: 100% !important;
     height: 100% !important;
 }
+
+.cards {
+    background-color: #5d00ebd4 !important;
+}
+
+.cards:hover{
+    color: #5d00ebd4 !important;
+}
+
+#alternateMenu {
+    align-self: end;
+    font-size: 2vh;
+    border: none;
+    color: white;
+    background-color: #5d00ebd4;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 3px;
+    padding-left: 18px;
+    padding-right: 18px;
+    box-shadow: 0px 0px 0px 0px gray;
+
+    transition: box-shadow,background-color,color 0.3s linear;
+}
+
+    #alternateMenu:hover {
+        border: solid 1px #5d00ebd4 !important;
+        color: #5d00ebd4 !important;
+        background-color: white !important;
+        box-shadow: 0px 0px 9px 0px gray;
+        transition: background-color,color,box-shadow 0.3s linear;
+    }
+
+

@@ -73,8 +73,8 @@ const TipoRegistroColor = [
         color: '#fccc00'
     },
     {
-        cod: 'ReceitaPas',
-        name: 'Receita Passiva',
+        cod: 'RendaPas',
+        name: 'Renda Passiva',
         color: '#24b550'
     },
     {
