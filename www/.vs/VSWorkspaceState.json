@@ -2,18 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\Admin",
-    "\\Admin\\Projects",
-    "\\Admin\\Projects\\Intru",
-    "\\Admin\\Projects\\Intru\\Nubank",
     "\\Content",
     "\\Content\\js",
     "\\Library.Front",
     "\\Library.Front\\Library",
-    "\\Library.Front\\Library\\css",
     "\\Library.Front\\Library\\js",
     "\\Library.Front\\Library\\js\\class",
-    "\\Security"
+    "\\Security",
+    "\\Security\\Login"
   ],
-  "SelectedNode": "\\Content\\js\\Intru.js",
+  "SelectedNode": "\\Library.Front\\Library\\js\\script.padrao.js",
   "PreviewInSolutionExplorer": false
 }

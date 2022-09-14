@@ -84,6 +84,7 @@ var Execute = {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {        
 try{    
+    debugger;
     var Wallet = {};
     Wallet.Cards = Execute.ReturnCards();
     Wallet.Payments = Execute.ReturnPayments();

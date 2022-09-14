@@ -1,9 +1,11 @@
 .container {
-    width: 70% !important;
+    width: 100% !important;
     height: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 2%;
+    margin-top: 2%;
 }
 
 body {
@@ -28,23 +30,23 @@ html {
     grid-template-rows: 1fr 1fr 1fr 22%;
     grid-template-columns: 1fr;
     gap: 62px;
-    margin-top: 8%;
+    position: relative;  
 }
 
 .head {
-    box-shadow: 0px 0px 9px 0px black;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    text-align: center;
-    z-index: 500;
-    position: fixed;
-    background-color: #5d00ebd4;
-    width: 100%;
-    display: grid;
-    flex-direction: row;
-    color: white !important;
-    justify-content: space-around;
     align-items: center;
+    background-color: #5d00ebd4;
+    box-shadow: 0px 0px 9px 0px black;
+    color: white !important;
+    display: grid;
     font-size: 2vh;
+    flex-direction: row;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-content: space-around;
+    position: sticky;
+    text-align: center;
+    width: 100%;
+    z-index: 500;
 }
 
 h5 {
@@ -192,7 +194,7 @@ footer {
     }
 
         .atualizar:hover::before {
-            content: 'Última atualização - ';
+            content: 'ï¿½ltima atualizaï¿½ï¿½o - ';
         }
 
 .selectPrymary {
@@ -205,6 +207,7 @@ footer {
 
 .painelBody {
     font-weight: bold;
+    width: 100% !important;
 }
 
 .painelBody input,option,select{

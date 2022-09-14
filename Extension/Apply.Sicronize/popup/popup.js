@@ -1,5 +1,6 @@
 const urlHostExt = `http://intru`;
-const urlAPIExt = `https://intru.herokuapp.com/`;
+const urlAPIExt = `https://localhost:44382/`;
+//const urlAPIExt = `https://intru.herokuapp.com/`;
 //const urlAPIExt = `${urlHostExt}/api/`;
 //const urlAPI = `https://localhost:44382/`;
 

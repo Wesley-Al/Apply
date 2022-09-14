@@ -58,28 +58,18 @@ const MonthColor = [
 
 const TipoRegistroColor = [
     {
-        cod: 'RendaFx',
-        name: 'Renda Fixa',
+        cod: '0',
+        name: 'Renda',
         color: '#1060ff'
     },
     {
-        cod: 'DebitoFx',
-        name: 'Débito Fixo',
+        cod: '1',
+        name: 'DÃ©bito',
         color: '#fe0000'
-    },
+    },    
     {
-        cod: 'DebitoPas',
-        name: 'Débito Passivo',
-        color: '#fccc00'
-    },
-    {
-        cod: 'RendaPas',
-        name: 'Renda Passiva',
-        color: '#24b550'
-    },
-    {
-        cod: 'Emprestimo',
-        name: 'Empréstimo',
+        cod: '2',
+        name: 'EmprÃ©stimo',
         color: '#7542ff'
     }
 ]

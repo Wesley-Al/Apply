@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-Br">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="charset=UTF-8;">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intru</title>
     <link rel="sortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -14,47 +15,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             try {
-                var dataSet = new Array;
-                var chartData = ChartData;
-                var label = new Array;
-                var option = null;
-
+                               
                 document.getElementById('userName').innerHTML = recuperaUserNameCookie() + '<i class="far fa-user-circle"></i>';
-                document.getElementById('user').textContent = `Bem vindo , ${recuperaUserNameCookie()}`
-
-                for (var m = 0; m < MonthColor.length; m++) {
-
-                    label.push(MonthColor[m].month);
-                }
-
-                for (var i = 0; i < TipoRegistroColor.length; i++) {
-                    var data = new Array;
-
-                    for (var m = 0; m < MonthColor.length; m++) {
-
-                        var total = 0;
-                        data.push(10 + (m * Math.random()));
-                    }
-
-                    dataSet.push({
-                        label: TipoRegistroColor[i].name,
-                        data: data,
-                        backgroundColor: TipoRegistroColor[i].color,
-                        borderWidth: 2,
-                        borderColor: TipoRegistroColor[i].color
-                    });
-
-                    option = Scripts.Elements.Create('option', null, 'optionsType', null, null, ['dropdown-item', 'optionSelect']);
-
-                    option.innerText = TipoRegistroColor[i].name;
-                    option.value = i;
-
-                    document.getElementById('selectType')
-                        .appendChild(option);
-                }
-
-                chartData.labels = label;
-                chartData.datasets = dataSet;               
+                document.getElementById('user').textContent = `Bem vindo , ${recuperaUserNameCookie()}`                     
 
                 document.getElementById('save').addEventListener('click', (target, obj) => {
                     CadastraCard();
@@ -62,40 +25,11 @@
 
                 document.getElementById('saveCategory').addEventListener('click', (target, obj) => {
                     CadastraCategoria();
-                });
-
-                document.getElementById('eraseCategory').addEventListener('click', (target, obj) => {                    
-
-                    var selected = document.querySelectorAll('.categoryItem');
-                    var existSelected = false;
-                    var classList = null;
-                    var itens = new Array();
-
-                    for (var i = 0; i < selected?.length; i++) {
-                        classList = selected[i].classList;
-
-                        if (classList?.value?.indexOf('cardSelected') != -1) {
-                            itens.push(parseInt(selected[i]
-                                .dataset['cod']));
-                            existSelected = true;
-                        }
-                    }
-
-                    if (existSelected) {
-                        DeleteAll.Category(itens);
-                    }
-                    
-                });
-
-                document.getElementById('selectAllCategory').addEventListener('click', (target, obj) => {
-                    selectAll('categoryItem', 'li', 'cards', 'cardSelected');
-                    Scripts.ElementList.ToogleDisabledElement('categoryItem ', 'cardSelected', 'eraseCategory');
-                });
-
-                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
-                    "graficoLine");              
-
-                ImplementaCategory();
+                });           
+                
+               
+                //ImplementGrafico();
+                ImplementList("Category");
                 ImplementMonthsOptions();
 
             } catch (error) {
@@ -109,83 +43,80 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        .dropdown-item {
-            font-weight: bold !important;
-            color: black !important;
+        .relatorio {
+            display: flex;
+            justify-content: center;
+        }
+
+        div[name=frameCarrousel] {
+            height: 100%;
+            width: 100%;
+        }
+
+        .totalizador {
+            width: 100%;            
+            background-color: var(--colorPrymary5);
+            border-radius: 10px;
+            margin-top: 21px;
+            padding: 36px;
+        }
+
+        #graficoLine {
+            width: 100% !important;
+            height: 10%;
+        }
+
+        .buttonPanel {
             background-color: white !important;
+            border: 0;
+            color: var(--colorPrymary5) !important;
+            font-weight: 600 !important;
+            width: 100% !important;
+            transition: background-color 0.5s;
         }
 
-        .btn-secondary {
-            font-weight: 500;
-            border: none;
-            background-color: transparent;
-            color: white;
-            box-shadow: none;
+            .buttonPanel:hover {
+                background-color: var(--colorPrymary5) !important;
+                color: white !important;
+                font-weight: 600 !important;
+                transition: background-color 0.5s;
+            }
+
+            .buttonPanel:disabled {
+                background-color: var(--colorPrymary5) !important;
+                opacity: 50% !important;
+                color: white !important;
+            }
+
+        .panel {
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-content: center;
+            text-align: center;            
         }
-
-            .btn-secondary:focus {
-                border: none;
-                background-color: white;
-                color: var(--colorPrymary5);
-                box-shadow: none;
-            }
-
-            .btn-secondary:hover {
-                border: none;
-                background-color: white;
-                color: var(--colorPrymary5);
-                box-shadow: none;
-            }
-
-        .container {
-            max-height: 40vh;
-        }
-
-        .btn-primary {
-            color: #5d00ebd4;
-            background-color: white;
-            border-color: #5d00ebd4;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-            .btn-primary:hover {
-                color: white;
-                background-color: #5d00ebd4;
-                border-color: none;
-                box-shadow: 0px 0px 9px 0px gray;
-            }
-
-            .btn-primary:disabled {
-                border: none;
-                background-color: white;
-                color: var(--colorPrymary5);
-                box-shadow: none;
-            }
     </style>
 
 </head>
 <body>
-    <div id="container" class="container">
-        <div id="header" class="head">
-            <!--<a style=" background-color: transparent;" href="/index.html"><i class="fas fa-rocket backMenu"></i></a>-->
-            <label id="user"></label>
-            <div style=" grid-column-start: 3; text-align: center; display: flex; justify-content: center;">
-                <h4 id="userName" style=" text-align: center;"></h4>
-            </div>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                    Navegar para...
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><button class="dropdown-item" type="button">Action</button></li>
-                    <li><button class="dropdown-item" type="button">Another action</button></li>
-                    <li><button class="dropdown-item" type="button">Something else here</button></li>
-                </ul>
-            </div>
-            <label id="logout" onclick="logOut();">Logout</label>
+    <div id="header" class="head">
+        <!--<a style=" background-color: transparent;" href="/index.html"><i class="fas fa-rocket backMenu"></i></a>-->
+        <label id="user"></label>
+        <div style=" grid-column-start: 3; text-align: center; display: flex; justify-content: center;">
+            <h4 id="userName" style=" text-align: center;"></h4>
         </div>
-
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                Navegar para...
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a class="dropdown-item" href="./nubank">Relat√≥rio de Bancos</a></li>
+                <li><a class="dropdown-item" href="./intru_Report.html">Relat√≥rio</a></li>                
+            </ul>
+        </div>
+        <label id="logout" onclick="logOut();">Logout</label>
+    </div>
+    <div id="container" class="container">
         <div id="body" class="body">
             <div id="painel" class="painel">
                 <button id="alternateMenu" type="button" data-bs-target="#panelCarrosel" data-bs-slide="next">
@@ -203,29 +134,30 @@
                                     </small>
                                 </div>
                                 <div>
-                                    <div style="display: flex;gap: 56px; flex-wrap: wrap;">
+                                    <div style="display: flex; gap: 56px; flex-wrap: wrap; justify-content: flex-start;">
                                         <div class="mb-3">
                                             <label for="disabledTextInput" class="form-label">Tipo</label>
                                             <div class="selectionType">
                                                 <div class="btn-group dropend">
-                                                    <select style="background-color: cadetblue;" id="selectType" class="btn btn-secondary dropdown-toggle selectPrymary" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <select style="background-color: cadetblue;" id="selectType" class="btn btn-secondary dropdown-toggle selectPrymary" data-bs-toggle="dropdown" aria-expanded="true">
                                                         <option style="color: var(--colorPrymary5) !important; font-weight: bold !important; background-color: white !important; " class="dropdown-item-text">Selecione um tipo de Registro</option>
+                                                        <option class="dropdown-item optionSelect" value="0">Renda</option>
+                                                        <option class="dropdown-item optionSelect" value="1">D√©bito</option>
+                                                        <option class="dropdown-item optionSelect" value="2">Empr√©stimo</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div id="vinculoUsuario">
-                                                <label for="disabledTextInput" class="form-label">
-                                                    Vincular Usu&#225;rio
-                                                </label>
-                                                <input type="text" class="form-control" placeholder="Usu&#225;rio">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="Title" class="form-label">Titulo</label>
-                                            <input id="Title" type="text" class="form-control" placeholder="Titulo do Registro">
+
+                                            <label for="Title" class="form-label">Nome</label>
+                                            <input id="Title" type="text" class="form-control" placeholder="Nome do Registro">
 
                                             <label for="Amount" class="form-label">Valor</label>
                                             <input id="Amount" type="text" class="form-control" placeholder="Valor do Registro">
+
+                                            <br />
+                                            <button style="width: 100%;" id="save" class="btn btn-primary">
+                                                Salvar
+                                            </button>
                                         </div>
                                         <div class="mb-3">
                                             <label for="Date" class="form-label">Data</label>
@@ -233,14 +165,10 @@
 
                                             <label for="Category" class="form-label">Categoria</label>
                                             <select id="Category" class="form-select"></select>
-                                        </div>
-                                        <div class="mb-3">
+                                           
                                             <label for="Description" class="form-label">Descri&ccedil;&atilde;o</label>
                                             <textarea id="Description" class="form-control"></textarea>
-                                        </div>
-                                        <button id="save" class="btn btn-primary">
-                                            Concluir
-                                        </button>
+                                        </div>                                            
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +176,7 @@
                                 <div class="title">
                                     <span>Cadastrar Categoria </span>
                                     <small>
-                                        Categorias s„o essenciais para que vocÍ consiga organizar seus registros
+                                        Categorias s√£o essenciais para que voc√™ consiga organizar seus registros
                                     </small>
                                 </div>
                                 <div>
@@ -262,16 +190,16 @@
                                                 <label for="TypeFixed" class="form-label">Categoria Fixa?</label>
                                                 <input id="TypeFixed" class="" type="checkbox">
                                                 <br />
-                                                <small>(Categoria Fixa significa que tudo que for dessa Categoria sera uma Renda/DÈbito <strong>FIXO</strong>)</small>
+                                                <small>(Categoria Fixa significa que tudo que for dessa Categoria sera uma Renda/D√©bito <strong>FIXO</strong>)</small>
                                             </div>
                                             <button id="saveCategory" class="btn btn-primary">
                                                 Concluir
                                             </button>
                                         </div>
-                                        <div id="listCategory" style="height: 59% !important;" class="container">
+                                        <div name="list" style="height: 59% !important;" class="container">
                                             <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">
-                                                <button id="selectAllCategory" type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
-                                                <button id="eraseCategory" type="button" class="btn btn-primary buttonPanel" disabled=""><i class="fas fa-eraser"></i> Apagar</button>
+                                                <button id="selectAll" type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
+                                                <button id="erase" type="button" class="btn btn-primary buttonPanel" disabled=""><i class="fas fa-eraser"></i> Apagar</button>
                                                 <button type="button" class="btn btn-primary buttonPanel" onclick="DeleteAll.Category();"><i class="far fa-trash-alt"></i> Apagar Todas</button>
                                                 <button id="refresh" type="button" class="btn btn-primary buttonPanel" onclick="AtualizaList.Category();"><i class="fas fa-sync-alt"></i> Atualizar <i id="icoRefresh" class="far fa-dot-circle"></i></button>
                                             </div>
@@ -283,89 +211,7 @@
                     </div>
                 </div>
             </div>
-
-            <div id="listsCarrosel" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <span>DÈbitos</span>
-                        <div id="listCards" style="height: 59% !important;" class="container">
-                            <div style="width: 100%; flex-direction: column;" class="btn-group" role="group" aria-label="Basic example">
-                                <button id="monthOptions" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    All
-                                </button>
-                                <div class="collapse" id="collapseExample">
-                                    <div class="card card-body">
-                                        <div class="btn-group" role="group" id="groupMonth">
-                                            <input value="All" checked type="checkbox" class="btn-check" name="month" id="All" autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="All">All</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
-                                <button type="button" class="btn btn-primary buttonPanel" disabled><i class="fas fa-eraser"></i> Apagar</button>
-                                <button type="button" class="btn btn-primary buttonPanel" onclick="DeleteAll();"><i class="far fa-trash-alt"></i> Apagar Todas</button>
-                                <button id="refresh" type="button" class="btn btn-primary buttonPanel" onclick="AtualizaList();"><i class="fas fa-sync-alt"></i> Atualizar <i id="icoRefresh" class="far fa-dot-circle"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <span>Rendas</span>
-                        <div id="listCards" style="height: 59% !important;" class="container">
-                            <div style="width: 100%; flex-direction: column;" class="btn-group" role="group" aria-label="Basic example">
-                                <button id="monthOptions" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    All
-                                </button>
-                                <div class="collapse" id="collapseExample">
-                                    <div class="card card-body">
-                                        <div class="btn-group" role="group" id="groupMonth">
-                                            <input value="All" checked type="checkbox" class="btn-check" name="month" id="All" autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="All">All</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary buttonPanel"><i class="far fa-check-square"></i> Todos</button>
-                                <button type="button" class="btn btn-primary buttonPanel" disabled><i class="fas fa-eraser"></i> Apagar</button>
-                                <button type="button" class="btn btn-primary buttonPanel" onclick="DeleteAll();"><i class="far fa-trash-alt"></i> Apagar Todas</button>
-                                <button id="refresh" type="button" class="btn btn-primary buttonPanel" onclick="AtualizaList();"><i class="fas fa-sync-alt"></i> Atualizar <i id="icoRefresh" class="far fa-dot-circle"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#listsCarrosel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#listsCarrosel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-
-
-            <div id="relatorio" class="relatorio">
-                <canvas id="graficoLine"></canvas>
-            </div>
-
-            <div id="curriculum" class="curriculum">
-                <div class="projects">
-                    <div class="list-group">
-                        <a href="/Admin/Projects/Intru/Nubank/index.html" class="list-group-item list-group-item-action" aria-current="true">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">NuBank</h5>
-                                <small class="atualizar">Hoje <i class="fas fa-sync-alt"></i></small>
-                            </div>
-                            <p class="mb-1">Some placeholder content in a paragraph.</p>
-                            <small>And some small print.</small>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer><i class="fas fa-meteor iconFooter"></i> Intru 1.1 - INTRU INC.</footer>
     </div>
+    <footer><i class="fas fa-meteor iconFooter"></i> Intru 1.1 - INTRU INC.</footer>
 </body>
 </html>

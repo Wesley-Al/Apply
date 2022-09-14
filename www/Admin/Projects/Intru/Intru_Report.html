@@ -1,0 +1,548 @@
+﻿<!DOCTYPE html>
+<html lang="pt-Br" style=" height: 100%; width: 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intru</title>
+    <link rel="sortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+    <script src="/Library.Front/Library/js/core/coreIncrement.js?" type='text/javascript'></script>
+    <script src="/Library.Front/Library/js/core/core.js?" type='text/javascript'></script>
+
+    <script type='text/javascript'>
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+
+                document.getElementById('userName').innerHTML = recuperaUserNameCookie() + '<i class="far fa-user-circle"></i>';
+                document.getElementById('user').textContent = `Bem vindo , ${recuperaUserNameCookie()}`
+
+                document.getElementById('erase').addEventListener('click', (target, obj) => {
+
+                    var selected = document.querySelectorAll('.listItem');
+                    var existSelected = false;
+                    var classList = null;
+                    var itens = new Array();
+
+                    for (var i = 0; i < selected?.length; i++) {
+                        classList = selected[i].classList;
+
+                        if (classList?.value?.indexOf('cardSelected') != -1) {
+                            itens.push(parseInt(selected[i]
+                                .dataset['cod']));
+                            existSelected = true;
+                        }
+                    }
+
+                    if (existSelected) {
+                        Card.DeleteCardsSelected(itens);
+                    }
+
+                });
+
+                document.getElementById('selectAll').addEventListener('click', (target, obj) => {
+
+                    selectAll('listItem', 'li', 'cards', 'cardSelected');
+                    Scripts.ElementList.ToogleDisabledElement('listItem ', 'cardSelected', 'erase');
+                });
+
+                document.getElementById('exibeGrafico').addEventListener('click', () => {
+                    if(document.getElementById('grafico').style.display == 'none'){
+                        document.getElementById('grafico').style.display = ''
+                    }else{
+                        document.getElementById('grafico').style.display = 'none'
+                    }
+                })
+
+
+                ImplementGrafico();
+                ImplementListReport();
+                ImplementMonthsOptions();
+
+            } catch (error) {
+                Scripts.Elements.Message.Error(error);
+            }
+        });
+
+        var Card = {
+            AtualizaList: () => {
+                try {
+                    debugger;
+                    var inputs = document.querySelectorAll('input[name=month]:checked');
+                    var options = new Array();
+
+                    for (var i = 0; i < inputs.length; i++) {
+                        options.push(inputs[i].value);
+                    }
+
+                    document.getElementById('monthOptions').innerText = options.join(' - ') == "" ? 'All' : options.join(' - ');
+
+                    var divCarrousel = document.querySelectorAll('div[name=frameCarrousel]');
+
+                    document.getElementById('graficoLine').remove();
+
+                    divCarrousel[0].appendChild(Scripts.Elements.Create('canvas', 'graficoLine'));
+
+                    ImplementGrafico(options);
+                    ImplementListReport(options);
+
+                } catch (Error) {
+                    alert(Error);
+                }
+            },
+            DeleteCardsSelected: async (itens) => {
+                if (confirm('Deseja apagar todos os Registros selecionados?')) {
+                    return new Promise((resolve) => {
+                        debugger;
+                        var options = AjaxOptions;
+
+                        if (itens?.length > 0) {
+                            var cards = {
+                                CCCodList: itens
+                            }
+
+                            options.url = `${urlAPI}Cards/DeleteCards`;
+                            options.data = cards;
+                        } else {
+
+                            options.url = `${urlAPI}Cards/DeleteAllCards`;
+                            options.data = recuperaUserCodCookie();
+                        }
+
+                        options.method = 'POST';
+
+                        options.onload = (xhr, obj) => {
+
+                            var response = xhr.currentTarget.response;
+
+                            if (response != null && response != undefined) {
+                                if (response.success == false) {
+                                    alert(`Ocorreu um erro durante o processo: ${response.erroMsg}.`);
+                                    resolve(false);
+                                } else if (response?.objeto != null && response?.objeto?.length > 0) {
+                                    alert(response.objeto.join('\n'));
+                                }
+
+                                Card.AtualizaList();
+                                resolve(true);
+                            } else {
+                                alert("Nenhum dado foi excluído.");
+                            }
+                        }
+
+                        Scripts.API.POST(options);
+                    });
+                }
+            },
+            DeleteAllCards: async () => {
+                if (confirm('Deseja apagar todos os Registros?')) {
+                    return new Promise((resolve) => {
+
+                        var options = AjaxOptions;
+
+                        options.url = `${urlAPI}Cards/DeleteAllCards`;
+                        options.data = recuperaUserCodCookie();
+                        options.method = 'POST';
+                        options.onload = (xhr, obj) => {
+
+                            var response = xhr.currentTarget.response;
+
+                            if (response != null && response != undefined) {
+                                if (response.success == false) {
+                                    alert(`Ocorreu um erro durante o processo: ${response.erroMsg}.`);
+                                    resolve(false);
+                                } else if (response?.objeto != null && response?.objeto?.length > 0) {
+                                    alert(response.objeto.join('\n'));
+                                }
+
+                                Card.AtualizaList();
+                                resolve(true);
+                            } else {
+                                alert("Nenhum dado foi excluído.");
+                            }
+                        }
+
+                        Scripts.API.POST(options);
+                    });
+                }
+            },
+        }
+
+        var config = {};
+
+        var AtualizaDados = (event, element) => {
+            try {
+                // var icon = Scripts.Elements.Create('i', 'icoRefresh', null, null, null, ['far', 'fa-dot-circle']);
+
+                var options = document.querySelectorAll('input[name=month]:checked');
+
+                if (options.length > 0) {
+                    document.getElementById('icoRefresh').classList;
+                }
+
+            } catch (Error) {
+                Scripts.Elements.Message.Error(Error);
+            }
+        }
+
+        var AtualizaList = () => {
+            try {
+
+                var inputs = document.querySelectorAll('input[name=month]:checked');
+                var options = new Array();
+
+                for (var i = 0; i < inputs.length; i++) {
+                    options.push(inputs[i].value);
+                }
+
+                document.getElementById('monthOptions').innerText = options.join(' - ') == "" ? 'All' : options.join(' - ');
+
+                var divCarrousel = document.querySelectorAll('div[name=frameCarrousel]');
+
+                document.getElementsByClassName('totalizador')[0]?.remove();
+                document.getElementById('listCard')?.remove();
+                document.getElementById('graficoLine')?.remove()
+                document.getElementById('graficoBar')?.remove();
+
+                divCarrousel[0].appendChild(Scripts.Elements.Create('canvas', 'graficoLine'));
+                divCarrousel[1].appendChild(Scripts.Elements.Create('canvas', 'graficoBar'));
+
+                ImplementGrafico(options);
+
+            } catch (Error) {
+                alert(Error);
+            }
+        }
+
+        var ImplementGrafico = async (dataOptions) => {
+            try {
+
+                var Wallet = await CarregaDados.Cards(dataOptions);
+
+                var chartData = ChartData;
+
+                var data = new Array;
+                var dataSet = new Array;
+                var label = new Array;
+                debugger;
+                for (var m = 0; m < MonthColor.length; m++) {
+
+                    label.push(MonthColor[m].month);
+                }
+
+                for (var i = 0; i < TipoRegistroColor.length; i++) {
+                    var data = new Array;
+
+                    var cardsFixed = Wallet.Cards.filter(x => x.CardFixed == true && x.Type == TipoRegistroColor[i].cod);
+
+                    for (var m = 0; m < MonthColor.length; m++) {
+
+                        var cards = Wallet.Cards.filter(x => x.TimeString.indexOf(MonthColor[m].month) > -1 && x.Type == TipoRegistroColor[i].cod && x.CardFixed != true);
+
+                        if (cards.length == 0 && cardsFixed.length == 0) {
+
+                            data.push(0);
+
+                        } else {
+                            let totalMes = 0;
+
+                            for (var index = 0; index < cardsFixed.length; index++) {
+
+                                totalMes += parseFloat(cardsFixed[index].Amount.replaceAll("R$", "").replaceAll(",", "."));
+                            }
+
+                            for (var index = 0; index < cards.length; index++) {
+
+                                totalMes += parseFloat(cards[index].Amount.replaceAll("R$", "").replaceAll(",", "."));
+                            }
+
+                            data.push(totalMes);
+
+                        }
+                    }
+
+                    dataSet.push({
+                        label: TipoRegistroColor[i].name,
+                        data: data,
+                        backgroundColor: TipoRegistroColor[i].color,
+                        borderWidth: 2,
+                        borderColor: TipoRegistroColor[i].color
+                    });
+                }
+
+                chartData.labels = label;
+                chartData.datasets = dataSet;
+
+                Scripts.Grafico.NewChart(Scripts.Grafico.ConfigChart('line', chartData),
+                    "graficoLine");
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        var ImplementMonthsOptions = () => {
+            try {
+
+                for (var i = 0; i <= MonthColor.length; i++) {
+                    var checkbox = Scripts.Elements.Create('input', `option${MonthColor[i].month}`, 'month',
+                        'btn-check', null, null, (event) => { AtualizaDados(event, event.target); }, 'checkbox');
+
+                    var label = Scripts.Elements.Create('label', null, null,
+                        'btn-check', null, ['btn', 'btn-outline-primary']);
+
+                    checkbox.value = MonthColor[i].month;
+
+                    label.innerText = MonthColor[i].month;
+                    label.htmlFor = `option${MonthColor[i].month}`;
+
+                    document.getElementById('groupMonth').appendChild(checkbox);
+                    document.getElementById('groupMonth').appendChild(label);
+                }
+
+            } catch (Error) {
+
+            }
+        }
+
+        var ImplementListReport = async (dataOptions) => {
+            try {
+                var ol = Scripts.Elements.Create('ol', 'listGroup', null, null, 'width: 100%; height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
+                var option;
+
+                var Wallet = await CarregaDados.Cards(dataOptions);
+
+                var totalizador = 0;
+
+                for (var index = 0; index < TipoRegistroColor.length; index++) {
+                    totalizador = 0;
+
+                    var cards = Wallet.Cards.filter(x => x.Type == TipoRegistroColor[index].cod);
+
+                    var ol = Scripts.Elements.Create('ol', `listGroup-${TipoRegistroColor[index].cod}`, null, null, 'height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
+                    
+                    for (var i = 0; i < cards.length; i++) {
+                        ol.appendChild(ImplementCardsList.Cards(i + 1, cards[i]?.CCCod, cards[i]?.Amount,
+                            cards[i]?.TimeString, cards[i]?.Title, cards[i]?.Description));
+
+                        totalizador += parseFloat(cards[i].Amount.replaceAll("R$", "").replaceAll(",", "."));
+                    }
+
+                    document.querySelectorAll("div[name=list]").forEach((obj) => {
+                        if (obj.dataset['cod'] == TipoRegistroColor[index].cod) {
+                            if (obj.children[0] != undefined) {
+                                obj.removeChild(obj.children[0]);
+                            }
+
+                            obj.appendChild(ol);
+                        }
+                    });
+
+                    var divTotalizador = Scripts.Elements.Create('div', null, null,
+                        null, "display: flex; align-items: center; justify-content: center;", ['totalizador', 'cards']);
+
+                    var spanTotalizador = Scripts.Elements.Create('span', null, null,
+                        null);
+
+                    spanTotalizador.innerText = `Total: ${totalizador.toLocaleBR(totalizador)}`;
+
+                    divTotalizador.appendChild(spanTotalizador);
+                    divTotalizador.append(Scripts.Elements.Create('i', null, null,
+                        null, null, ["fas", "fa-coins"]));
+                    document.getElementById(`listGroup-${TipoRegistroColor[index].cod}`).appendChild(divTotalizador);
+
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+           
+    </script>
+
+    <link rel="stylesheet" href="/Library.Front/Library/css/style.padrao.css">
+    <link rel="stylesheet" href="/Content/css/IntruReport.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #exibeGrafico {
+            height: 47%;
+            align-self: center;
+            border: none;
+            width: 2.5%;
+            overflow: hidden;
+            background-color: #5d00ebd4;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .nav-link {
+            color: var(--colorPrymary5) !important;
+            font-weight: bold;
+        }
+
+        .nav {
+            justify-content: center;
+        }
+
+        .tab-content {
+            height: 100% !important;
+            overflow: auto;
+        }
+
+        #graficoLine {
+            width: 100% !important;
+        }
+
+        .buttonPanel {
+            background-color: white !important;
+            border: 0;
+            color: var(--colorPrymary5) !important;
+            font-weight: 600 !important;
+            width: 100% !important;
+            transition: background-color 0.5s;
+        }
+
+        .buttonPanel:hover {
+            background-color: var(--colorPrymary5) !important;
+            color: white !important;
+            font-weight: 600 !important;
+            transition: background-color 0.5s;
+        }
+
+        .buttonPanel:disabled {
+            background-color: var(--colorPrymary5) !important;
+            opacity: 50% !important;
+            color: white !important;
+        }
+
+        .panel {
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-content: center;
+            text-align: center;
+            padding-top: 12% !important;
+        }
+
+        footer {
+            position: fixed;
+            background-color: var(--colorPrymary5);
+            height: 6%;
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            font-size: 2vh;
+            bottom: 0px;
+        }
+
+        .totalizador {
+            width: 100%;
+            height: 60px;
+            background-color: var(--colorPrymary5);
+            border-radius: 10px;
+            margin-top: 21px;
+        }
+
+        .iconFooter {
+            transform: rotate(261deg);
+            padding-top: 1%;
+            padding-right: 0.4%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="head">
+        <!--<a style=" background-color: transparent;" href="/index.html"><i class="fas fa-rocket backMenu"></i></a>-->
+        <label id="user"></label>
+        <div style=" grid-column-start: 3; text-align: center; display: flex; justify-content: center;">
+            <h4 id="userName" style=" text-align: center;"></h4>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Navegar para...
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a class="dropdown-item" href="./nubank">Relatório de Bancos</a></li>
+                <li><a class="dropdown-item" href="./intru_Report.html">Relatório</a></li>
+            </ul>
+        </div>
+        <label id="logout" onclick="logOut();">Logout</label>
+    </div>
+    <a style=" background-color: transparent; position: absolute; top: 11%; left: 4%;"
+        href="/Admin/Projects/Intru/Intru.html"><i class="fas fa-rocket backMenu"></i></a>
+
+    <div class="panel">
+        <button id="exibeGrafico" type="button" data-bs-slide="next">
+            <i class="far fa-chart-bar"></i>
+        </button>
+
+        <div id="grafico" class="container">
+            <h1 style="color: var(--colorPrymary5);">Estatisticas</h1>
+            <div name="frameCarrousel" class="carousel-item active">
+                <canvas id="graficoLine"></canvas>
+            </div>
+        </div>
+
+        <div style="height: 59% !important;" class="container">
+            <div style="width: 100%; flex-direction: column;" class="btn-group" role="group" aria-label="Basic example">
+                <button id="monthOptions" class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    All
+                </button>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <div class="btn-group" role="group" id="groupMonth">
+                            <input value="All" checked type="checkbox" class="btn-check" name="month" id="All"
+                                autocomplete="off">
+                            <label class="btn btn-outline-primary" for="All">All</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 100%;" class="btn-group" role="group" aria-label="Basic example">
+                <button id="selectAll" type="button" class="btn btn-primary buttonPanel"><i
+                        class="far fa-check-square"></i> Todos</button>
+                <button id="erase" type="button" class="btn btn-primary buttonPanel" disabled=""><i
+                        class="fas fa-eraser"></i> Apagar</button>
+                <button type="button" class="btn btn-primary buttonPanel" onclick="Card.DeleteAllCards();"><i
+                        class="far fa-trash-alt"></i> Apagar Tudo</button>
+                <button id="refresh" type="button" class="btn btn-primary buttonPanel" onclick="Card.AtualizaList();"><i
+                        class="fas fa-sync-alt"></i> Atualizar</button>
+            </div>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="list-debito-tab" data-bs-toggle="tab"
+                        data-bs-target="#list-debito" type="button" role="tab" aria-controls="list-debito"
+                        aria-selected="true">Débitos</button>
+                    <button class="nav-link" id="list-renda-tab" data-bs-toggle="tab" data-bs-target="#list-renda"
+                        type="button" role="tab" aria-controls="list-renda" aria-selected="false">Rendas</button>
+                    <button class="nav-link" id="list-emprestimo-tab" data-bs-toggle="tab"
+                        data-bs-target="#list-emprestimo" type="button" role="tab" aria-controls="list-emprestimo"
+                        aria-selected="false">Empréstimos</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div data-cod="1" name="list" class="tab-pane fade show active" id="list-debito" role="tabpanel"
+                    aria-labelledby="nav-home-tab">
+
+                </div>
+                <div data-cod="0" name="list" class="tab-pane fade" id="list-renda" role="tabpanel"
+                    aria-labelledby="nav-profile-tab"></div>
+                <div data-cod="2" name="list" class="tab-pane fade" id="list-emprestimo" role="tabpanel"
+                    aria-labelledby="nav-contact-tab"></div>
+            </div>
+        </div>
+    </div>
+    <footer><i class="fas fa-meteor iconFooter"></i> Intru 1.1 - INTRU INC.</footer>
+</body>
+
+</html>

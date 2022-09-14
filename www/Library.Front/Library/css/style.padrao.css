@@ -7,7 +7,7 @@
     --colorPrymary2: #0297F2;
     --colorPrymary3: #0944DB;
     --colorPrymary4: #0F02F2;
-    --colorPrymary5: #820AD1;
+    --colorPrymary5: #5d00ebd4;
     --colorPrymary6: #5D00EB;
 }
 
@@ -23,6 +23,13 @@ body {
 
     height: 100%;
     width: 100%;
+}
+
+.containerAction{
+    display: flex;
+    justify-content: space-around;
+    gap: 11px;
+    text-align: center;
 }
 
 a{
@@ -57,6 +64,7 @@ a:hover{
     right: 3%;
     border-radius: 9px;
     font-size: 1.5vh;
+    z-index: 2000;
 }
 
 .messageSuccess {
@@ -68,6 +76,7 @@ a:hover{
     right: 3%;
     border-radius: 9px;
     font-size: 1.5vh;
+    z-index: 2000;
 }
 
 .messageContent {
@@ -162,3 +171,52 @@ a:hover{
     cursor: pointer;
 }
 
+.dropdown-item {
+    font-weight: bold !important;
+    color: black !important;
+    background-color: white !important;
+}
+
+.btn-secondary {
+    font-weight: 500;
+    border: none;
+    background-color: transparent;
+    color: white;
+    box-shadow: none;
+}
+
+    .btn-secondary:focus {
+        border: none;
+        background-color: white;
+        color: var(--colorPrymary5);
+        box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+        border: none;
+        background-color: white;
+        color: var(--colorPrymary5);
+        box-shadow: none;
+    }
+
+.btn-primary {
+    color: #5d00ebd4;
+    background-color: white;
+    border-color: #5d00ebd4;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .btn-primary:hover {
+        color: white;
+        background-color: #5d00ebd4;
+        border-color: none;
+        box-shadow: 0px 0px 9px 0px gray;
+    }
+
+    .btn-primary:disabled {
+        border: none;
+        background-color: white;
+        color: var(--colorPrymary5);
+        box-shadow: none;
+    }

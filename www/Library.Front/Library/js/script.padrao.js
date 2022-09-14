@@ -14,6 +14,7 @@
 const url = new URL(document.URL);
 const urlHost = `${url.protocol}//${url.host}`;
 //const urlAPI = `${urlHost}/api/`;
+//const urlAPI = `http://intru/api/`;
 //const urlAPI = `https://intru.herokuapp.com/`;
 const urlAPI = `https://localhost:44382/`;
 
@@ -503,6 +504,450 @@ var recuperaUserCodCookie = function () {
         return null;
     }    
 };
+
+var DeleteAll = {
+    Category: async (itens) => {
+        if (confirm('Deseja apagar todas as Categorias?')) {
+            return new Promise((resolve) => {
+                var options = AjaxOptions;
+
+                if (itens?.length > 0) {
+                    var categorys = {
+                        UsuCod: recuperaUserCodCookie(),
+                        CCCodList: itens
+                    }
+
+                    options.url = `${urlAPI}Category/DeleteCategorys`;
+                    options.data = categorys;
+                } else {
+                    options.url = `${urlAPI}Category/DeleteAllCategorys`;
+                    options.data = recuperaUserCodCookie();
+
+                }
+
+                options.method = 'POST';
+
+                options.onload = (xhr, obj) => {
+
+                    var response = xhr.currentTarget.response;
+
+                    if (response != null && response != undefined) {
+                        if (response.success == false) {
+                            alert(`Ocorreu um erro durante o processo: ${response.erroMsg}.`);
+                            resolve(false);
+                        } else if (response?.objeto != null && response?.objeto?.length > 0) {
+                            alert(response.objeto.join('\n'));
+                        }
+
+                        AtualizaList.Category();
+                        resolve(true);
+                    } else {
+                        alert("Nenhum dado foi excluído.");
+                    }
+                }
+
+                Scripts.API.POST(options);
+            });
+        }
+    }   
+}
+
+var AtualizaDados = (event, element) => {
+    try {
+        // var icon = Scripts.Elements.Create('i', 'icoRefresh', null, null, null, ['far', 'fa-dot-circle']);
+
+        var options = document.querySelectorAll('input[name=month]:checked');
+
+        if (options.length > 0) {
+            document.getElementById('icoRefresh').classList;
+        }
+
+    } catch (Error) {
+
+    }
+}
+
+var AtualizaList = {
+    Category: () => {
+        try {
+            document.getElementById('listGroup')?.remove();
+
+            ImplementList("Category");
+
+        } catch (error) {
+            alert(error);
+        }
+    },
+    Cards: () => {
+        try {
+
+            var inputs = document.querySelectorAll('input[name=month]:checked');
+            var options = new Array();
+
+            for (var i = 0; i < inputs.length; i++) {
+                options.push(inputs[i].value);
+            }
+
+            document.getElementById('monthOptions').innerText = options.join(' - ') == "" ? 'All' : options.join(' - ');
+
+            var divCarrousel = document.querySelectorAll('div[name=frameCarrousel]');
+
+            document.getElementsByClassName('totalizador')[0]?.remove();
+            document.getElementById('listGroup')?.remove();
+            document.getElementById('graficoLine')?.remove()
+            document.getElementById('graficoBar')?.remove();
+
+            divCarrousel[0].appendChild(Scripts.Elements.Create('canvas', 'graficoLine'));
+            divCarrousel[1].appendChild(Scripts.Elements.Create('canvas', 'graficoBar'));
+
+            ImplementGrafico(options);
+
+        } catch (Error) {
+            alert(Error);
+        }
+    }
+}
+
+var CarregaDados = {
+    Category: async () => {
+        return new Promise((resolve) => {
+            var options = AjaxOptions;
+
+            options.url = `${urlAPI}Category/GetAllByUsuCod?usuCod=${recuperaUserCodCookie()}`;
+            options.method = 'POST';
+            options.async = false;
+
+            options.onload = (xhr, obj) => {
+
+                if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
+                    if (xhr.currentTarget.response.success == false) {
+                        Scripts.Elements.Message.Error(`Ocorreu um erro: ${xhr.currentTarget.response.erroMsg}`);
+                        resolve(null);
+                    }
+
+                    var Category;
+
+                    if (xhr.currentTarget.response.objeto != undefined && xhr.currentTarget.response.objeto != null) {
+                        Category = xhr.currentTarget.response.objeto;
+                    } else {
+                        Category = [];
+                    }
+
+                    resolve(Category);
+                } else {
+                    alert("Nenhuma categoria foi encontrada");
+                }
+            }
+
+            Scripts.API.POST(options);
+        });
+    },
+    Cards: async (dataOptions) => {
+        return new Promise((resolve) => {
+            var options = AjaxOptions;
+            var dataJoined = dataOptions != null && dataOptions != undefined ? dataOptions.join(',') : '';
+
+            //options.url = `${urlAPI}Syncronize/GetById?usuCod=${recuperaUserCodCookie()}&dataJoined=${dataJoined}`;
+            options.url = `${urlAPI}Cards/GetByUsuCod?usuCod=${recuperaUserCodCookie()}&dataJoined=${dataJoined}`;
+            options.method = 'POST';
+            options.async = false;
+
+            options.onload = (xhr, obj) => {
+                
+                if (xhr.currentTarget.response != null && xhr.currentTarget.response != undefined) {
+                    if (xhr.currentTarget.response.success == false) {
+                        Scripts.Elements.Message.Error(`Ocorreu um erro: ${xhr.currentTarget.response.erroMsg}`);
+                        resolve(null);
+                    }
+
+                    var Wallet;
+
+                    if (xhr.currentTarget.response.Objeto != undefined && xhr.currentTarget.response.Objeto != null) {
+                        Wallet = xhr.currentTarget.response.Objeto;
+                    } else {
+                        Wallet = {
+                            Cards: [],
+                            Payments: [],
+                            FlowClosed: []
+                        }
+                    }
+
+                    resolve(Wallet);
+                } else {
+                    alert("Nenhuma carteira foi encontrada");
+                }
+            }
+
+            if (dataOptions != null && dataOptions != undefined) {
+                if (dataOptions.length > 0) {
+                    dataJoined = dataOptions.join(',');
+                }
+            }
+
+            /*  options.data = { 
+                  usuCod: recuperaUserCodCookie(),
+                  dataJoined: dataJoined
+              };*/
+
+            Scripts.API.POST(options);
+        });
+    }
+}
+
+var ImplementCardsList = {
+    Cards: (index, codCard, amount, timeString, title, description, codBank, codWallet) => {
+        try {
+            var card = Scripts.Elements.Create('li', null, null,
+                null, null, ['list-group-item', 'listItem', 'd-flex', 'justify-content-between', 'align-items-start', 'cards']);
+
+            card.addEventListener('click', (element) => {
+                Scripts.Elements.ToogleClass(element.currentTarget, 'cards', 'cardSelected', (element) => {
+                    
+                    Scripts.ElementList.ToogleDisabledElement('listItem ', 'cardSelected', 'erase');
+                });
+            });
+
+            card.dataset['cod'] = codCard;
+
+            var cabecalho = Scripts.Elements.Create('div', null, null,
+                null, 'width: 100%;', ['ms-2', 'me-auto']);
+
+            cabecalho.appendChild(Scripts.Elements.Create('i', null, null,
+                null, null, ['fas', 'fa-check-circle']));
+
+            cabecalho.innerText = `${title} - ${amount}`;
+
+            var titulo = Scripts.Elements.Create('div', null, null,
+                'fw-bold', null);            
+
+            var spanTime = Scripts.Elements.Create('span', 'listGroup', null,
+                null, null, ['badge', 'bg-primary', 'rounded-pill', 'spanTime']);
+
+            var spanEdit = Scripts.Elements.Create('span', 'listGroup', null,
+                null, null, ['badge', 'bg-primary', 'rounded-pill', 'spanTime']);
+
+            var container = Scripts.Elements.Create('div', null, null, 'containerAction');
+
+            spanTime.innerText = timeString;
+
+            spanEdit.appendChild(Scripts.Elements.Create('i', null , null,
+                null, null, ['far', 'fa-edit', 'spanTime']))
+
+            spanEdit.addEventListener('click', (element) => {
+
+                document.body.insertAdjacentHTML('beforeEnd', 
+                `<div class="modal fade show" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">    
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" onclick="fecharModal(this);" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <div style="display: flex; gap: 56px; flex-wrap: wrap; justify-content: flex-start;">
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Tipo</label>
+                            <div class="selectionType">
+                                <div class="btn-group dropend">
+                                    <select style="background-color: cadetblue;" id="selectType" class="btn btn-secondary dropdown-toggle selectPrymary" data-bs-toggle="dropdown" aria-expanded="true">
+                                        <option style="color: var(--colorPrymary5) !important; font-weight: bold !important; background-color: white !important; " class="dropdown-item-text">Selecione um tipo de Registro</option>
+                                        <option class="dropdown-item optionSelect" value="0">Renda</option>
+                                        <option class="dropdown-item optionSelect" value="1">Débito</option>
+                                        <option class="dropdown-item optionSelect" value="2">Empréstimo</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <label for="Title" class="form-label">Titulo</label>
+                            <input id="Title" type="text" class="form-control" placeholder="Titulo do Registro">
+
+                            <label for="Amount" class="form-label">Valor</label>
+                            <input id="Amount" type="text" class="form-control" placeholder="Valor do Registro">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Date" class="form-label">Data</label>
+                            <input id="Date" value="${'2022-04-01'}" type="date" class="form-control" placeholder="Data do Registro">
+
+                            <label for="Category" class="form-label">Categoria</label>
+                            <select id="Category" class="form-select"><option value="10">Salario</option><option value="11">Faturas</option><option value="12">Fatura Mensal</option><option value="13">Despesa</option></select>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="Description" class="form-label">Descrição</label>
+                            <textarea id="Description" class="form-control"></textarea>
+                        </div>                        
+                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>`);
+            })
+
+            container.appendChild(spanEdit);
+            container.appendChild(spanTime);
+
+            cabecalho.appendChild(titulo);
+            cabecalho.appendChild(titulo);
+            //cabecalho.appendChild(spanIndex);
+            card.append(cabecalho);
+            card.appendChild(container);
+
+            return card;
+
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    Category: (Category) => {
+        try {
+
+            var category = Scripts.Elements.Create('li', null, null,
+                null, null, ['list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'cards', 'listItem']);
+
+            var edit = Scripts.Elements.Create('i', null, null,
+                null, null, ['fas', 'fa-pen', 'editItem']);
+
+            category.addEventListener('click', (element) => {
+                Scripts.Elements.ToogleClass(element.currentTarget, 'cards', 'cardSelected', (element) => {
+                   
+                    Scripts.ElementList.ToogleDisabledElement('listItem ', 'cardSelected', 'erase');
+                });
+            });
+
+            category.dataset['cod'] = Category.ccCod;
+
+            var cabecalho = Scripts.Elements.Create('div', null, null,
+                null, 'width: 100%;', ['ms-2', 'me-auto']);
+
+            cabecalho.appendChild(Scripts.Elements.Create('i', null, null,
+                null, null, ['fas', 'fa-check-circle']));
+
+            cabecalho.innerText = `${Category.ccName}`;
+
+            var titulo = Scripts.Elements.Create('div', null, null,
+                'fw-bold', null);
+
+            var spanFixed = Scripts.Elements.Create('span', 'listcategory', null,
+                null, null, ['badge', 'bg-primary', 'rounded-pill', 'spanTime']);
+
+            spanFixed.innerText = Category.ccTypeFixed != false ? "Fixo" : "";
+
+            cabecalho.appendChild(titulo);
+            //cabecalho.appendChild(spanIndex);
+            category.append(cabecalho);
+            category.appendChild(spanFixed);
+            category.appendChild(edit);
+            return category;
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+var fecharModal = (element) =>{
+    document.getElementById('modalEdit').remove();
+}
+
+var ImplementList = async (type) => {
+    try {           
+
+        var ol = Scripts.Elements.Create('ol', 'listGroup', null, null, 'width: 100%; height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);
+        var option;
+
+        if (type == "Category") {
+            var Category = await CarregaDados.Category();
+            var lenSelect = document.getElementById('Category').children.length;
+
+            for (var i = 0; i < Category.length; i++) {
+                ol.appendChild(ImplementCardsList.Category(Category[i]));
+            }
+
+            document.querySelector("div[name=list]").appendChild(ol);
+
+            for (var index = 0; index < lenSelect; index++) {
+                document.getElementById('Category').removeChild(document.getElementById('Category').lastChild);
+            }
+
+            for (var index = 0; index < Category.length; index++) {
+                option = Scripts.Elements.Create('option', null, 'optionsCategory');
+
+                option.innerText = Category[index].ccName;
+                option.value = Category[index].ccCod;
+
+                document.getElementById('Category').append(option);
+            }
+
+        }
+        else if (type == "Cards") {
+
+            var Wallet = await CarregaDados.Cards();
+
+            var totalizador = 0;
+
+            var ol = Scripts.Elements.Create('ol', 'listGroup', null, null, 'height: 100% !important; overflow: auto !important;', ['list-group', 'list-group-numbered']);         
+
+            for (var i = 0; i < Wallet.Cards.length; i++) {
+                ol.appendChild(ImplementCardsList.Cards(i + 1, Wallet.Cards[i]?.CodCard, Wallet.Cards[i]?.Amount,
+                    Wallet.Cards[i]?.TimeString, Wallet.Cards[i]?.title ?? ' - ', Wallet.Cards[i]?.Description));
+
+                totalizador += parseFloat(Wallet.Cards[i].Amount.replaceAll("R$", "").replaceAll(",", "."));
+            }          
+
+            document.querySelector("div[name=list]").appendChild(ol);
+
+            var divTotalizador = Scripts.Elements.Create('div', null, null,
+                null, "display: flex; align-items: center; justify-content: center;", ['totalizador', 'cards']);
+
+            var spanTotalizador = Scripts.Elements.Create('span', null, null,
+                null);
+
+            spanTotalizador.innerText = `Total: ${totalizador.toLocaleBR(totalizador)}`;
+
+            divTotalizador.appendChild(spanTotalizador);
+            divTotalizador.append(Scripts.Elements.Create('i', null, null,
+                null, null, ["fas", "fa-coins"]));
+            document.getElementById("listGroup").appendChild(divTotalizador);
+        }
+       
+        document.getElementById('erase').addEventListener('click', (target, obj) => {
+           
+            var selected = document.querySelectorAll('.listItem');
+            var existSelected = false;
+            var classList = null;
+            var itens = new Array();
+
+            for (var i = 0; i < selected?.length; i++) {
+                classList = selected[i].classList;
+
+                if (classList?.value?.indexOf('cardSelected') != -1) {
+                    itens.push(parseInt(selected[i]
+                        .dataset['cod']));
+                    existSelected = true;
+                }
+            }
+
+            if (existSelected) {
+                DeleteAll.Category(itens);
+            }
+
+        });
+
+        document.getElementById('selectAll').addEventListener('click', (target, obj) => {
+           
+            selectAll('listItem', 'li', 'cards', 'cardSelected');
+            Scripts.ElementList.ToogleDisabledElement('listItem ', 'cardSelected', 'erase');
+        });
+      
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 //Métodos nativos reescritos
 
